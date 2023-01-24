@@ -14,6 +14,25 @@ const config = {
     locales: ["en"],
     defaultLocale: "en",
   },
+
+  webpack: (config) => {
+    config.module.rules.push(
+      {
+        test: /\.svg$/,
+        loader: "svg-sprite-loader",
+      },
+      //     {
+      // test: /\.svg$/,
+      // use: [
+      //   { loader: 'svg-sprite-loader', options: { ... } },
+      //   'svg-transform-loader',
+      //   'svgo-loader'
+      // ]
+      //     }
+    )
+
+    return config
+  },
   // modularizeImports: {
   //   "@components": {
   //     transform: "@components/{{member}}",

@@ -1,7 +1,9 @@
 import { forwardRef } from "react"
 import type { ComponentPropsWithRef } from "react"
 
-export * from "./Sidebar/index"
+export * from "./Navbar"
+
+export * from "./Sidebar"
 
 type SidebarSwitch = Omit<
   ComponentPropsWithRef<"button">,
