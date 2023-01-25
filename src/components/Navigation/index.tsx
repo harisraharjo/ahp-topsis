@@ -1,9 +1,32 @@
-import { forwardRef } from "react"
+import { forwardRef, useState } from "react"
 import type { ComponentPropsWithRef } from "react"
+import { Sidebar } from "./Sidebar"
+import { Navbar } from "./Navbar"
 
-export * from "./Navbar"
+const Hamburger = () => (
+  <li className="flex items-center pl-4 xl:hidden">
+    <a
+      className="ease-nav-brand block p-0 text-sm text-slate-500 transition-all"
+      // sidenav-trigger
+    >
+      <div className="w-4.5 overflow-hidden">
+        <i className="relative mb-0.75 block h-0.5 rounded-sm bg-slate-500 transition-all ease-soft"></i>
+        <i className="relative mb-0.75 block h-0.5 rounded-sm bg-slate-500 transition-all ease-soft"></i>
+        <i className="relative block h-0.5 rounded-sm bg-slate-500 transition-all ease-soft"></i>
+      </div>
+    </a>
+  </li>
+)
 
-export * from "./Sidebar"
+export const Navigation = () => {
+  const [first, setfirst] = useState()
+  return (
+    <>
+      <Sidebar />
+      <Navbar hamburger={<Hamburger />} />
+    </>
+  )
+}
 
 type SidebarSwitch = Omit<
   ComponentPropsWithRef<"button">,
