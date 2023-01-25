@@ -1,61 +1,75 @@
-import { forwardRef, useState } from "react"
-import type { ComponentPropsWithRef } from "react"
+import { createContext, useState } from "react"
+import type { SetStateAction, Dispatch, PropsWithChildren } from "react"
 import { Sidebar } from "./Sidebar"
-import { Navbar } from "./Navbar"
 
-const Hamburger = () => (
-  <li className="flex items-center pl-4 xl:hidden">
-    <a
-      className="ease-nav-brand block p-0 text-sm text-slate-500 transition-all"
-      // sidenav-trigger
-    >
-      <div className="w-4.5 overflow-hidden">
-        <i className="relative mb-0.75 block h-0.5 rounded-sm bg-slate-500 transition-all ease-soft"></i>
-        <i className="relative mb-0.75 block h-0.5 rounded-sm bg-slate-500 transition-all ease-soft"></i>
-        <i className="relative block h-0.5 rounded-sm bg-slate-500 transition-all ease-soft"></i>
-      </div>
-    </a>
-  </li>
+// import { useState, useMemo } from "react"
+
+// export function useToggle(initialState = false, isToggle = false) {
+//   const [isOpen, setIsOpen] = useState(() => initialState)
+//   const toggle = useMemo(() => {
+//     if (isToggle) return () => setIsOpen((prev) => !prev)
+
+//     return Object.freeze({
+//       handleClose: () => setIsOpen(() => false),
+//       handleOpen: () => setIsOpen(() => true),
+//     })
+//   }, [isToggle])
+
+//   return Object.freeze({
+//     isOpen,
+//     toggle,
+//   })
+// }
+
+export const SidebarContext = createContext<Dispatch<SetStateAction<boolean>>>(
+  () => false,
 )
+const SidebarContextProvider = SidebarContext.Provider
 
-export const Navigation = () => {
-  const [first, setfirst] = useState()
+type NavigationProps = PropsWithChildren<{ a?: "" }>
+export const Navigation = ({ children }: NavigationProps) => {
+  const [isOpen, setIsOpen] = useState(false)
+
   return (
     <>
-      <Sidebar />
-      <Navbar hamburger={<Hamburger />} />
+      <SidebarContextProvider value={setIsOpen}>
+        {children}
+      </SidebarContextProvider>
+      {/* <Navbar hamburger={} /> */}
+      {/* <Hamburger /> */}
+      <Sidebar isOpen={isOpen} />
     </>
   )
 }
 
-type SidebarSwitch = Omit<
-  ComponentPropsWithRef<"button">,
-  | "children"
-  | "type"
-  | "aria-expanded"
-  | "aria-label"
-  | "Toggle sidenav"
-  | "className"
->
+// type SidebarSwitch = Omit<
+//   ComponentPropsWithRef<"button">,
+//   | "children"
+//   | "type"
+//   | "aria-expanded"
+//   | "aria-label"
+//   | "Toggle sidenav"
+//   | "className"
+// >
 
-export const SidebarSwitch = forwardRef<HTMLButtonElement, SidebarSwitch>(
-  ({ onClick, ...props }, ref) => {
-    return (
-      <button
-        type="button"
-        aria-expanded="false"
-        aria-label="Toggle sidebar"
-        onClick={onClick}
-        className="text-4xl text-white focus:outline-none"
-        ref={ref}
-        {...props}
-      >
-        &#8801;
-      </button>
-    )
-  },
-)
+// export const SidebarSwitch = forwardRef<HTMLButtonElement, SidebarSwitch>(
+//   ({ onClick, ...props }, ref) => {
+//     return (
+//       <button
+//         type="button"
+//         aria-expanded="false"
+//         aria-label="Toggle sidebar"
+//         onClick={onClick}
+//         className="text-4xl text-white focus:outline-none"
+//         ref={ref}
+//         {...props}
+//       >
+//         &#8801;
+//       </button>
+//     )
+//   },
+// )
 
-SidebarSwitch.displayName = "SidebarSwitch"
+// SidebarSwitch.displayName = "SidebarSwitch"
 
 // export {}

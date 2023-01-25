@@ -4,10 +4,17 @@ import Link from "next/link"
 import { useRouter } from "next/router"
 import { type PropsWithChildren } from "react"
 
+type SidebarProps = PropsWithChildren<{ isOpen: boolean }>
 // SERVER COMPONENT
-export const Sidebar = () => {
+export const Sidebar = ({ isOpen }: SidebarProps) => {
+  console.log(isOpen)
+
   return (
-    <aside className="ease-nav-brand fixed inset-y-0 z-990 my-4 ml-4 block w-full max-w-62.5 -translate-x-full flex-wrap items-center justify-between overflow-y-auto rounded-2xl border-0 bg-white p-0 shadow-none transition-transform duration-200 xl:left-0 xl:translate-x-0 xl:bg-transparent">
+    <aside
+      className={`ease-nav-brand fixed inset-y-0 z-990 my-4 ml-4 block w-full max-w-62.5 -translate-x-full flex-wrap items-center justify-between overflow-y-auto rounded-2xl border-0 bg-white p-0 shadow-none transition-transform duration-200 xl:left-0 xl:translate-x-0 xl:bg-transparent ${
+        isOpen ? "translate-x-0 shadow-soft-xl" : ""
+      }`}
+    >
       <div className="h-19.5">
         <i className="fas fa-times absolute top-0 right-0 hidden cursor-pointer p-4 text-slate-400 opacity-50 xl:hidden"></i>
         <a

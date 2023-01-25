@@ -8,6 +8,7 @@ import "../styles/globals.css"
 import { NextPage } from "next"
 import Head from "next/head"
 import { Navigation } from "@components"
+import { Navbar } from "@components/Navigation/Navbar"
 
 const App: AppType<{ session: Session | null }> = ({
   Component,
@@ -18,7 +19,9 @@ const App: AppType<{ session: Session | null }> = ({
   return (
     // xl:ml-68.5
     <SessionProvider session={session}>
-      <Navigation />
+      <Navigation>
+        <Navbar />
+      </Navigation>
       <Component {...pageProps} />
     </SessionProvider>
   )
