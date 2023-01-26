@@ -2,14 +2,9 @@ import { type PropsWithChildren, type ReactNode } from "react"
 import { SidebarHandler, useSidebarContext } from "../Sidebar"
 
 export type NavbarProps = PropsWithChildren<{ _?: ReactNode }>
-export const Navbar = ({ children: __, _ }: NavbarProps) => {
-  console.log("ADADA")
+export const Navbar = ({ children: __ }: NavbarProps) => {
   return (
-    <nav
-      className="relative mx-6 flex flex-wrap items-center justify-between rounded-2xl px-0 py-2 shadow-none transition-all duration-250 ease-soft-in lg:flex-nowrap lg:justify-start"
-      //   navbar-main
-      //   navbar-scroll="true"
-    >
+    <nav className="relative mx-6 flex flex-wrap items-center justify-between rounded-2xl px-0 py-2 shadow-none transition-all duration-250 ease-soft-in lg:flex-nowrap lg:justify-start">
       <div className="flex-wrap-inherit mx-auto flex w-full items-center justify-between px-4 py-1">
         <nav>
           <ol className="mr-12 flex flex-wrap rounded-lg bg-transparent pt-1 sm:mr-16">
@@ -54,7 +49,7 @@ export const Navbar = ({ children: __, _ }: NavbarProps) => {
 
             {/* <!-- notifications --> */}
 
-            <li className="relative flex items-center pr-2">
+            {/* <li className="relative flex items-center pr-2">
               <p className="transform-dropdown-show hidden"></p>
               <a
                 className="ease-nav-brand block p-0 text-sm text-slate-500 transition-all"
@@ -62,7 +57,7 @@ export const Navbar = ({ children: __, _ }: NavbarProps) => {
               >
                 <i className="fa fa-bell cursor-pointer"></i>
               </a>
-            </li>
+            </li> */}
           </ul>
         </div>
       </div>

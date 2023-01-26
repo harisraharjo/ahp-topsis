@@ -10,7 +10,7 @@ import { Navbar } from "./Navbar"
 type NavigationProps = PropsWithChildren<{ navbar: ReactNode }>
 const Container = ({ children, navbar }: NavigationProps) => {
   const [isOpen, handler] = useState(false)
-  const handlerRef = useRef(null)
+  const handlerRef = useRef<HTMLButtonElement | null>(null)
 
   return (
     <>

@@ -5,8 +5,8 @@ import { useRouter } from "next/router"
 import {
   useRef,
   useContext,
-  type PropsWithChildren,
   createContext,
+  type PropsWithChildren,
   type MutableRefObject,
   type Dispatch,
   type SetStateAction,
@@ -15,12 +15,13 @@ import {
 } from "react"
 import "../../../../public/DashboardIcon.svg"
 import { Svg } from "@components/Svg"
+import useOnClickOutside from "use-onclickoutside"
 // import useOnClickOutside from "use-onclickoutside"
 
 type SidebarHandler = Dispatch<SetStateAction<boolean>>
 const SidebarHandlerContext = createContext<SidebarHandler>(() => false)
 
-type SidebarState = MutableRefObject<null>
+type SidebarState = MutableRefObject<HTMLButtonElement | null>
 const SidebarStateContext = createContext<SidebarState | undefined>(undefined)
 
 const SidebarHandlerContextProvider = SidebarHandlerContext.Provider
@@ -50,7 +51,7 @@ export const SidebarContextProvider = ({
 
 type SidebarProps = PropsWithChildren<{
   isOpen: boolean
-  handlerRef: MutableRefObject<null>
+  handlerRef: SidebarState
   handler: SidebarHandler
 }>
 // SERVER COMPONENT
@@ -60,21 +61,12 @@ export const SidebarContainer = ({
   handlerRef,
   handler,
 }: SidebarProps) => {
-  // TODO!  onClick outside
   const ref = useRef(null)
-  // const handler = useContext(SidebarHandlerContext)
-
-  // useOnClickOutside(ref, (event) => {
-  //   if (!handlerRef.current?.contains(event.target)) {
-  //     handler(prev => !prev)
-  //   }
-  // })
-
-  // const ads: Handler = (event) => {
-  //   if (!togglerRef.current.contains(event.target)) {
-  //     setOpen(false)
-  //   }
-  // }
+  useOnClickOutside(ref, (event) => {
+    if (!handlerRef.current?.contains(event.target as Node)) {
+      handler((prev) => !prev)
+    }
+  })
 
   return (
     <aside
@@ -89,30 +81,14 @@ export const SidebarContainer = ({
 }
 
 type SidebarHandlerProps = Pick<ComponentPropsWithRef<"button">, "onClick">
-
-// export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-//   ({ children, ...props }, ref) => {
-//     return (
-//       <button {...props} className={buttonStyles} ref={ref}>
-//         {children}
-//       </button>
-//     )
-//   },
-// )
-
 export const SidebarHandler = forwardRef<
   HTMLButtonElement,
   SidebarHandlerProps
->(({ onClick: handler }, ref) => (
+>(({ onClick }, ref) => (
   <button
     ref={ref}
     className="w-4.5 cursor-pointer overflow-hidden"
-    onClick={handler}
-    /**(e) => {
-          e.preventDefault()
-          e.stopPropagation()
-          handler((prev) => !prev)
-        } */
+    onClick={onClick}
   >
     <i className="relative mb-0.75 block h-0.5 rounded-sm bg-slate-500 transition-all ease-soft"></i>
     <i className="relative mb-0.75 block h-0.5 rounded-sm bg-slate-500 transition-all ease-soft"></i>
