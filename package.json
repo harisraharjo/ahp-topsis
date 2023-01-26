@@ -17,11 +17,13 @@
     "@trpc/next": "^10.9.0",
     "@trpc/react-query": "^10.9.0",
     "@trpc/server": "^10.9.0",
+    "motion": "^10.15.5",
     "next": "13.1.5",
     "next-auth": "^4.18.10",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "superjson": "1.12.2",
+    "use-onclickoutside": "^0.4.1",
     "zod": "^3.20.2"
   },
   "devDependencies": {
