@@ -64,7 +64,7 @@ export const SidebarContainer = ({
   const ref = useRef(null)
   useOnClickOutside(ref, (event) => {
     if (!handlerRef.current?.contains(event.target as Node)) {
-      handler((prev) => !prev)
+      handler(() => false)
     }
   })
 

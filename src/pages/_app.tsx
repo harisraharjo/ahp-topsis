@@ -1,4 +1,4 @@
-import { type AppType } from "next/app"
+import { type AppProps } from "next/app"
 import { type Session } from "next-auth"
 import { SessionProvider } from "next-auth/react"
 
@@ -6,30 +6,42 @@ import { api } from "../utils/api"
 
 import "../styles/globals.css"
 import { Navigation } from "@components"
+import type { NextPage } from "next"
 
-const App: AppType<{ session: Session | null }> = ({
+export type NextPageWithLayout<P = unknown, IP = P> = NextPage<P, IP> & {
+  // getLayout?: (page: ReactElement) => ReactNode
+  hideNav?: true | undefined
+}
+type AppPropsWithLayout<P = unknown> = AppProps<P> & {
+  Component: NextPageWithLayout
+}
+
+function App({
   Component,
   pageProps: { session, ...pageProps },
-}) => {
-  // const a = session?.expires
-
+}: AppPropsWithLayout<{ session: Session | null }>) {
+  const { hideNav } = Component
   return (
-    // xl:ml-68.5
     <SessionProvider session={session}>
-      <Navigation />
-      <Component {...pageProps} />
+      <section className={`${!hideNav ? "xl:ml-68.5" : ""}`}>
+        {!hideNav && <Navigation />}
+        <Component {...pageProps} />
+      </section>
     </SessionProvider>
   )
 }
 
 export default api.withTRPC(App)
 
-// export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
-//   getLayout?: (page: ReactElement) => ReactNode
-// }
+// const App: AppType<{ session: Session | null }>= ({ Component, pageProps: { session, ...pageProps } }) => {
 
-// type AppPropsWithLayout = AppProps & {
-//   Component: NextPageWithLayout
+//   return (
+//     //
+//     <SessionProvider session={session}>
+//       <Navigation />
+//       <Component {...pageProps} />
+//     </SessionProvider>
+//   )
 // }
 
 // export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {

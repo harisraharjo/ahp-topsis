@@ -6,7 +6,7 @@ const Document = () => {
       <Head>
         <meta name="color-scheme" content="light" />
       </Head>
-      <body className="m-0 bg-gray-50 font-sans text-base font-normal leading-default text-slate-500 xl:ml-68.5">
+      <body className="m-0 bg-gray-50 font-sans text-base font-normal leading-default text-slate-500">
         <Main />
         <NextScript />
       </body>
