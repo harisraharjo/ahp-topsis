@@ -6,17 +6,17 @@ import {
   useRef,
   useContext,
   createContext,
+  forwardRef,
   type PropsWithChildren,
   type MutableRefObject,
   type Dispatch,
   type SetStateAction,
   type ComponentPropsWithRef,
-  forwardRef,
+  type ReactElement,
 } from "react"
 import "../../../../public/DashboardIcon.svg"
 import { Svg } from "@components/Svg"
 import useOnClickOutside from "use-onclickoutside"
-// import useOnClickOutside from "use-onclickoutside"
 
 type SidebarHandler = Dispatch<SetStateAction<boolean>>
 const SidebarHandlerContext = createContext<SidebarHandler>(() => false)
@@ -102,8 +102,7 @@ export const SidebarBody = () => (
     <Logo />
     <div className="block h-sidenav max-h-screen w-auto grow basis-full items-center overflow-auto">
       <ul className="mb-0 flex flex-col pl-0">
-        {/* CLIENT COMPONENT */}
-        <SidenavItemContainer />
+        <SidebarItems />
       </ul>
     </div>
   </>
@@ -138,7 +137,6 @@ type PATH = {
   title: string
   href: string
 }
-
 const PATHS: readonly PATH[] = [
   {
     title: "Dashboard",
@@ -152,72 +150,61 @@ const PATHS: readonly PATH[] = [
   },
 ]
 
-const activeStyles: { link: ActiveLink; svg: ActiveSVG } = {
-  link: "shadow-soft-xl rounded-lg bg-white font-semibold text-slate-700",
-  svg: "bg-gradient-to-tl from-purple-700 to-pink-500",
-}
-
-// CLIENT COMPONENT
-const SidenavItemContainer = () => {
-  const { asPath } = useRouter()
-
-  return (
-    <>
-      {PATHS.map((data) => (
-        <SidebarItem
-          key={data.href}
-          activeLink={asPath === data.href ? activeStyles.link : ""}
-          activeSVG={asPath === data.href ? activeStyles.svg : ""}
-          href={data.href}
-          title={data.title}
-        />
-      ))}
-    </>
-  )
-}
-
-// Server COMPONENT
-const SidebarItemName = ({ children }: { children: string }) => (
-  <span className="pointer-events-none ml-1 opacity-100 duration-300 ease-soft">
-    {children}
-  </span>
+// SERVER COMP
+const SidebarItems = () => (
+  <>
+    {PATHS.map(({ title, href }) => (
+      <SidebarItem
+        key={href}
+        icon={<use xlinkHref={`#${title}Icon`} />}
+        href={href}
+      >
+        <SidebarItemName>{title}</SidebarItemName>
+      </SidebarItem>
+    ))}
+  </>
 )
 
 type ActiveLink =
   "shadow-soft-xl rounded-lg bg-white font-semibold text-slate-700"
 type ActiveSVG = "bg-gradient-to-tl from-purple-700 to-pink-500"
-
-type SidenavItemProps = PropsWithChildren<
-  {
-    activeLink: ActiveLink | ""
-    activeSVG: ActiveSVG | ""
-    title: string
-    // icon: SVGProps<SVGUseElement>
-  } & PATH
+const activeStyles: { link: ActiveLink; svg: ActiveSVG } = {
+  link: "shadow-soft-xl rounded-lg bg-white font-semibold text-slate-700",
+  svg: "bg-gradient-to-tl from-purple-700 to-pink-500",
+}
+type SidebarItemProps = PropsWithChildren<
+  { icon: ReactElement<SVGUseElement> } & Pick<PATH, "href">
 >
+// CLIENT COMP
+const SidebarItem = ({ href, children, icon }: SidebarItemProps) => {
+  const { asPath } = useRouter()
+  const isOnRoute = asPath === href
 
-const SidebarItem = ({
-  activeLink = "",
-  activeSVG = "",
-  // icon,
-  // children,
-  href,
-  title,
-}: //   ...props
-SidenavItemProps) => {
+  // TODO COMPLETE THE SPRITE
   return (
     <li className="mt-0.5 w-full">
       <Link
-        className={`ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap py-2.7 px-4 text-sm transition-colors ${activeLink}`}
+        className={`ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap py-2.7 px-4 text-sm transition-colors ${
+          isOnRoute ? activeStyles.link : ""
+        }`}
         href={href}
       >
         <Svg
-          className={`mr-2 h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center shadow-soft-2xl xl:p-2.5 ${activeSVG}`}
+          className={`mr-2 h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center shadow-soft-2xl xl:p-2.5 ${
+            isOnRoute ? activeStyles.svg : ""
+          }`}
         >
-          <use xlinkHref={`#${title}Icon`} />
+          {icon}
         </Svg>
-        <SidebarItemName>{title}</SidebarItemName>
+        {children}
       </Link>
     </li>
   )
 }
+
+// SERVER COMPONENT
+const SidebarItemName = ({ children }: { children: string }) => (
+  <span className="pointer-events-none ml-1 opacity-100 duration-300 ease-soft">
+    {children}
+  </span>
+)

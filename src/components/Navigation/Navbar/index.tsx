@@ -34,6 +34,7 @@ export const Navbar = ({ children: __ }: NavbarProps) => {
               />
             </div>
           </div>
+          {/* <-- --> */}
           <ul className="mb-0 flex list-none flex-row justify-end pl-0 md-max:w-full">
             <li className="flex items-center pl-4 xl:hidden">
               <Hamburger />

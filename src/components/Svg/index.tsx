@@ -1,8 +1,12 @@
-import type { SVGProps } from "react"
+import type { ReactElement, SVGProps } from "react"
 
-export const Svg = ({
-  children,
-  ...props
-}: Omit<SVGProps<SVGSVGElement>, "id">) => {
-  return <svg {...props}>{children}</svg>
+type SvgProps = Omit<SVGProps<SVGSVGElement>, "id" | "children"> & {
+  children: ReactElement<SVGUseElement>
+}
+export const Svg = ({ children, ...props }: SvgProps) => {
+  return (
+    <svg {...props}>
+      <>{children}</>
+    </svg>
+  )
 }
