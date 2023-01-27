@@ -178,7 +178,7 @@ type SidebarItemProps = PropsWithChildren<
 // CLIENT COMP
 const SidebarItem = ({ href, children, icon }: SidebarItemProps) => {
   const { asPath } = useRouter()
-  const isOnRoute = asPath === href
+  const isOnRoute = asPath.includes(href)
 
   // TODO COMPLETE THE SPRITE
   return (

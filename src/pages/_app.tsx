@@ -32,21 +32,3 @@ function App({
 }
 
 export default api.withTRPC(App)
-
-// const App: AppType<{ session: Session | null }>= ({ Component, pageProps: { session, ...pageProps } }) => {
-
-//   return (
-//     //
-//     <SessionProvider session={session}>
-//       <Navigation />
-//       <Component {...pageProps} />
-//     </SessionProvider>
-//   )
-// }
-
-// export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
-//   // Use the layout defined at the page level, if available
-//   const getLayout = Component.getLayout ?? ((page) => page)
-
-//   return getLayout(<Component {...pageProps} />)
-// }
