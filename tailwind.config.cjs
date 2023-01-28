@@ -3,11 +3,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
-  // theme: {
-  //   extend: {
-
-  //   },
-  // },
   theme: {
     screens: {
       sm: "576px",
