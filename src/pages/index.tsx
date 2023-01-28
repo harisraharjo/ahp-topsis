@@ -16,7 +16,7 @@ const Home: NextPageWithLayout = () => {
 }
 
 Home.head = {
-  desc: "NONO",
+  desc: "Dashboard Page",
   title: "Dashboard",
 }
 

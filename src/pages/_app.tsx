@@ -30,8 +30,8 @@ function App({
   return (
     <SessionProvider session={session}>
       <Head>
-        <title>{head?.title || "Hada"}</title>
-        <meta property="og:title" content={head?.title || "Hada"} key="title" />
+        <title>{head?.title || "App"}</title>
+        <meta property="og:title" content={head?.title || "App"} key="title" />
         <meta
           name="description"
           content={head?.desc || "SMP 1 Negeri Waru App"}
