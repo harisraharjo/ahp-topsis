@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "es2017",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -17,27 +21,73 @@
     "noUncheckedIndexedAccess": true,
     "baseUrl": ".",
     "paths": {
-      "@components": ["src/components"],
-      "@components/*": ["src/components/*"],
-      "@features/*": ["src/features/*"],
-      "@features": ["src/features"],
-      "@server/*": ["src/server/*"],
-      "@server": ["src/server"],
-      "@layouts/*": ["src/layouts/*"],
-      "@layouts": ["src/layouts"],
-      "@lib/*": ["src/lib/*"],
-      "@lib": ["src/lib"],
-      "@public/*": ["public/*"],
-      "@public": ["public"],
-      "@styles/*": ["src/styles/*"],
-      "@styles": ["src/styles"],
-      "@test/*": ["test/*"],
-      "@test": ["test"],
-      "@typings": ["src/types"],
-      "@utils/*": ["src/utils/*"],
-      "@utils": ["src/utils"]
+      "@components": [
+        "src/components"
+      ],
+      "@components/*": [
+        "src/components/*"
+      ],
+      "@features/*": [
+        "src/features/*"
+      ],
+      "@features": [
+        "src/features"
+      ],
+      "@server/*": [
+        "src/server/*"
+      ],
+      "@server": [
+        "src/server"
+      ],
+      "@layouts/*": [
+        "src/layouts/*"
+      ],
+      "@layouts": [
+        "src/layouts"
+      ],
+      "@lib/*": [
+        "src/lib/*"
+      ],
+      "@lib": [
+        "src/lib"
+      ],
+      "@public/*": [
+        "public/*"
+      ],
+      "@public": [
+        "public"
+      ],
+      "@styles/*": [
+        "src/styles/*"
+      ],
+      "@styles": [
+        "src/styles"
+      ],
+      "@test/*": [
+        "test/*"
+      ],
+      "@test": [
+        "test"
+      ],
+      "@typings": [
+        "src/types"
+      ],
+      "@utils/*": [
+        "src/utils/*"
+      ],
+      "@utils": [
+        "src/utils"
+      ]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.cjs", "**/*.mjs"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.cjs",
+    "**/*.mjs"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
