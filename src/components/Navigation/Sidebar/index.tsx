@@ -180,7 +180,7 @@ const SidebarItem = ({ href, children, icon }: SidebarItemProps) => {
   const { asPath } = useRouter()
   const isOnRoute = asPath.includes(href)
 
-  // TODO COMPLETE THE SPRITE
+  // TODO COMPLETE THE SPRITE. Terakhir aja
   return (
     <li className="mt-0.5 w-full">
       <Link
