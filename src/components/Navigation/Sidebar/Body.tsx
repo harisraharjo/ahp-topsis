@@ -42,15 +42,10 @@ const Logo = () => (
 
 const SidebarItems = () => (
   <>
-    {PATHS.map(({ title, href, slug }) => (
-      <SidebarItem
-        key={href}
-        // icon={<use xlinkHref={`#${title}Icon`} />}
-        slug={slug}
-        href={href}
-      >
+    {PATHS.map((path) => (
+      <SidebarItem key={path.href} {...path}>
         <span className="pointer-events-none ml-1 opacity-100 duration-300 ease-soft">
-          {title}
+          {path.title}
         </span>
       </SidebarItem>
     ))}

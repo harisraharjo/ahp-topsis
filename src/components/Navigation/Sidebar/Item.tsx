@@ -3,8 +3,8 @@
 import Link from "next/link"
 import type { PropsWithChildren, ReactElement } from "react"
 import type { PATH } from "./routeData"
-// import { Svg } from "@components/Svg"
-// import "../../../../public/DashboardIcon.svg"
+import { Svg } from "@components/Svg"
+// import DI from "../../../../public/DashboardIcon.svg"
 import { useSelectedLayoutSegment } from "next/navigation"
 
 type ActiveLink =
@@ -16,19 +16,16 @@ const activeStyles: { link: ActiveLink; svg: ActiveSVG } = {
   svg: "bg-gradient-to-tl from-purple-700 to-pink-500",
 }
 
-type SidebarItemProps = PropsWithChildren<
-  { icon?: ReactElement<SVGUseElement> } & Pick<PATH, "href" | "slug">
->
+type SidebarItemProps = PropsWithChildren<PATH>
 export const SidebarItem = ({
   href,
   children,
   slug,
-  icon: _,
+  title,
 }: SidebarItemProps) => {
   const segment = useSelectedLayoutSegment()
   const isActive = segment === slug
-
-  // TODO COMPLETE THE SPRITE. Terakhir aja
+  // TODO: SVG PAKAI SPRITE. Terakhir aja
   return (
     <li className="mt-0.5 w-full">
       <Link
@@ -37,13 +34,13 @@ export const SidebarItem = ({
         }`}
         href={href}
       >
-        {/* <Svg
+        <Svg
           className={`mr-2 h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center shadow-soft-2xl xl:p-2.5 ${
             isActive ? activeStyles.svg : ""
           }`}
         >
-          {icon}
-        </Svg> */}
+          <use xlinkHref={`#${title}Icon`} />
+        </Svg>
         {children}
       </Link>
     </li>
