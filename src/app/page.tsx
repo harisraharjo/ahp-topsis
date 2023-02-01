@@ -1,3 +1,7 @@
+import { redirectIfUnauthorized } from "@server/auth"
+
 export default function Page() {
-  return <h1>Hello, Next.js!</h1>
+  redirectIfUnauthorized()
+
+  return <h1>Hello, Next!</h1>
 }

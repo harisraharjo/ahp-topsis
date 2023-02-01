@@ -1,5 +1,6 @@
 import { type PropsWithChildren, type ReactNode } from "react"
 import { SidebarHandler } from "../Sidebar"
+import { SignOut } from "../../signin/handler"
 
 export type NavbarProps = PropsWithChildren<{ _?: ReactNode }>
 export const Navbar = ({}: NavbarProps) => {
@@ -33,6 +34,7 @@ export const Navbar = ({}: NavbarProps) => {
                 placeholder="Type here..."
               />
             </div>
+            <SignOut />
           </div>
           {/* <-- --> */}
           <ul className="mb-0 flex list-none flex-row justify-end pl-0 md-max:w-full">

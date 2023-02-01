@@ -1,21 +1,49 @@
-import { type GetServerSidePropsContext } from "next"
-import { unstable_getServerSession } from "next-auth"
+import { getServerSession } from "next-auth"
 
-import { authOptions } from "../_pages/api/auth/[...nextauth]"
+import { redirect } from "next/navigation"
+import { type NextAuthOptions } from "next-auth"
+import DiscordProvider from "next-auth/providers/discord"
+// Prisma adapter for NextAuth, optional and can be removed
+// import { PrismaAdapter } from "@next-auth/prisma-adapter"
 
-/**
- * Wrapper for unstable_getServerSession, used in trpc createContext and the
- * restricted API route
- *
- * Don't worry too much about the "unstable", it's safe to use but the syntax
- * may change in future versions
- *
- * @see https://next-auth.js.org/configuration/nextjs
- */
+import { env } from "@env/server.mjs"
+// import { prisma } from "./db"
 
-export const getServerAuthSession = async (ctx: {
-  req: GetServerSidePropsContext["req"]
-  res: GetServerSidePropsContext["res"]
-}) => {
-  return await unstable_getServerSession(ctx.req, ctx.res, authOptions)
+//SINGLETON
+let isAuthorized = false
+
+// ONLY FOR PAGE/Layout (SERVER COMPONENT)
+export function redirectIfUnauthorized(): void {
+  if (!isAuthorized) return redirect("/signin")
+}
+
+export const authOptions: NextAuthOptions = {
+  // Include user.id on session
+  callbacks: {
+    // TODO: Add Signin callback to only allow a set of emails only
+    session({ session, user: _ }) {
+      console.log("Retrieving Session...")
+      if (session.user) {
+        isAuthorized = true
+        // session.user.id = user.id
+      } else {
+        isAuthorized = false
+      }
+
+      return session
+    },
+  },
+  // Configure one or more authentication providers
+  // adapter: PrismaAdapter(prisma),
+  providers: [
+    // GoogleProvider(),
+    DiscordProvider({
+      clientId: env.DISCORD_CLIENT_ID,
+      clientSecret: env.DISCORD_CLIENT_SECRET,
+    }),
+  ],
+}
+
+export function getServerAuthSession() {
+  return getServerSession(authOptions)
 }

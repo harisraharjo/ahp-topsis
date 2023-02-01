@@ -19,8 +19,8 @@
     "paths": {
       "@components": ["src/components"],
       "@components/*": ["src/components/*"],
-      "@features/*": ["src/features/*"],
-      "@features": ["src/features"],
+      "@middleware/*": ["src/pages/api/*"],
+      "@env/*": ["src/env/*"],
       "@server/*": ["src/server/*"],
       "@server": ["src/server"],
       "@layouts/*": ["src/layouts/*"],

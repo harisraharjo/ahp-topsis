@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import type { PropsWithChildren, ReactElement } from "react"
+import type { PropsWithChildren } from "react"
 import type { PATH } from "./routeData"
 import { Svg } from "@components/Svg"
 // import DI from "../../../../public/DashboardIcon.svg"
