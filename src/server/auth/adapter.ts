@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/require-await */
 import type { DB } from "../db"
 
 import type { Awaitable } from "next-auth"
@@ -15,10 +14,6 @@ import {
   updateSession,
   updateUser,
 } from "../db/query"
-
-// import type { Adapter } from "next-auth/adapters"
-// type AwaitableTable<T extends keyof DB, Null = false, Undefined = false> = Awaitable<(DB[T] | Null extends null ? null : never | Undefined extends undefined ? undefined : never)>
-// type DA = AwaitableTable<"User">
 
 export interface Adapter {
   createUser: (user: DB["User"]) => Awaitable<DB["User"]>
