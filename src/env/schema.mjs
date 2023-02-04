@@ -1,29 +1,31 @@
 // @ts-check
 import { z } from "zod"
 
+const zString = z.string()
 /**
  * Specify your server-side environment variables schema here.
  * This way you can ensure the app isn't built with invalid env vars.
  */
 export const serverSchema = z.object({
-  DATABASE_URL: z.string().url(),
-  DATABASE_HOST: z.string().url(),
-  DATABASE_USERNAME: z.string().url(),
-  DATABASE_PASSWORD: z.string().url(),
+  DATABASE_URL: zString.url(),
+  DATABASE_URL_PRISMA: zString.url(),
+  DATABASE_HOST: zString,
+  DATABASE_USERNAME: zString,
+  DATABASE_PASSWORD: zString,
   NODE_ENV: z.enum(["development", "test", "production"]),
   NEXTAUTH_SECRET:
     process.env.NODE_ENV === "production"
-      ? z.string().min(1)
-      : z.string().min(1).optional(),
+      ? zString.min(1)
+      : zString.min(1).optional(),
   NEXTAUTH_URL: z.preprocess(
     // This makes Vercel deployments not fail if you don't set NEXTAUTH_URL
     // Since NextAuth.js automatically uses the VERCEL_URL if present.
     (str) => process.env.VERCEL_URL ?? str,
     // VERCEL_URL doesn't include `https` so it cant be validated as a URL
-    process.env.VERCEL ? z.string() : z.string().url(),
+    process.env.VERCEL ? zString : zString.url(),
   ),
-  DISCORD_CLIENT_ID: z.string(),
-  DISCORD_CLIENT_SECRET: z.string(),
+  DISCORD_CLIENT_ID: zString,
+  DISCORD_CLIENT_SECRET: zString,
 })
 
 /**
@@ -33,6 +35,7 @@ export const serverSchema = z.object({
  */
 export const serverEnv = {
   DATABASE_URL: process.env.DATABASE_URL,
+  DATABASE_URL_PRISMA: process.env.DATABASE_URL_PRISMA,
   DATABASE_HOST: process.env.DATABASE_HOST,
   DATABASE_USERNAME: process.env.DATABASE_USERNAME,
   DATABASE_PASSWORD: process.env.DATABASE_PASSWORD,
@@ -49,7 +52,7 @@ export const serverEnv = {
  * To expose them to the client, prefix them with `NEXT_PUBLIC_`.
  */
 export const clientSchema = z.object({
-  // NEXT_PUBLIC_CLIENTVAR: z.string(),
+  // NEXT_PUBLIC_CLIENTVAR: zString,
 })
 
 /**

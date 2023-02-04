@@ -11,14 +11,14 @@ datasource db {
     // Further reading:
     // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
     // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
-    url          = env("DATABASE_URL")
+    url          = env("DATABASE_URL_PRISMA")
     relationMode = "prisma"
 }
 
 model Example {
     id        String   @id @default(cuid())
     createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+    updatedAt DateTime @default(now())
     score     Decimal
 }
 
@@ -27,7 +27,7 @@ model Example {
 model Account {
     id                       String   @id @default(cuid())
     createdAt                DateTime @default(now())
-    updatedAt                DateTime @updatedAt
+    updatedAt                DateTime @default(now())
     userId                   String
     type                     String
     provider                 String
@@ -55,16 +55,21 @@ model Session {
     user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+enum Role {
+    USER
+    ADMIN
+}
+
 model User {
     id            String    @id @default(cuid())
     createdAt     DateTime  @default(now())
-    updatedAt     DateTime  @updatedAt
+    updatedAt     DateTime  @default(now())
     name          String?
     email         String?   @unique
     password      String?
     emailVerified DateTime?
     image         String?
-    role          String?   @default("user")
+    role          Role?     @default(USER)
     accounts      Account[]
     sessions      Session[]
 }

@@ -3,11 +3,13 @@ import { getServerSession } from "next-auth"
 import { redirect } from "next/navigation"
 import { type NextAuthOptions } from "next-auth"
 import DiscordProvider from "next-auth/providers/discord"
-// Prisma adapter for NextAuth, optional and can be removed
-import { PrismaAdapter } from "@next-auth/prisma-adapter"
 
 import { env } from "@env/server.mjs"
-import { prisma } from "./db"
+
+import type { Adapter as NextAuthAdapter } from "next-auth/adapters"
+import { KyselyPlanetscaleAdapter } from "./adapter"
+
+export type { Adapter } from "./adapter"
 
 //SINGLETON
 let isAuthorized = false
@@ -33,9 +35,8 @@ export const authOptions: NextAuthOptions = {
       return session
     },
   },
+  adapter: KyselyPlanetscaleAdapter() as unknown as NextAuthAdapter<false>,
   // Configure one or more authentication providers
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-  adapter: PrismaAdapter(prisma),
   providers: [
     // GoogleProvider(),
     DiscordProvider({
