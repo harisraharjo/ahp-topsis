@@ -23,4 +23,4 @@ export const db = new Kysely<DB>({
   },
 })
 
-export type KyselyDB = typeof db
+export type KyselyPlanetscaleDB = typeof db

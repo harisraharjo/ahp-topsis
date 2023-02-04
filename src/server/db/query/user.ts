@@ -1,9 +1,8 @@
 import type { DB } from "../types"
-
-import { createId as createCUID } from "@paralleldrive/cuid2"
 import { db } from "../config"
-import type { InsertObject, UpdateObject } from "kysely"
+import type { UpdateObject } from "kysely"
 import { type Adapter } from "@server/auth/adapter"
+import { insertValuesInto, selectTableBy } from "./utils"
 
 // const filter<T extends keyof DB, Key extends keyof DB[T]>(
 //   table: T,
@@ -15,35 +14,11 @@ import { type Adapter } from "@server/auth/adapter"
 //     .where()
 // }
 
-const insertValuesInto = <T extends keyof DB>(
-  table: T,
-  values: DB[T] | Omit<DB[T], "id">,
-) =>
-  db
-    .insertInto(table)
-    .values({ ...values, id: createCUID() } as InsertObject<DB, T>)
-
-const selectTableBy = <
-  T extends keyof DB,
-  Key extends keyof DB[T],
-  V extends DB[T][Key],
->(
-  table: T,
-  key: Key,
-  value: V,
-) =>
-  db.selectFrom(table).selectAll().where(
-    // @ts-expect-error kysely uses const overload which makes vscode confused
-    key,
-    "=",
-    value,
-  )
-
 export const createUser = (user: DB["User"]) =>
-  insertValuesInto("User", user)
+  insertValuesInto(db, "User", user)
     .executeTakeFirstOrThrow()
     .then(() =>
-      selectTableBy("User", "email", user.email).executeTakeFirstOrThrow(),
+      selectTableBy(db, "User", "email", user.email).executeTakeFirstOrThrow(),
     )
 
 export const getUserBy = <
@@ -52,7 +27,7 @@ export const getUserBy = <
 >(
   key: Key,
   value: Value,
-) => selectTableBy("User", key, value).executeTakeFirst()
+) => selectTableBy(db, "User", key, value).executeTakeFirst()
 
 export const updateUser = (user: Partial<DB["User"]>) => {
   const { id, ...userData } = user
@@ -65,14 +40,14 @@ export const updateUser = (user: Partial<DB["User"]>) => {
 
   return query
     .executeTakeFirstOrThrow()
-    .then(() => selectTableBy("User", "id", id).executeTakeFirstOrThrow())
+    .then(() => selectTableBy(db, "User", "id", id).executeTakeFirstOrThrow())
 }
 
 export const deleteUser = (id: DB["User"]["id"]) =>
   db.deleteFrom("User").where("User.id", "=", id).execute()
 
 export const linkAccount = (account: DB["Account"]) =>
-  insertValuesInto("Account", account).executeTakeFirstOrThrow()
+  insertValuesInto(db, "Account", account).executeTakeFirstOrThrow()
 
 type ProviderAccountID = Parameters<Adapter["getUserByAccount"]>[0]
 
@@ -116,13 +91,14 @@ export const getSessionAndUser = (
 
 const getSession = (sessionToken: DB["Session"]["sessionToken"]) =>
   selectTableBy(
+    db,
     "Session",
     "sessionToken",
     sessionToken,
   ).executeTakeFirstOrThrow()
 
 export const createSession = (session: Omit<DB["Session"], "id">) =>
-  insertValuesInto("Session", session)
+  insertValuesInto(db, "Session", session)
     .executeTakeFirstOrThrow()
     .then(() => getSession(session.sessionToken))
 
