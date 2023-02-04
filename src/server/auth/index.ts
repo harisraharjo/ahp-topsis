@@ -20,14 +20,13 @@ export function redirectIfUnauthorized(): void {
 }
 
 export const authOptions: NextAuthOptions = {
-  // Include user.id on session
   callbacks: {
     // TODO: Add Signin callback to only allow a set of emails only
-    session({ session, user: _ }) {
+    session({ session, user }) {
       console.log("Retrieving Session...")
       if (session.user) {
         isAuthorized = true
-        // session.user.id = user.id
+        session.user.id = user.id
       } else {
         isAuthorized = false
       }

@@ -10,6 +10,17 @@ const config = {
 
 export const db = new Kysely<DB>({
   dialect: new PlanetScaleDialect(config),
+  log(event) {
+    if (event.level === "query") {
+      console.log("=== QUERY ===")
+      console.log(event.query)
+    }
+
+    if (event.level === "error") {
+      console.log("=== ERROR ===")
+      console.log(event.error)
+    }
+  },
 })
 
 export type KyselyDB = typeof db

@@ -92,10 +92,20 @@ export function KyselyPlanetscaleAdapter(): Adapter {
     linkAccount: linkAccount as unknown as Adapter["linkAccount"],
     unlinkAccount: unlinkAccount as unknown as Adapter["unlinkAccount"],
     createSession: createSession,
-    getSessionAndUser: async (sessionToken) =>
-      ((await getSessionAndUser(sessionToken)) ?? null) as ReturnType<
-        Adapter["getSessionAndUser"]
-      >,
+    getSessionAndUser: (sessionToken) =>
+      getSessionAndUser(sessionToken).then((result) => {
+        if (!result) return null
+        const { sessionId, userId, expires, sessionToken, ...user } = result
+        return {
+          session: {
+            expires,
+            id: sessionId,
+            userId,
+            sessionToken,
+          },
+          user,
+        }
+      }) as ReturnType<Adapter["getSessionAndUser"]>,
     updateSession,
     deleteSession: deleteSession as unknown as Adapter["deleteSession"],
   }
