@@ -1,12 +1,15 @@
-import type { ReactElement, SVGProps } from "react"
+import type { ComponentPropsWithRef, ReactElement } from "react"
+import { forwardRef } from "react"
 
-type SvgProps = Omit<SVGProps<SVGSVGElement>, "id" | "children"> & {
+type SvgProps = Omit<ComponentPropsWithRef<"svg">, "id" | "children"> & {
   children: ReactElement<SVGUseElement>
 }
-export const Svg = ({ children, ...props }: SvgProps) => {
-  return (
-    <svg {...props}>
+export const Svg = forwardRef<SVGSVGElement, SvgProps>(
+  ({ children, ...props }, ref) => (
+    <svg ref={ref} {...props}>
       <>{children}</>
     </svg>
-  )
-}
+  ),
+)
+
+Svg.displayName = "SvgComponent"

@@ -1,14 +1,11 @@
+"use client"
+
 import { useRef, useState } from "react"
 import type { ReactNode, PropsWithChildren } from "react"
-import {
-  SidebarBody,
-  SidebarContainer,
-  SidebarContextProvider,
-} from "./Sidebar"
-import { Navbar } from "./Navbar"
+import { SidebarContainer, SidebarContextProvider } from "./Sidebar"
 
 type NavigationProps = PropsWithChildren<{ navbar: ReactNode }>
-const Container = ({ children, navbar }: NavigationProps) => {
+export const Container = ({ children, navbar }: NavigationProps) => {
   const [isOpen, handler] = useState(false)
   const handlerRef = useRef<HTMLButtonElement | null>(null)
 
@@ -25,13 +22,5 @@ const Container = ({ children, navbar }: NavigationProps) => {
         {children}
       </SidebarContainer>
     </>
-  )
-}
-
-export const Navigation = () => {
-  return (
-    <Container navbar={<Navbar />}>
-      <SidebarBody />
-    </Container>
   )
 }
