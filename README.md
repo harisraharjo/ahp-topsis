@@ -14,7 +14,7 @@ To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the fo
 - Database
 
   1\. Create Model and schema with Prisma\
-  2\. Push/migrate to planetscale\
+  2\. Push (don't use migrate!, yet) to planetscale\
   3\. Import type to typescript with `db:type`
 
 # Important Resources
@@ -26,7 +26,5 @@ To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the fo
 
 # TODO
 
-- Simpan data auth ke planetscale
 - Workaround TRPC. atau mungkin di remove aja(?)
-- remove prisma (?)
 - Ganti OAuth discord ke Google

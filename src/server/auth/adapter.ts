@@ -1,6 +1,7 @@
 import type { DB } from "../db"
 
-import type { Awaitable } from "next-auth"
+import type { Awaitable as NextAuthAwaitable } from "next-auth"
+
 import {
   createSession,
   createUser,
@@ -15,37 +16,42 @@ import {
   updateUser,
 } from "../db/query"
 
+export type AdapterKeyFunctionParameter<Key extends keyof Adapter> = Parameters<
+  // @ts-expect-error -> I don't know why but it works?
+  Adapter[Key]
+>
+
 export interface Adapter {
-  createUser: (user: DB["User"]) => Awaitable<DB["User"]>
-  getUser: (id: string) => Awaitable<DB["User"] | null>
-  getUserByEmail: (email: string) => Awaitable<DB["User"] | null>
+  createUser: (user: DB["User"]) => NextAuthAwaitable<DB["User"]>
+  getUser: (id: string) => NextAuthAwaitable<DB["User"] | null>
+  getUserByEmail: (email: string) => NextAuthAwaitable<DB["User"] | null>
   /** Using the provider id and the id of the user for a specific account, get the user. */
   getUserByAccount: (
     providerAccountId: Pick<DB["Account"], "provider" | "providerAccountId">,
-  ) => Awaitable<DB["User"] | null>
-  updateUser: (user: Partial<DB["User"]>) => Awaitable<DB["User"]>
+  ) => NextAuthAwaitable<DB["User"] | null>
+  updateUser: (user: Partial<DB["User"]>) => NextAuthAwaitable<DB["User"]>
   deleteUser?: (
     userId: string,
-  ) => Promise<void> | Awaitable<DB["User"] | null | undefined>
+  ) => Promise<void> | NextAuthAwaitable<DB["User"] | null | undefined>
   linkAccount: (
     account: DB["Account"],
-  ) => Promise<void> | Awaitable<DB["Account"] | null | undefined>
+  ) => Promise<void> | NextAuthAwaitable<DB["Account"] | null | undefined>
   unlinkAccount?: (
     providerAccountId: Pick<DB["Account"], "provider" | "providerAccountId">,
-  ) => Promise<void> | Awaitable<DB["Account"] | undefined>
+  ) => Promise<void> | NextAuthAwaitable<DB["Account"] | undefined>
   /** Creates a session for the user and returns it. */
   createSession: (session: {
     sessionToken: string
     userId: string
     expires: Date
-  }) => Awaitable<DB["Session"]>
-  getSessionAndUser: (sessionToken: string) => Awaitable<{
+  }) => NextAuthAwaitable<DB["Session"]>
+  getSessionAndUser: (sessionToken: string) => NextAuthAwaitable<{
     session: DB["Session"]
     user: DB["User"]
   } | null>
   updateSession: (
     session: Partial<DB["Session"]> & Pick<DB["Session"], "sessionToken">,
-  ) => Awaitable<DB["Session"] | null | undefined>
+  ) => NextAuthAwaitable<DB["Session"] | null | undefined>
   /**
    * Deletes a session from the database.
    * It is preferred that this method also returns the session
@@ -53,10 +59,10 @@ export interface Adapter {
    */
   deleteSession: (
     sessionToken: string,
-  ) => Promise<void> | Awaitable<DB["Session"] | null | undefined>
+  ) => Promise<void> | NextAuthAwaitable<DB["Session"] | null | undefined>
   //   createVerificationToken?: (
   //     verificationToken: DB["VerificationToken"],
-  //   ) => Awaitable<DB["VerificationToken"] | null | undefined>
+  //   ) => NextAuthAwaitable<DB["VerificationToken"] | null | undefined>
   //   /**
   //    * Return verification token from the database
   //    * and delete it so it cannot be used again.
@@ -64,44 +70,66 @@ export interface Adapter {
   //   useVerificationToken?: (params: {
   //     identifier: string
   //     token: string
-  //   }) => Awaitable<DB["VerificationToken"] | null>
+  //   }) => NextAuthAwaitable<DB["VerificationToken"] | null>
 }
 
 export function KyselyPlanetscaleAdapter(): Adapter {
   return {
     createUser: createUser as unknown as Adapter["createUser"],
-    getUser: async (id) =>
-      ((await getUserBy("id", id)) ?? null) as ReturnType<
-        Adapter["getUserByAccount"]
-      >,
-    getUserByEmail: async (email) =>
-      ((await getUserBy("email", email)) ?? null) as ReturnType<
-        Adapter["getUserByEmail"]
-      >,
-    getUserByAccount: async (providerAccountID) =>
-      ((await getUserByAccount(providerAccountID)) ?? null) as ReturnType<
-        Adapter["getUserByAccount"]
-      >,
+    getUser: awaitedOrNull(getUserBy, "id") as Adapter["getUser"],
+    getUserByEmail: awaitedOrNull(
+      getUserBy,
+      "email",
+    ) as Adapter["getUserByEmail"],
+    getUserByAccount: awaitedOrNull(
+      getUserByAccount,
+    ) as Adapter["getUserByAccount"],
     updateUser: updateUser as unknown as Adapter["updateUser"],
     deleteUser: deleteUser as unknown as Adapter["deleteUser"],
     linkAccount: linkAccount as unknown as Adapter["linkAccount"],
     unlinkAccount: unlinkAccount as unknown as Adapter["unlinkAccount"],
     createSession: createSession,
     getSessionAndUser: (sessionToken) =>
-      getSessionAndUser(sessionToken).then((result) => {
-        if (!result) return null
-        const { sessionId, userId, expires, sessionToken, ...user } = result
-        return {
-          session: {
-            expires,
-            id: sessionId,
-            userId,
-            sessionToken,
-          },
-          user,
-        }
-      }) as ReturnType<Adapter["getSessionAndUser"]>,
+      getSessionAndUser(sessionToken).then(
+        constructSessionAndUser,
+      ) as ReturnType<Adapter["getSessionAndUser"]>,
+
     updateSession,
     deleteSession: deleteSession as unknown as Adapter["deleteSession"],
+  }
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type UndefinedPromiselikeFn = (...args: any) => PromiseLike<unknown | undefined>
+/**
+ *
+ * @param fn To return null value if the end result is undefined
+ * @param props Takes a PromiseLike function that is possible to have undefined value
+ * @returns Return a function that takes args from the adapter and the passed in function
+ */
+const awaitedOrNull =
+  <T extends UndefinedPromiselikeFn>(fn: T, props?: Parameters<T>[1]) =>
+  (arg: unknown) =>
+    fn(arg, props).then((r) => r ?? null)
+
+/**
+ *
+ * @param result Takes the awaited result from getSessionAndUser functioni
+ * @returns Either an object with Session and User as keys or null
+ */
+const constructSessionAndUser = (
+  result: Awaited<ReturnType<typeof getSessionAndUser>>,
+) => {
+  if (!result) return null
+
+  const { sessionId, userId, expires, sessionToken, ...user } = result
+  return {
+    session: {
+      id: sessionId,
+      sessionToken,
+      userId,
+      expires,
+    },
+    user,
   }
 }

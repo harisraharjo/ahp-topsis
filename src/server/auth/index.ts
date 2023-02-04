@@ -15,9 +15,7 @@ export type { Adapter } from "./adapter"
 let isAuthorized = false
 
 // ONLY FOR PAGE/Layout (SERVER COMPONENT)
-export function redirectIfUnauthorized(): void {
-  if (!isAuthorized) return redirect("/signin")
-}
+export const redirectIfUnauthorized = () => !isAuthorized && redirect("/signin")
 
 export const authOptions: NextAuthOptions = {
   callbacks: {
@@ -35,7 +33,6 @@ export const authOptions: NextAuthOptions = {
     },
   },
   adapter: KyselyPlanetscaleAdapter() as unknown as NextAuthAdapter<false>,
-  // Configure one or more authentication providers
   providers: [
     // GoogleProvider(),
     DiscordProvider({

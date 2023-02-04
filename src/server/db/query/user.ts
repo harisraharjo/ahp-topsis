@@ -1,7 +1,7 @@
 import type { DB } from "../types"
 import { db } from "../config"
 import type { UpdateObject } from "kysely"
-import { type Adapter } from "@server/auth/adapter"
+import { type AdapterKeyFunctionParameter } from "@server/auth/adapter"
 import { insertValuesInto, selectTableBy } from "./utils"
 
 // const filter<T extends keyof DB, Key extends keyof DB[T]>(
@@ -25,8 +25,8 @@ export const getUserBy = <
   Key extends keyof DB["User"],
   Value extends DB["User"][Key],
 >(
-  key: Key,
   value: Value,
+  key: Key,
 ) => selectTableBy(db, "User", key, value).executeTakeFirst()
 
 export const updateUser = (user: Partial<DB["User"]>) => {
@@ -49,7 +49,7 @@ export const deleteUser = (id: DB["User"]["id"]) =>
 export const linkAccount = (account: DB["Account"]) =>
   insertValuesInto(db, "Account", account).executeTakeFirstOrThrow()
 
-type ProviderAccountID = Parameters<Adapter["getUserByAccount"]>[0]
+type ProviderAccountID = AdapterKeyFunctionParameter<"getUserByAccount">[0]
 
 export const unlinkAccount = ({
   providerAccountId,
@@ -103,7 +103,7 @@ export const createSession = (session: Omit<DB["Session"], "id">) =>
     .then(() => getSession(session.sessionToken))
 
 export const updateSession = (
-  session: Parameters<Adapter["updateSession"]>[0],
+  session: AdapterKeyFunctionParameter<"updateSession">[0],
 ) =>
   db
     .updateTable("Session")

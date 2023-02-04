@@ -23,7 +23,7 @@ export const selectTableBy = <
   value: V,
 ) =>
   db.selectFrom(table).selectAll().where(
-    // @ts-expect-error kysely uses const overload which makes vscode confused
+    // @ts-expect-error -> kysely uses function overload which confused vscode
     key,
     "=",
     value,
