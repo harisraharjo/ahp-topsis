@@ -15,11 +15,12 @@ datasource db {
     relationMode = "prisma"
 }
 
-model Example {
-    id        String   @id @default(cuid())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @default(now())
-    score     Decimal
+model Criteria {
+    id       Int     @id @default(autoincrement()) @db.UnsignedSmallInt()
+    name     String
+    weight   Decimal @db.Decimal(8, 5)
+    scale    Json? // example: {value: ["A", "b", "c","D"]}
+    parentId Int?
 }
 
 // <-- NEXT AUTH -->
@@ -42,9 +43,9 @@ model Account {
     session_state            String?
     oauth_token_secret       String?
     oauth_token              String?
-    user                     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
     @@unique([provider, providerAccountId])
+    @@index([userId])
 }
 
 model Session {
@@ -52,7 +53,8 @@ model Session {
     sessionToken String   @unique
     userId       String
     expires      DateTime
-    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@index([userId])
 }
 
 enum Role {
@@ -70,8 +72,6 @@ model User {
     emailVerified DateTime?
     image         String?
     role          Role?     @default(USER)
-    accounts      Account[]
-    sessions      Session[]
 }
 
 model VerificationToken {

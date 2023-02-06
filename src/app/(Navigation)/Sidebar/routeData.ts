@@ -17,4 +17,10 @@ export const PATHS: readonly PATH[] = [
     href: "/entries",
     slug: "entries",
   },
-]
+  {
+    title: "Criteria",
+    // icon: <StatusIcon />,
+    href: "/criteria",
+    slug: "criteria",
+  },
+] as const

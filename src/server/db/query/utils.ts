@@ -1,16 +1,25 @@
-import type { InsertObject } from "kysely"
+import type { InsertObject, UpdateObject } from "kysely"
 import type { KyselyPlanetscaleDB } from "../config"
 import type { DB } from "../types"
 import { createId as createCUID } from "@paralleldrive/cuid2"
 
-export const insertValuesInto = <T extends keyof DB>(
+export type SetObjectAt<
+  TB extends keyof DB,
+  UT extends keyof DB = TB,
+> = UpdateObject<DB, TB, UT>
+
+export const appendID = <
+  T extends keyof DB,
+  V extends DB[T] | Omit<DB[T], "id">,
+>(
+  values: V,
+) => ({ ...values, id: createCUID() })
+
+export const insertValuesInto = <T extends keyof DB, V extends DB[T]>(
   db: KyselyPlanetscaleDB,
   table: T,
-  values: DB[T] | Omit<DB[T], "id">,
-) =>
-  db
-    .insertInto(table)
-    .values({ ...values, id: createCUID() } as InsertObject<DB, T>)
+  values: V,
+) => db.insertInto(table).values(values as InsertObject<DB, T>)
 
 export const selectTableBy = <
   T extends keyof DB,

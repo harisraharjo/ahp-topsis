@@ -17,7 +17,7 @@ import {
 } from "../db/query"
 
 export type AdapterKeyFunctionParameter<Key extends keyof Adapter> = Parameters<
-  // @ts-expect-error -> I don't know why but it works?
+  // @ts-expect-error -> it _should_ works?
   Adapter[Key]
 >
 
@@ -101,6 +101,7 @@ export function KyselyPlanetscaleAdapter(): Adapter {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type UndefinedPromiselikeFn = (...args: any) => PromiseLike<unknown | undefined>
+
 /**
  *
  * @param fn To return null value if the end result is undefined
@@ -108,9 +109,14 @@ type UndefinedPromiselikeFn = (...args: any) => PromiseLike<unknown | undefined>
  * @returns Return a function that takes args from the adapter and the passed in function
  */
 const awaitedOrNull =
-  <T extends UndefinedPromiselikeFn>(fn: T, props?: Parameters<T>[1]) =>
-  (arg: unknown) =>
-    fn(arg, props).then((r) => r ?? null)
+  <T extends UndefinedPromiselikeFn, Props extends Parameters<T>[1]>(
+    fn: T,
+    props?: Props,
+  ) =>
+  (arg: unknown) => {
+    console.log("Awaited or null ->", fn.name)
+    return fn(arg, props).then((r) => r ?? null)
+  }
 
 /**
  *

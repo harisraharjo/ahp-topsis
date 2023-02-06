@@ -6,6 +6,18 @@ export type Generated<T> = T extends ColumnType<infer S, infer I, infer U>
   ? ColumnType<S, I | undefined, U>
   : ColumnType<T, T | undefined, T>;
 
+export type Json = ColumnType<JsonValue, string, string>;
+
+export type JsonArray = JsonValue[];
+
+export type JsonObject = {
+  [K in string]?: JsonValue;
+};
+
+export type JsonPrimitive = boolean | null | number | string;
+
+export type JsonValue = JsonArray | JsonObject | JsonPrimitive;
+
 export interface Account {
   id: string;
   createdAt: Generated<Date>;
@@ -26,11 +38,12 @@ export interface Account {
   oauth_token: string | null;
 }
 
-export interface Example {
-  id: string;
-  createdAt: Generated<Date>;
-  updatedAt: Generated<Date>;
-  score: Decimal;
+export interface Criteria {
+  id: Generated<number>;
+  name: string;
+  weight: Decimal;
+  scale: Json | null;
+  parentId: number | null;
 }
 
 export interface Session {
@@ -60,7 +73,7 @@ export interface VerificationToken {
 
 export interface DB {
   Account: Account;
-  Example: Example;
+  Criteria: Criteria;
   Session: Session;
   User: User;
   VerificationToken: VerificationToken;

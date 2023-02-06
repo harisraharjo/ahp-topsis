@@ -33,7 +33,7 @@
       "@styles": ["src/styles"],
       "@test/*": ["test/*"],
       "@test": ["test"],
-      "@typings": ["src/types"],
+      "@customTypes": ["src/types"],
       "@utils/*": ["src/utils/*"],
       "@utils": ["src/utils"]
     },
