@@ -1,15 +1,15 @@
-import type { Criteria } from "../types"
 import { insertValuesInto, selectTableBy } from "./utils"
 import { db } from "../config"
+import type { QueryValues } from "../utils"
 
-export const createCriteria = (criteria: Criteria) =>
+export const createCriteria = (criteria: QueryValues<"Criteria", "insert">) =>
   insertValuesInto(db, "Criteria", criteria)
     .executeTakeFirstOrThrow()
-    .then(() =>
+    .then((r) =>
       selectTableBy(
         db,
         "Criteria",
         "id",
-        criteria.id,
+        r.insertId as unknown as number,
       ).executeTakeFirstOrThrow(),
     )

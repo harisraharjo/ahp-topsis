@@ -2,6 +2,7 @@ import type { InsertObject, UpdateObject } from "kysely"
 import type { KyselyPlanetscaleDB } from "../config"
 import type { DB } from "../types"
 import { createId as createCUID } from "@paralleldrive/cuid2"
+import type { DestructureQueryValue, QueryValues } from "../utils"
 
 export type SetObjectAt<
   TB extends keyof DB,
@@ -15,7 +16,10 @@ export const appendID = <
   values: V,
 ) => ({ ...values, id: createCUID() })
 
-export const insertValuesInto = <T extends keyof DB, V extends DB[T]>(
+export const insertValuesInto = <
+  T extends keyof DB,
+  V extends QueryValues<T, "insert">,
+>(
   db: KyselyPlanetscaleDB,
   table: T,
   values: V,
@@ -24,7 +28,7 @@ export const insertValuesInto = <T extends keyof DB, V extends DB[T]>(
 export const selectTableBy = <
   T extends keyof DB,
   Key extends keyof DB[T],
-  V extends DB[T][Key],
+  V extends DestructureQueryValue<T, Key, "select">,
 >(
   db: KyselyPlanetscaleDB,
   table: T,

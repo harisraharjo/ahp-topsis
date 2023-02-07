@@ -1,10 +1,11 @@
-import type { Account, Session, User } from "../types"
+import type { Session, User } from "../types"
 import { db } from "../config"
 
 import { type AdapterKeyFunctionParameter } from "@server/auth/adapter"
 import type { SetObjectAt } from "./utils"
 import { appendID } from "./utils"
 import { insertValuesInto, selectTableBy } from "./utils"
+import type { DestructureQueryValue, QueryValues } from "../utils"
 
 // const filter<T extends keyof DB, Key extends keyof DB[T]>(
 //   table: T,
@@ -16,7 +17,7 @@ import { insertValuesInto, selectTableBy } from "./utils"
 //     .where()
 // }
 
-export const createUser = (user: User) => {
+export const createUser = (user: QueryValues<"User", "insert">) => {
   return insertValuesInto(db, "User", appendID(user))
     .executeTakeFirstOrThrow()
     .then(() =>
@@ -24,7 +25,10 @@ export const createUser = (user: User) => {
     )
 }
 
-export const getUserBy = <Key extends keyof User, Value extends User[Key]>(
+export const getUserBy = <
+  Key extends keyof User,
+  Value extends DestructureQueryValue<"User", Key, "select">,
+>(
   value: Value,
   key: Key,
 ) => selectTableBy(db, "User", key, value).executeTakeFirst()
@@ -46,7 +50,7 @@ export const updateUser = (user: Partial<User>) => {
 export const deleteUser = (id: User["id"]) =>
   db.deleteFrom("User").where("User.id", "=", id).execute()
 
-export const linkAccount = (account: Account) =>
+export const linkAccount = (account: QueryValues<"Account", "insert">) =>
   insertValuesInto(db, "Account", appendID(account)).executeTakeFirstOrThrow()
 
 type ProviderAccountID = AdapterKeyFunctionParameter<"getUserByAccount">[0]
