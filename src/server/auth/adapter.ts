@@ -89,15 +89,16 @@ export function KyselyPlanetscaleAdapter(): Adapter {
     linkAccount: linkAccount as unknown as Adapter["linkAccount"],
     unlinkAccount: unlinkAccount as unknown as Adapter["unlinkAccount"],
     createSession: createSession,
-    getSessionAndUser: (sessionToken) =>
-      getSessionAndUser(sessionToken).then(
-        constructSessionAndUser,
-      ) as ReturnType<Adapter["getSessionAndUser"]>,
-
+    getSessionAndUser: sessionAndUser,
     updateSession,
     deleteSession: deleteSession as unknown as Adapter["deleteSession"],
   }
 }
+
+const sessionAndUser = (sessionToken: DB["Session"]["sessionToken"]) =>
+  getSessionAndUser(sessionToken).then(constructSessionAndUser) as ReturnType<
+    Adapter["getSessionAndUser"]
+  >
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type UndefinedPromiselikeFn = (...args: any) => PromiseLike<unknown | undefined>

@@ -1,10 +1,13 @@
-import { AddCriteria } from "./AddCriteria"
+// import { AddCriteria } from "./AddCriteria"
 
-export default function Layout() {
+import type { ReactNode } from "react"
+
+export default function Layout({ children }: { children: ReactNode }) {
   return (
     <div>
-      <AddCriteria />
+      {/* <AddCriteria /> */}
       Criterias
+      {children}
     </div>
   )
 }

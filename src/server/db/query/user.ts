@@ -1,11 +1,14 @@
 import type { Session, User } from "../types"
 import { db } from "../config"
 
-import { type AdapterKeyFunctionParameter } from "@server/auth/adapter"
-import type { SetObjectAt } from "./utils"
-import { appendID } from "./utils"
+import { appendID, updateTableBy } from "./utils"
 import { insertValuesInto, selectTableBy } from "./utils"
-import type { DestructureQueryValue, QueryValues } from "../utils"
+import type {
+  DestructureQueryValue,
+  QueryValues,
+  RawQueryValue,
+} from "../utils"
+import type { AdapterKeyFunctionParameter } from "@server/auth/adapter"
 
 // const filter<T extends keyof DB, Key extends keyof DB[T]>(
 //   table: T,
@@ -33,14 +36,11 @@ export const getUserBy = <
   key: Key,
 ) => selectTableBy(db, "User", key, value).executeTakeFirst()
 
-export const updateUser = (user: Partial<User>) => {
+export const updateUser = (user: QueryValues<"User", "update">) => {
   const { id, ...userData } = user
   if (!id) throw new Error("User not found")
 
-  const query = db
-    .updateTable("User")
-    .set(userData as SetObjectAt<"User">)
-    .where("id", "=", id)
+  const query = updateTableBy(db, "User", "id", userData)
 
   return query
     .executeTakeFirstOrThrow()
@@ -53,8 +53,10 @@ export const deleteUser = (id: User["id"]) =>
 export const linkAccount = (account: QueryValues<"Account", "insert">) =>
   insertValuesInto(db, "Account", appendID(account)).executeTakeFirstOrThrow()
 
-type ProviderAccountID = AdapterKeyFunctionParameter<"getUserByAccount">[0]
-
+type ProviderAccountID = Pick<
+  RawQueryValue<"Account">,
+  "provider" | "providerAccountId"
+>
 export const unlinkAccount = ({
   providerAccountId,
   provider,
@@ -91,7 +93,7 @@ export const getSessionAndUser = (sessionToken: Session["sessionToken"]) =>
     .where("Session.sessionToken", "=", sessionToken)
     .executeTakeFirst()
 
-const getSession = (sessionToken: Session["sessionToken"]) =>
+const getSession = (sessionToken: Session["sessionToken"]) => () =>
   selectTableBy(
     db,
     "Session",
@@ -102,17 +104,14 @@ const getSession = (sessionToken: Session["sessionToken"]) =>
 export const createSession = (session: Omit<Session, "id">) =>
   insertValuesInto(db, "Session", appendID(session))
     .executeTakeFirstOrThrow()
-    .then(() => getSession(session.sessionToken))
+    .then(getSession(session.sessionToken))
 
 export const updateSession = (
   session: AdapterKeyFunctionParameter<"updateSession">[0],
 ) =>
-  db
-    .updateTable("Session")
-    .set(session)
-    .where("Session.sessionToken", "=", session.sessionToken)
+  updateTableBy(db, "Session", "sessionToken", session)
     .executeTakeFirstOrThrow()
-    .then(() => getSession(session.sessionToken))
+    .then(getSession(session.sessionToken))
 
 export const deleteSession = (sessionToken: Session["sessionToken"]) =>
   db

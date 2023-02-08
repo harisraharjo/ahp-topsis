@@ -15,7 +15,9 @@ export type { Adapter } from "./adapter"
 let isAuthorized = false
 
 // ONLY FOR PAGE/Layout (SERVER COMPONENT)
-export const redirectIfUnauthorized = () => !isAuthorized && redirect("/signin")
+export const redirectIfUnauthorized = () => {
+  !isAuthorized && redirect("/signin")
+}
 
 export const authOptions: NextAuthOptions = {
   callbacks: {
@@ -25,7 +27,9 @@ export const authOptions: NextAuthOptions = {
       if (session.user) {
         isAuthorized = true
         session.user.id = user.id
+        console.log("Ses:", isAuthorized)
       } else {
+        console.log("NOUSE:", session)
         isAuthorized = false
       }
 
@@ -43,5 +47,7 @@ export const authOptions: NextAuthOptions = {
 }
 
 export function getServerAuthSession() {
-  return getServerSession(authOptions)
+  return isAuthorized
+    ? Promise.resolve(isAuthorized)
+    : getServerSession(authOptions)
 }

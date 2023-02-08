@@ -1,13 +1,13 @@
 "use client"
 
-export const AddCriteria = () => {
+export const AddCriteria = ({ operation }: { operation: "Add" | "Delete" }) => {
   return (
     <button
       onClick={() => {
-        console.log("Add Criteria")
+        console.log(`${operation} Criteria`)
       }}
     >
-      Add
+      {operation}
     </button>
   )
 }

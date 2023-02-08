@@ -26,5 +26,6 @@ To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the fo
 
 # TODO
 
+- Use nextauth inside middleware?
 - Workaround TRPC. atau mungkin di remove aja(?)
 - Ganti OAuth discord ke Google
