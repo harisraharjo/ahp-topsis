@@ -38,8 +38,3 @@ export const authOptions: NextAuthOptions = {
 }
 
 export const getServerAuthSession = () => getServerSession(authOptions)
-
-// export const generateDate = () => {
-//   const date = new Date()
-//   return date.getUTCDate() + date.getUTCMonth() + date.getUTCFullYear()
-// }

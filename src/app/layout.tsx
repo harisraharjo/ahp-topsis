@@ -3,11 +3,11 @@ import type { ReactNode } from "react"
 import { Suspense } from "react"
 
 import "../styles/globals.css"
-import { generateDate, getServerAuthSession } from "@server/auth"
+import { getServerAuthSession } from "@server/auth"
 import Loading from "./loading"
 
 async function RootLayout({ children }: { children: ReactNode }) {
-  const session = getServerAuthSession(generateDate())
+  const session = getServerAuthSession()
 
   return (
     <html lang="en">
