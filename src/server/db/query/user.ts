@@ -36,15 +36,14 @@ export const getUserBy = <
   key: Key,
 ) => selectTableBy(db, "User", key, value).executeTakeFirst()
 
-export const updateUser = (user: QueryValues<"User", "update">) => {
-  const { id, ...userData } = user
-  if (!id) throw new Error("User not found")
-
-  const query = updateTableBy(db, "User", "id", userData)
+export const updateUser = (user: QueryValues<"User", "update", "id">) => {
+  const query = updateTableBy(db, "User", "id", user)
 
   return query
     .executeTakeFirstOrThrow()
-    .then(() => selectTableBy(db, "User", "id", id).executeTakeFirstOrThrow())
+    .then(() =>
+      selectTableBy(db, "User", "id", user.id).executeTakeFirstOrThrow(),
+    )
 }
 
 export const deleteUser = (id: User["id"]) =>

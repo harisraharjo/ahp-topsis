@@ -6,29 +6,30 @@ export const createCriteria = (criteria: QueryValues<"Criteria", "insert">) =>
   insertValuesInto(db, "Criteria", criteria)
     .executeTakeFirstOrThrow()
     .then((r) =>
-      selectTableBy(
-        db,
-        "Criteria",
-        "id",
-        r.insertId as unknown as number,
-      ).executeTakeFirst(),
+      r.insertId ? selectCriteria(r.insertId as unknown as number) : undefined,
     )
+
+export const selectCriteria = (
+  id: DestructureQueryValue<"Criteria", "id", "select">,
+) => selectTableBy(db, "Criteria", "id", id).executeTakeFirst()
 
 export const deleteCriteria = (
   id: DestructureQueryValue<"Criteria", "id", "update">,
 ) => db.deleteFrom("Criteria").where("Criteria.id", "=", id).execute()
 
 export const updateCriteria = (
-  criteria: Partial<QueryValues<"Criteria", "update">>,
+  criteria: QueryValues<"Criteria", "update", "id">,
 ) => {
-  const { id, ...criteriaData } = criteria
-  if (!id) throw new Error("Criteria not found")
-
-  const query = updateTableBy(db, "Criteria", "id", criteriaData)
+  const query = updateTableBy(db, "Criteria", "id", criteria)
 
   return query
     .executeTakeFirstOrThrow()
     .then(() =>
-      selectTableBy(db, "Criteria", "id", id).executeTakeFirstOrThrow(),
+      selectTableBy(
+        db,
+        "Criteria",
+        "id",
+        criteria.id,
+      ).executeTakeFirstOrThrow(),
     )
 }

@@ -20,16 +20,21 @@ export type DestructureQueryValue<
   : DB[Table][Key]
 
 export type RawQueryValue<
-  Table extends keyof DB,
+  Table extends Tables,
   Q extends QueryType = "select",
 > = {
   [K in keyof DB[Table]]: DestructureQueryValue<Table, K, Q>
 }
 
 export type QueryValues<
-  Table extends keyof DB,
+  Table extends Tables,
   Q extends QueryType,
+  Key extends keyof DB[Table] = never,
+  Value extends RawQueryValue<Table, Q> = RawQueryValue<Table, Q>,
 > = Q extends "update"
-  ? Partial<RawQueryValue<Table, Q>>
-  : Partial<RawQueryValue<Table, Q>> &
-      ExtractMandatoryKeys<RawQueryValue<Table, Q>>
+  ? Key extends never
+    ? never
+    : WithRequired<Partial<Value>, Key>
+  : Partial<Value> & ExtractMandatoryKeys<Value>
+
+type WithRequired<T, K extends keyof T> = T & { [P in K]-?: T[P] }

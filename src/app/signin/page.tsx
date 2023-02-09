@@ -3,8 +3,8 @@ import { redirect } from "next/navigation"
 import { SignIn } from "./handler"
 
 export default async function Page() {
-  const ses = await getServerAuthSession()
-  if (ses) redirect("/")
+  const session = await getServerAuthSession()
+  if (session) redirect("/")
 
   return (
     <div className="grid place-items-center">

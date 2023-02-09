@@ -9,28 +9,19 @@ import { env } from "@env/server.mjs"
 import type { Adapter as NextAuthAdapter } from "next-auth/adapters"
 import { KyselyPlanetscaleAdapter } from "./adapter"
 
-export type { Adapter } from "./adapter"
+export const redirectIfUnauthorized = async () => {
+  const session = await getServerAuthSession()
 
-//SINGLETON
-let isAuthorized = false
-
-// ONLY FOR PAGE/Layout (SERVER COMPONENT)
-export const redirectIfUnauthorized = () => {
-  !isAuthorized && redirect("/signin")
+  !session && redirect("/signin")
 }
 
 export const authOptions: NextAuthOptions = {
   callbacks: {
     // TODO: Add Signin callback to only allow a set of emails only
     session({ session, user }) {
-      console.log("Retrieving Session...")
+      console.log("Retrieving Session success...")
       if (session.user) {
-        isAuthorized = true
         session.user.id = user.id
-        console.log("Ses:", isAuthorized)
-      } else {
-        console.log("NOUSE:", session)
-        isAuthorized = false
       }
 
       return session
@@ -46,8 +37,9 @@ export const authOptions: NextAuthOptions = {
   ],
 }
 
-export function getServerAuthSession() {
-  return isAuthorized
-    ? Promise.resolve(isAuthorized)
-    : getServerSession(authOptions)
-}
+export const getServerAuthSession = () => getServerSession(authOptions)
+
+// export const generateDate = () => {
+//   const date = new Date()
+//   return date.getUTCDate() + date.getUTCMonth() + date.getUTCFullYear()
+// }

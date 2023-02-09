@@ -1,8 +1,8 @@
 import type { ReactNode } from "react"
 import { redirectIfUnauthorized } from "@server/auth"
 
-export default function Layout({ children }: { children: ReactNode }) {
-  redirectIfUnauthorized()
+export default async function Layout({ children }: { children: ReactNode }) {
+  await redirectIfUnauthorized()
 
   return (
     <div>

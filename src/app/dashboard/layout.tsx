@@ -1,8 +1,8 @@
 import type { ReactNode } from "react"
 import { redirectIfUnauthorized } from "@server/auth"
 
-function Layout({ children }: { children: ReactNode }) {
-  redirectIfUnauthorized()
+async function Layout({ children }: { children: ReactNode }) {
+  await redirectIfUnauthorized()
 
   return <div>Layout {children}</div>
 }
