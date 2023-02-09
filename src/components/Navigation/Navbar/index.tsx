@@ -1,6 +1,6 @@
 import { type PropsWithChildren, type ReactNode } from "react"
 import { SidebarHandler } from "../Sidebar"
-import { SignOut } from "../../signin/handler"
+import { SignOut } from "@components/SigninHandler"
 
 export type NavbarProps = PropsWithChildren<{ _?: ReactNode }>
 export const Navbar = ({}: NavbarProps) => {

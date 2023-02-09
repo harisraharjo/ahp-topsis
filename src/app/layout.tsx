@@ -1,10 +1,10 @@
-import { Navigation } from "./(Navigation)"
 import type { ReactNode } from "react"
 import { Suspense } from "react"
 
 import "../styles/globals.css"
 import { getServerAuthSession } from "@server/auth"
 import Loading from "./loading"
+import { Navigation } from "@components"
 
 async function RootLayout({ children }: { children: ReactNode }) {
   const session = getServerAuthSession()

@@ -1,7 +1,7 @@
 import Image from "next/image"
 import logo from "@public/logo-ct.png"
 
-import { PATHS } from "./routeData"
+import { PATHS } from "../routeData"
 import { SidebarItem } from "./Item"
 
 export const SidebarBody = () => (

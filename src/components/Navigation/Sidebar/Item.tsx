@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import type { PropsWithChildren } from "react"
-import type { PATH } from "./routeData"
+import type { PATH } from "../routeData"
 import { Svg } from "@components/Svg"
 // import DI from "../../../../public/DashboardIcon.svg"
 import { useSelectedLayoutSegment } from "next/navigation"
