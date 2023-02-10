@@ -10,6 +10,7 @@ import {
 import type { DestructureQueryValue, QueryValue, RawQueryValue } from "../utils"
 import type { AdapterKeyFunctionParameter } from "@server/auth/adapter"
 import type { InsertObject } from "kysely"
+import { cache } from "react"
 
 export const createUser = (user: InsertObject<DB, "User">) =>
   insertRows("User", appendID(user))
@@ -94,12 +95,12 @@ export const createSession = (session: Omit<Session, "id">) =>
     .executeTakeFirstOrThrow()
     .then(getSession(session.sessionToken))
 
-export const updateSession = (
-  session: AdapterKeyFunctionParameter<"updateSession">[0],
-) =>
-  updateRow("Session", "sessionToken", session)
-    .executeTakeFirstOrThrow()
-    .then(getSession(session.sessionToken))
+export const updateSession = cache(
+  (session: AdapterKeyFunctionParameter<"updateSession">[0]) =>
+    updateRow("Session", "sessionToken", session)
+      .executeTakeFirstOrThrow()
+      .then(getSession(session.sessionToken)),
+)
 
 export const deleteSession = (sessionToken: Session["sessionToken"]) =>
   deleteRows(

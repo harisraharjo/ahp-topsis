@@ -123,10 +123,8 @@ const awaitedOrNull =
     fn: T,
     props?: Props,
   ) =>
-  (arg: unknown) => {
-    console.log("Awaited or null ->", fn.name)
-    return fn(arg, props).then((r) => r ?? null)
-  }
+  (arg: unknown) =>
+    fn(arg, props).then((r) => r ?? null)
 
 /**
  *
@@ -138,10 +136,10 @@ const constructSessionAndUser = (
 ) => {
   if (!result) return null
 
-  const { sessionId, userId, expires, sessionToken, ...user } = result
+  const { sessionId: id, userId, expires, sessionToken, ...user } = result
   return {
     session: {
-      id: sessionId,
+      id,
       sessionToken,
       userId,
       expires,
