@@ -4,7 +4,7 @@ import {
   insertRows,
   selectRows,
   appendID,
-  updateTableBy,
+  updateRow,
   deleteRows,
 } from "./utils"
 import type { DestructureQueryValue, QueryValue, RawQueryValue } from "../utils"
@@ -28,7 +28,7 @@ export const getUserBy = <
 ) => selectRows("User", key, "=", value)
 
 export const updateUser = (user: QueryValue<"User", "update", "id">) => {
-  const query = updateTableBy("User", "id", user)
+  const query = updateRow("User", "id", user)
 
   return query
     .executeTakeFirstOrThrow()
@@ -97,7 +97,7 @@ export const createSession = (session: Omit<Session, "id">) =>
 export const updateSession = (
   session: AdapterKeyFunctionParameter<"updateSession">[0],
 ) =>
-  updateTableBy("Session", "sessionToken", session)
+  updateRow("Session", "sessionToken", session)
     .executeTakeFirstOrThrow()
     .then(getSession(session.sessionToken))
 

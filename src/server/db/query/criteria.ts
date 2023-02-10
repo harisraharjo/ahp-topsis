@@ -3,7 +3,7 @@ import {
   insertRows,
   selectAllFrom,
   selectRows,
-  updateTableBy,
+  updateRow,
 } from "./utils"
 
 import type { DestructureQueryValue, InsertValue, QueryValue } from "../utils"
@@ -27,4 +27,4 @@ export const deleteCriteria = (
 
 export const updateCriteria = (
   criteria: QueryValue<"Criteria", "update", "id">,
-) => updateTableBy("Criteria", "id", criteria)
+) => updateRow("Criteria", "id", criteria)

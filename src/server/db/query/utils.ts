@@ -52,7 +52,7 @@ export const selectRows = <
 //   value: V,
 // ) => sb.where(key as ReferenceExpression<DB, SelectedTable>, "=", value)
 
-export const updateTableBy = <
+export const updateRow = <
   T extends keyof DB,
   Key extends keyof DB[T],
   V extends QueryValue<T, "update", Key>,
