@@ -3,6 +3,7 @@
 import { Suspense } from "react"
 import { AddCriteria } from "./AddCriteria"
 import { Criterias } from "./Criterias"
+
 import Loading from "./loading"
 
 export default function Page() {
@@ -14,7 +15,6 @@ export default function Page() {
         <Criterias />
       </Suspense>
       <br />
-      <AddCriteria operation="Delete" />
     </div>
   )
 }
