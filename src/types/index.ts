@@ -12,6 +12,7 @@ export type ExtractMandatoryKeys<T> = {
   [K in keyof T as Exclude<K, undefined | null> extends T[K] ? K : never]: T[K]
 }
 
+export type WithRequired<T, K extends keyof T> = T & { [P in K]-?: T[P] }
 // export type BuildArrayMinLength<
 //   T,
 //   N extends number,

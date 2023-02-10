@@ -1,20 +1,21 @@
-import type { ExtractMandatoryKeys } from "@customTypes"
-import type { ColumnType } from "kysely"
+import type { ExtractMandatoryKeys, WithRequired } from "@customTypes"
+import type { ColumnType, InsertObject } from "kysely"
 import type { DB } from "./types"
 
-type QueryType = "select" | "insert" | "update"
+export type InsertValue<Table extends keyof DB> = InsertObject<DB, Table>
+
+type Modify = "update" | "delete"
+type QueryType = "select" | Modify
 type Tables = keyof DB
 // TODO: (VERY LOW) No autocomplete?
 export type DestructureQueryValue<
   Table extends Tables,
   Key extends keyof DB[Table],
   Q extends QueryType,
-> = DB[Table][Key] extends ColumnType<infer S, infer I, infer U>
+> = DB[Table][Key] extends ColumnType<infer S, unknown, infer U>
   ? Q extends "select"
     ? S
-    : Q extends "insert"
-    ? I
-    : Q extends "update"
+    : Q extends Modify
     ? U
     : never
   : DB[Table][Key]
@@ -26,15 +27,13 @@ export type RawQueryValue<
   [K in keyof DB[Table]]: DestructureQueryValue<Table, K, Q>
 }
 
-export type QueryValues<
+export type QueryValue<
   Table extends Tables,
   Q extends QueryType,
   Key extends keyof DB[Table] = never,
-  Value extends RawQueryValue<Table, Q> = RawQueryValue<Table, Q>,
-> = Q extends "update"
+  RawValue extends RawQueryValue<Table, Q> = RawQueryValue<Table, Q>,
+> = Q extends Modify
   ? Key extends never
     ? never
-    : WithRequired<Partial<Value>, Key>
-  : Partial<Value> & ExtractMandatoryKeys<Value>
-
-type WithRequired<T, K extends keyof T> = T & { [P in K]-?: T[P] }
+    : WithRequired<Partial<RawValue>, Key>
+  : Partial<RawValue> & ExtractMandatoryKeys<RawValue>

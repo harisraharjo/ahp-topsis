@@ -1,19 +1,23 @@
-import type { Session, User } from "../types"
+import type { DB, Session, User } from "../types"
 import { db } from "../config"
-
-import { appendID, updateTableBy } from "./utils"
-import { insertValuesInto, selectRowsBy } from "./utils"
-import type {
-  DestructureQueryValue,
-  QueryValues,
-  RawQueryValue,
-} from "../utils"
+import {
+  insertRows,
+  selectRows,
+  appendID,
+  updateTableBy,
+  deleteRows,
+} from "./utils"
+import type { DestructureQueryValue, QueryValue, RawQueryValue } from "../utils"
 import type { AdapterKeyFunctionParameter } from "@server/auth/adapter"
+import type { InsertObject } from "kysely"
 
-export const createUser = (user: QueryValues<"User", "insert">) =>
-  insertValuesInto("User", appendID(user))
+export const createUser = (user: InsertObject<DB, "User">) =>
+  insertRows("User", appendID(user))
     .executeTakeFirstOrThrow()
-    .then(() => getUserBy(user.email, "email").executeTakeFirstOrThrow())
+    .then(() =>
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      getUserBy(user.email as string, "email").executeTakeFirstOrThrow(),
+    )
 
 export const getUserBy = <
   Key extends keyof RawQueryValue<"User">,
@@ -21,23 +25,23 @@ export const getUserBy = <
 >(
   value: Value,
   key: Key,
-) => selectRowsBy("User", key, "=", value)
+) => selectRows("User", key, "=", value)
 
-export const updateUser = (user: QueryValues<"User", "update", "id">) => {
+export const updateUser = (user: QueryValue<"User", "update", "id">) => {
   const query = updateTableBy("User", "id", user)
 
   return query
     .executeTakeFirstOrThrow()
     .then(() =>
-      selectRowsBy("User", "id", "=", user.id).executeTakeFirstOrThrow(),
+      selectRows("User", "id", "=", user.id).executeTakeFirstOrThrow(),
     )
 }
 
 export const deleteUser = (id: User["id"]) =>
-  db.deleteFrom("User").where("User.id", "=", id).execute()
+  deleteRows("User", "id", "=", id).execute()
 
-export const linkAccount = (account: QueryValues<"Account", "insert">) =>
-  insertValuesInto("Account", appendID(account)).executeTakeFirstOrThrow()
+export const linkAccount = (account: InsertObject<DB, "Account">) =>
+  insertRows("Account", appendID(account)).executeTakeFirstOrThrow()
 
 type ProviderAccountID = Pick<
   RawQueryValue<"Account">,
@@ -47,10 +51,8 @@ export const unlinkAccount = ({
   providerAccountId,
   provider,
 }: ProviderAccountID) =>
-  db
-    .deleteFrom("Account")
-    .where("Account.providerAccountId", "=", providerAccountId)
-    .where("Account.provider", "=", provider)
+  deleteRows("Account", "providerAccountId", "=", providerAccountId)
+    .where("provider", "=", provider)
     .executeTakeFirstOrThrow()
 
 export const getUserByAccount = ({
@@ -80,7 +82,7 @@ export const getSessionAndUser = (sessionToken: Session["sessionToken"]) =>
     .executeTakeFirst()
 
 const getSession = (sessionToken: Session["sessionToken"]) => () =>
-  selectRowsBy(
+  selectRows(
     "Session",
     "sessionToken",
     "=",
@@ -88,7 +90,7 @@ const getSession = (sessionToken: Session["sessionToken"]) => () =>
   ).executeTakeFirstOrThrow()
 
 export const createSession = (session: Omit<Session, "id">) =>
-  insertValuesInto("Session", appendID(session))
+  insertRows("Session", appendID(session))
     .executeTakeFirstOrThrow()
     .then(getSession(session.sessionToken))
 
@@ -100,7 +102,9 @@ export const updateSession = (
     .then(getSession(session.sessionToken))
 
 export const deleteSession = (sessionToken: Session["sessionToken"]) =>
-  db
-    .deleteFrom("Session")
-    .where("Session.sessionToken", "=", sessionToken)
-    .executeTakeFirstOrThrow()
+  deleteRows(
+    "Session",
+    "sessionToken",
+    "=",
+    sessionToken,
+  ).executeTakeFirstOrThrow()
