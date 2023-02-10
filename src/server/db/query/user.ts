@@ -2,7 +2,7 @@ import type { Session, User } from "../types"
 import { db } from "../config"
 
 import { appendID, updateTableBy } from "./utils"
-import { insertValuesInto, selectTableBy } from "./utils"
+import { insertValuesInto, selectRowsBy } from "./utils"
 import type {
   DestructureQueryValue,
   QueryValues,
@@ -10,39 +10,26 @@ import type {
 } from "../utils"
 import type { AdapterKeyFunctionParameter } from "@server/auth/adapter"
 
-// const filter<T extends keyof DB, Key extends keyof DB[T]>(
-//   table: T,
-//   key: Key,
-// ) {
-//   return db
-//     .selectFrom(table)
-//     .selectAll()
-//     .where()
-// }
-
-export const createUser = (user: QueryValues<"User", "insert">) => {
-  return insertValuesInto(db, "User", appendID(user))
+export const createUser = (user: QueryValues<"User", "insert">) =>
+  insertValuesInto("User", appendID(user))
     .executeTakeFirstOrThrow()
-    .then(() =>
-      selectTableBy(db, "User", "email", user.email).executeTakeFirstOrThrow(),
-    )
-}
+    .then(() => getUserBy(user.email, "email").executeTakeFirstOrThrow())
 
 export const getUserBy = <
-  Key extends keyof User,
+  Key extends keyof RawQueryValue<"User">,
   Value extends DestructureQueryValue<"User", Key, "select">,
 >(
   value: Value,
   key: Key,
-) => selectTableBy(db, "User", key, value).executeTakeFirst()
+) => selectRowsBy("User", key, "=", value)
 
 export const updateUser = (user: QueryValues<"User", "update", "id">) => {
-  const query = updateTableBy(db, "User", "id", user)
+  const query = updateTableBy("User", "id", user)
 
   return query
     .executeTakeFirstOrThrow()
     .then(() =>
-      selectTableBy(db, "User", "id", user.id).executeTakeFirstOrThrow(),
+      selectRowsBy("User", "id", "=", user.id).executeTakeFirstOrThrow(),
     )
 }
 
@@ -50,7 +37,7 @@ export const deleteUser = (id: User["id"]) =>
   db.deleteFrom("User").where("User.id", "=", id).execute()
 
 export const linkAccount = (account: QueryValues<"Account", "insert">) =>
-  insertValuesInto(db, "Account", appendID(account)).executeTakeFirstOrThrow()
+  insertValuesInto("Account", appendID(account)).executeTakeFirstOrThrow()
 
 type ProviderAccountID = Pick<
   RawQueryValue<"Account">,
@@ -93,22 +80,22 @@ export const getSessionAndUser = (sessionToken: Session["sessionToken"]) =>
     .executeTakeFirst()
 
 const getSession = (sessionToken: Session["sessionToken"]) => () =>
-  selectTableBy(
-    db,
+  selectRowsBy(
     "Session",
     "sessionToken",
+    "=",
     sessionToken,
   ).executeTakeFirstOrThrow()
 
 export const createSession = (session: Omit<Session, "id">) =>
-  insertValuesInto(db, "Session", appendID(session))
+  insertValuesInto("Session", appendID(session))
     .executeTakeFirstOrThrow()
     .then(getSession(session.sessionToken))
 
 export const updateSession = (
   session: AdapterKeyFunctionParameter<"updateSession">[0],
 ) =>
-  updateTableBy(db, "Session", "sessionToken", session)
+  updateTableBy("Session", "sessionToken", session)
     .executeTakeFirstOrThrow()
     .then(getSession(session.sessionToken))
 

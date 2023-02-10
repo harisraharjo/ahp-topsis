@@ -15,6 +15,7 @@ import {
   updateSession,
   updateUser,
 } from "../db/query"
+import { DestructureQueryValue, RawQueryValue } from "@server/db/utils"
 
 export type AdapterKeyFunctionParameter<Key extends keyof Adapter> = Parameters<
   // @ts-expect-error -> it _should_ works?
@@ -73,12 +74,20 @@ export interface Adapter {
   //   }) => NextAuthAwaitable<DB["VerificationToken"] | null>
 }
 
+export const getUser = <
+  Key extends keyof RawQueryValue<"User">,
+  Value extends DestructureQueryValue<"User", Key, "select">,
+>(
+  value: Value,
+  key: Key,
+) => getUserBy(value, key).executeTakeFirst()
+
 export function KyselyPlanetscaleAdapter(): Adapter {
   return {
     createUser: createUser as unknown as Adapter["createUser"],
-    getUser: awaitedOrNull(getUserBy, "id") as Adapter["getUser"],
+    getUser: awaitedOrNull(getUser, "id") as Adapter["getUser"],
     getUserByEmail: awaitedOrNull(
-      getUserBy,
+      getUser,
       "email",
     ) as Adapter["getUserByEmail"],
     getUserByAccount: awaitedOrNull(

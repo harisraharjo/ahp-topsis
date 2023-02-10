@@ -1,14 +1,14 @@
 import {
   insertValuesInto,
-  selectAll,
-  selectTableBy,
+  selectAllFrom,
+  selectRowsBy,
   updateTableBy,
 } from "./utils"
 import { db } from "../config"
 import type { DestructureQueryValue, QueryValues } from "../utils"
 
 export const createCriteria = (criteria: QueryValues<"Criteria", "insert">) =>
-  insertValuesInto(db, "Criteria", criteria)
+  insertValuesInto("Criteria", criteria)
     .executeTakeFirstOrThrow()
     .then((r) =>
       r.insertId ? selectCriteria(r.insertId as unknown as number) : undefined,
@@ -16,9 +16,9 @@ export const createCriteria = (criteria: QueryValues<"Criteria", "insert">) =>
 
 export const selectCriteria = (
   id: DestructureQueryValue<"Criteria", "id", "select">,
-) => selectTableBy(db, "Criteria", "id", id)
+) => selectRowsBy("Criteria", "id", "=", id)
 
-export const selectAllCriteria = () => selectAll(db, "Criteria")
+export const selectAllCriteria = () => selectAllFrom("Criteria")
 
 export const deleteCriteria = (
   id: DestructureQueryValue<"Criteria", "id", "update">,
@@ -26,4 +26,4 @@ export const deleteCriteria = (
 
 export const updateCriteria = (
   criteria: QueryValues<"Criteria", "update", "id">,
-) => updateTableBy(db, "Criteria", "id", criteria)
+) => updateTableBy("Criteria", "id", criteria)
