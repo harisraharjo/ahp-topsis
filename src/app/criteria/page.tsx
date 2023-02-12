@@ -1,5 +1,3 @@
-// import { createCriteria } from "@server/db/query/criteria"
-
 import { Suspense } from "react"
 import { AddCriteria } from "./AddCriteria"
 import { Criterias } from "./Criterias"

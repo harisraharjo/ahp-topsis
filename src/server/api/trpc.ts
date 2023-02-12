@@ -47,14 +47,13 @@ const createInnerTRPCContext = (opts: CreateContextOptions) => {
  * process every request that goes through your tRPC endpoint
  * @link https://trpc.io/docs/context
  */
-export const createTRPCContext = async () => {
-  // const { req, res } = opts;
-
-  // Get the session from the server using the unstable_getServerSession wrapper function
-  const session = await getServerAuthSession()
+export const createTRPCContext = async (opts: any) => {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+  console.log("OPSIES:", Object.keys(opts))
+  const session = getServerAuthSession()
 
   return createInnerTRPCContext({
-    session,
+    session: await session,
   })
 }
 
