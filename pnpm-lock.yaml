@@ -3,14 +3,14 @@ lockfileVersion: 5.4
 specifiers:
   '@paralleldrive/cuid2': ^2.0.1
   '@planetscale/database': ^1.5.0
-  '@tanstack/react-query': ^4.24.4
+  '@tanstack/react-query': ^4.24.6
   '@trpc/client': ^10.11.0
   '@trpc/next': ^10.11.0
   '@trpc/react-query': ^10.11.0
   '@trpc/server': ^10.11.0
   '@types/node': ^18.13.0
   '@types/prettier': ^2.7.2
-  '@types/react': ^18.0.27
+  '@types/react': ^18.0.28
   '@types/react-dom': ^18.0.10
   '@typescript-eslint/eslint-plugin': ^5.51.0
   '@typescript-eslint/parser': ^5.51.0
@@ -42,10 +42,10 @@ specifiers:
 dependencies:
   '@paralleldrive/cuid2': 2.0.1
   '@planetscale/database': 1.5.0
-  '@tanstack/react-query': 4.24.4_biqbaboplfbrettd7655fr4n2y
+  '@tanstack/react-query': 4.24.6_biqbaboplfbrettd7655fr4n2y
   '@trpc/client': 10.11.0_@trpc+server@10.11.0
-  '@trpc/next': 10.11.0_rid2hrxunbm3ffp2k2uj3yfmiq
-  '@trpc/react-query': 10.11.0_cpeqqrckfgr33xypfmr4g7wgmq
+  '@trpc/next': 10.11.0_raz3qfxfki7hz5kltyatwmqliq
+  '@trpc/react-query': 10.11.0_dcakzkhtr7lfnhwqu5kskkvph4
   '@trpc/server': 10.11.0
   add: 2.0.6
   kysely: 0.23.4
@@ -56,13 +56,13 @@ dependencies:
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   superjson: 1.12.2
-  use-onclickoutside: 0.4.1_3stiutgnnbnfnf3uowm5cip22i
+  use-onclickoutside: 0.4.1_pmekkgnqduwlme35zpnqhenc34
   zod: 3.20.6
 
 devDependencies:
   '@types/node': 18.13.0
   '@types/prettier': 2.7.2
-  '@types/react': 18.0.27
+  '@types/react': 18.0.28
   '@types/react-dom': 18.0.10
   '@typescript-eslint/eslint-plugin': 5.51.0_z4swst3wuuqk4hlme4ajzslgh4
   '@typescript-eslint/parser': 5.51.0_7kw3g6rralp5ps6mg3uyzz6azm
@@ -379,12 +379,12 @@ packages:
       tslib: 2.5.0
     dev: false
 
-  /@tanstack/query-core/4.24.4:
-    resolution: {integrity: sha512-9dqjv9eeB6VHN7lD3cLo16ZAjfjCsdXetSAD5+VyKqLUvcKTL0CklGQRJu+bWzdrS69R6Ea4UZo8obHYZnG6aA==}
+  /@tanstack/query-core/4.24.6:
+    resolution: {integrity: sha512-Tfru6YTDTCpX7dKVwHp/sosw/dNjEdzrncduUjIkQxn7n7u+74HT2ZrGtwwrU6Orws4x7zp3FKRqBPWVVhpx9w==}
     dev: false
 
-  /@tanstack/react-query/4.24.4_biqbaboplfbrettd7655fr4n2y:
-    resolution: {integrity: sha512-RpaS/3T/a3pHuZJbIAzAYRu+1nkp+/enr9hfRXDS/mojwx567UiMksoqW4wUFWlwIvWTXyhot2nbIipTKEg55Q==}
+  /@tanstack/react-query/4.24.6_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-pbJUVZCS4pcXS0kZiY+mVJ01ude0GrH5OXT2g9whcqSveRG/YVup/XdA9NdRpSMGkP2HxDRxxRNsTXkniWeIIA==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
@@ -395,7 +395,7 @@ packages:
       react-native:
         optional: true
     dependencies:
-      '@tanstack/query-core': 4.24.4
+      '@tanstack/query-core': 4.24.6
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       use-sync-external-store: 1.2.0_react@18.2.0
@@ -409,7 +409,7 @@ packages:
       '@trpc/server': 10.11.0
     dev: false
 
-  /@trpc/next/10.11.0_rid2hrxunbm3ffp2k2uj3yfmiq:
+  /@trpc/next/10.11.0_raz3qfxfki7hz5kltyatwmqliq:
     resolution: {integrity: sha512-BOKqJw7hq/QFMzWaMxK9nhov0+DYdBJJ9fkPWvQZNz1f4hiGsgl0BHygFg2pd2xWzjz1bgdHh//NJT9l7wbLyA==}
     peerDependencies:
       '@tanstack/react-query': ^4.3.8
@@ -420,9 +420,9 @@ packages:
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
     dependencies:
-      '@tanstack/react-query': 4.24.4_biqbaboplfbrettd7655fr4n2y
+      '@tanstack/react-query': 4.24.6_biqbaboplfbrettd7655fr4n2y
       '@trpc/client': 10.11.0_@trpc+server@10.11.0
-      '@trpc/react-query': 10.11.0_cpeqqrckfgr33xypfmr4g7wgmq
+      '@trpc/react-query': 10.11.0_dcakzkhtr7lfnhwqu5kskkvph4
       '@trpc/server': 10.11.0
       next: 13.1.6_biqbaboplfbrettd7655fr4n2y
       react: 18.2.0
@@ -430,7 +430,7 @@ packages:
       react-ssr-prepass: 1.5.0_react@18.2.0
     dev: false
 
-  /@trpc/react-query/10.11.0_cpeqqrckfgr33xypfmr4g7wgmq:
+  /@trpc/react-query/10.11.0_dcakzkhtr7lfnhwqu5kskkvph4:
     resolution: {integrity: sha512-KsyjckHFa6uRC3nEZASJ5n44j090dQqDxdHgdxNDHS4Da7Hwq2fGgdfEAgERzGzp8RjH+qKpU/PD0/MYxHmNDQ==}
     peerDependencies:
       '@tanstack/react-query': ^4.3.8
@@ -439,7 +439,7 @@ packages:
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
     dependencies:
-      '@tanstack/react-query': 4.24.4_biqbaboplfbrettd7655fr4n2y
+      '@tanstack/react-query': 4.24.6_biqbaboplfbrettd7655fr4n2y
       '@trpc/client': 10.11.0_@trpc+server@10.11.0
       '@trpc/server': 10.11.0
       react: 18.2.0
@@ -472,11 +472,11 @@ packages:
   /@types/react-dom/18.0.10:
     resolution: {integrity: sha512-E42GW/JA4Qv15wQdqJq8DL4JhNpB3prJgjgapN3qJT9K2zO5IIAQh4VXvCEDupoqAwnz0cY4RlXeC/ajX5SFHg==}
     dependencies:
-      '@types/react': 18.0.27
+      '@types/react': 18.0.28
     dev: true
 
-  /@types/react/18.0.27:
-    resolution: {integrity: sha512-3vtRKHgVxu3Jp9t718R9BuzoD4NcQ8YJ5XRzsSKxNDiDonD2MXIT1TmSkenxuCycZJoQT5d2vE8LwWJxBC1gmA==}
+  /@types/react/18.0.28:
+    resolution: {integrity: sha512-RD0ivG1kEztNBdoAK7lekI9M+azSnitIn85h4iOiaLjaTrMjzslhaqCGaI4IyCJ1RljWiLCEu4jyrLLgqxBTew==}
     dependencies:
       '@types/prop-types': 15.7.5
       '@types/scheduler': 0.16.2
@@ -3889,7 +3889,7 @@ packages:
       unidecode: 0.1.8
     dev: true
 
-  /use-isomorphic-layout-effect/1.1.2_3stiutgnnbnfnf3uowm5cip22i:
+  /use-isomorphic-layout-effect/1.1.2_pmekkgnqduwlme35zpnqhenc34:
     resolution: {integrity: sha512-49L8yCO3iGT/ZF9QttjwLF/ZD9Iwto5LnH5LmEdk/6cFmXddqi2ulF0edxTwjj+7mqvpVVGQWvbXZdn32wRSHA==}
     peerDependencies:
       '@types/react': '*'
@@ -3898,11 +3898,11 @@ packages:
       '@types/react':
         optional: true
     dependencies:
-      '@types/react': 18.0.27
+      '@types/react': 18.0.28
       react: 18.2.0
     dev: false
 
-  /use-latest/1.2.1_3stiutgnnbnfnf3uowm5cip22i:
+  /use-latest/1.2.1_pmekkgnqduwlme35zpnqhenc34:
     resolution: {integrity: sha512-xA+AVm/Wlg3e2P/JiItTziwS7FK92LWrDB0p+hgXloIMuVCeJJ8v6f0eeHyPZaJrM+usM1FkFfbNCrJGs8A/zw==}
     peerDependencies:
       '@types/react': '*'
@@ -3911,19 +3911,19 @@ packages:
       '@types/react':
         optional: true
     dependencies:
-      '@types/react': 18.0.27
+      '@types/react': 18.0.28
       react: 18.2.0
-      use-isomorphic-layout-effect: 1.1.2_3stiutgnnbnfnf3uowm5cip22i
+      use-isomorphic-layout-effect: 1.1.2_pmekkgnqduwlme35zpnqhenc34
     dev: false
 
-  /use-onclickoutside/0.4.1_3stiutgnnbnfnf3uowm5cip22i:
+  /use-onclickoutside/0.4.1_pmekkgnqduwlme35zpnqhenc34:
     resolution: {integrity: sha512-hAo1viJ9D2mPffUig4EWCwE4as7fq84HANk3MCkY3rhXk5oMl0mjLCLF/OhzWIhTaITcAcDDcnaxRdMHPq+sww==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
       are-passive-events-supported: 1.1.1
       react: 18.2.0
-      use-latest: 1.2.1_3stiutgnnbnfnf3uowm5cip22i
+      use-latest: 1.2.1_pmekkgnqduwlme35zpnqhenc34
     transitivePeerDependencies:
       - '@types/react'
     dev: false
