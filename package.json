@@ -5,7 +5,6 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev",
-    "postinstall": "prisma generate",
     "lint": "next lint",
     "start": "next start",
     "db:type": "kysely-codegen --out-file ./src/server/db/types.ts",
@@ -25,6 +24,7 @@
     "motion": "^10.15.5",
     "next": "13.1.6",
     "next-auth": "^4.19.2",
+    "next-superjson-plugin": "^0.5.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "superjson": "1.12.2",

@@ -4,6 +4,7 @@ import { Suspense } from "react"
 import "../styles/globals.css"
 import { getServerAuthSession } from "@server/auth"
 import Loading from "./loading"
+// import { TRPCProvider, getQueryClient } from "@components/TRPC"
 import { Navigation } from "@components"
 
 async function RootLayout({ children }: { children: ReactNode }) {
@@ -15,6 +16,8 @@ async function RootLayout({ children }: { children: ReactNode }) {
         <Suspense fallback={<Loading />}>
           {(await session) && <Navigation />}
         </Suspense>
+        {/* <TRPCProvider fn={getQueryClient}>
+        </TRPCProvider> */}
         {children}
       </body>
     </html>

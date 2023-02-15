@@ -6,9 +6,6 @@ import { appRouter } from "@server/api/root"
 
 // export API handler
 export default createNextApiHandler({
-  batching: {
-    enabled: true,
-  },
   router: appRouter,
   createContext: createTRPCContext,
   onError:

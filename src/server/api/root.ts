@@ -1,4 +1,4 @@
-import { criteria, example } from "./routers"
+import { criteria } from "./routers"
 import { createTRPCRouter } from "./trpc"
 
 /**
@@ -8,8 +8,15 @@ import { createTRPCRouter } from "./trpc"
  */
 export const appRouter = createTRPCRouter({
   criteria,
-  example,
 })
 
 // export type definition of API
 export type AppRouter = typeof appRouter
+
+export type Endpoints = "criteria" | "students" //typeof endpoints[number]
+
+// const getBaseUrl = () => {
+//   if (typeof window !== "undefined") return "" // browser should use relative url
+//   if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}` // SSR should use vercel url
+//   return `http://localhost:${process.env.PORT ?? 3000}` // dev SSR should use localhost
+// }

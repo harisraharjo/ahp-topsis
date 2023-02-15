@@ -15,14 +15,27 @@ export type ExtractMandatoryKeys<T> = {
 export type WithRequired<T, K extends keyof T> = T & { [P in K]-?: T[P] }
 
 export type BuildArrayMinLength<
-  T,
+  Data,
   N extends number,
-  Current extends readonly T[],
+  Current extends readonly Data[],
 > = Current["length"] extends N
-  ? [...Current, ...T[]]
-  : BuildArrayMinLength<T, N, [...Current, T]>
+  ? [...Current, ...Data[]]
+  : BuildArrayMinLength<Data, N, [...Current, Data]>
 
-export type ArrayMinLength<T, N extends number> = BuildArrayMinLength<T, N, []>
+export type ArrayMinLength<Data, N extends number> = BuildArrayMinLength<
+  Data,
+  N,
+  []
+>
+
+export type Invalid<T> = TypeError & { __errorMessage: T }
+
+export type IsUnique<Input extends readonly unknown[]> =
+  Input extends readonly [infer X, ...infer Rest]
+    ? X extends Rest[number]
+      ? Invalid<[X, "is repeated"]>
+      : IsUnique<Rest>
+    : true
 
 // type KeysUnder<T, A extends (keyof T)[]> = T extends object
 //   ? {

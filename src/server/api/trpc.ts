@@ -47,13 +47,11 @@ const createInnerTRPCContext = (opts: CreateContextOptions) => {
  * process every request that goes through your tRPC endpoint
  * @link https://trpc.io/docs/context
  */
-export const createTRPCContext = async (opts: any) => {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-  console.log("OPSIES:", Object.keys(opts))
-  const session = getServerAuthSession()
+export const createTRPCContext = async () => {
+  const session = await getServerAuthSession()
 
   return createInnerTRPCContext({
-    session: await session,
+    session,
   })
 }
 
@@ -100,14 +98,12 @@ export const publicProcedure = t.procedure
  * procedure
  */
 const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
-  if (!ctx.session || !ctx.session.user) {
+  if (!ctx.session?.user) {
     throw new TRPCError({ code: "UNAUTHORIZED" })
   }
+
   return next({
-    ctx: {
-      // infers the `session` as non-nullable
-      session: { ...ctx.session, user: ctx.session.user },
-    },
+    ctx,
   })
 })
 
