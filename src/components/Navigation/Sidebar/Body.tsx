@@ -7,8 +7,9 @@ import { SidebarItem } from "./Item"
 export const SidebarBody = () => (
   <>
     <Logo />
-    <div className="block h-sidenav max-h-screen w-auto grow basis-full items-center overflow-auto">
-      <ul className="mb-0 flex flex-col pl-0">
+    {/* h-sidenav */}
+    <div className="max-h-screen w-auto grow basis-full items-center overflow-auto">
+      <ul className="flex flex-col">
         <SidebarItems />
       </ul>
     </div>
@@ -18,9 +19,8 @@ export const SidebarBody = () => (
 const Logo = () => (
   <>
     <div className="h-19.5">
-      {/* <i className="fas fa-times absolute top-0 right-0 hidden cursor-pointer p-4 text-slate-400 opacity-50 xl:hidden"></i> */}
       <a
-        className="m-0 block whitespace-nowrap px-4 py-6 text-sm text-slate-700"
+        className="block whitespace-nowrap px-4 py-6 text-sm text-slate-700"
         href="#"
       >
         <Image
@@ -35,8 +35,7 @@ const Logo = () => (
         </span>
       </a>
     </div>
-
-    <hr className="mt-0 h-px bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent" />
+    <hr className="h-px bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent" />
   </>
 )
 
