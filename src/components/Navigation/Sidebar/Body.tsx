@@ -3,6 +3,7 @@ import logo from "@public/logo-ct.png"
 
 import { PATHS } from "../routeData"
 import { SidebarItem } from "./Item"
+import Link from "next/link"
 
 export const SidebarBody = () => (
   <>
@@ -19,9 +20,9 @@ export const SidebarBody = () => (
 const Logo = () => (
   <>
     <div className="h-19.5">
-      <a
+      <Link
         className="block whitespace-nowrap px-4 py-6 text-sm text-slate-700"
-        href="#"
+        href="/"
       >
         <Image
           src={logo}
@@ -33,16 +34,21 @@ const Logo = () => (
         <span className=" ml-1 font-semibold transition-all duration-200">
           SMP Negeri 1 Waru
         </span>
-      </a>
+      </Link>
     </div>
     <hr className="h-px bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent" />
   </>
 )
 
+// TODO: SVG PAKAI SPRITE (Terakhir)
 const SidebarItems = () => (
   <>
     {PATHS.map((path) => (
-      <SidebarItem key={path.href} {...path}>
+      <SidebarItem
+        key={path.href}
+        {...path}
+        icon={<use xlinkHref={`#${path.title}Icon`} />}
+      >
         <span className="pointer-events-none ml-1 opacity-100 duration-300 ease-soft">
           {path.title}
         </span>
