@@ -19,6 +19,7 @@ export const AddCriteria = ({ operation }: { operation: "Add" | "Delete" }) => {
       body: JSON.stringify({ msg: "Hello from add criteria" }),
     })
       .then((r) => {
+        console.log(r)
         return r.json()
       })
       .then((r) => {

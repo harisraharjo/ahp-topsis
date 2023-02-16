@@ -29,3 +29,6 @@ To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the fo
 - Use nextauth inside middleware?
 - Workaround TRPC. atau mungkin di remove aja(?)
 - Ganti OAuth discord ke Google
+- Add Github Webhook(?).\
+  Possible flow:\
+  user action (C,U,D) -> create github repo issue with its data -> github dispatch webhook with data -> api receive webhook -> update data to database from api -> revalidate page(s) from api
