@@ -29,7 +29,7 @@ export const SidebarItem = ({
   return (
     <li className="mt-0.5 w-full">
       <Link
-        className={`ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap py-2.7 px-4 text-sm transition-colors ${
+        className={`flex items-center whitespace-nowrap py-2.7 px-4 text-sm transition-colors ${
           isActive ? activeStyles.link : ""
         }`}
         href={href}

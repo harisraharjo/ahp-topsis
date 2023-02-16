@@ -1,5 +1,3 @@
-import { getServerSession } from "next-auth"
-
 import { redirect } from "next/navigation"
 import { type NextAuthOptions } from "next-auth"
 import DiscordProvider from "next-auth/providers/discord"
@@ -10,7 +8,9 @@ import type { Adapter as NextAuthAdapter } from "next-auth/adapters"
 import { KyselyPlanetscaleAdapter } from "./adapter"
 
 export const redirectIfUnauthorized = async () => {
-  const session = await getServerAuthSession()
+  // const session = await getServerAuthSession()
+  // !DANGER: Development only
+  const session = await Promise.resolve(true)
 
   !session && redirect("/signin")
 }
@@ -37,4 +37,8 @@ export const authOptions: NextAuthOptions = {
   ],
 }
 
-export const getServerAuthSession = () => getServerSession(authOptions)
+export const getServerAuthSession = () => {
+  // return getServerSession(authOptions)
+  // !DANGER: Development only
+  return Promise.resolve({ user: { id: 123 }, session: "12dfdfwfm" })
+}

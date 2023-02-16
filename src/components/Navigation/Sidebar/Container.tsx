@@ -13,16 +13,21 @@ export const SidebarContainer = ({
   handler,
 }: SidebarProps) => {
   const ref = useRef(null)
-  useOnClickOutside(ref, (event) => {
-    if (!handlerRef.current?.contains(event.target as Node)) {
-      handler(() => false)
-    }
-  })
+  useOnClickOutside(
+    ref,
+    (event) =>
+      void (
+        !handlerRef.current?.contains(event.target as Node) &&
+        handler(() => false)
+      ),
+  )
 
   return (
     <aside
       ref={ref}
-      className={`ease-nav-brand fixed inset-y-0 z-990 my-4 ml-4 block w-full max-w-62.5 -translate-x-full flex-wrap items-center justify-between overflow-y-auto rounded-2xl border-0 bg-white p-0 shadow-none transition-transform duration-200 xl:left-0 xl:translate-x-0 xl:bg-transparent ${
+      className={`fixed inset-y-0 my-4 block w-full max-w-62.5
+      -translate-x-full flex-wrap items-center justify-between overflow-y-auto rounded-2xl bg-white
+      p-0 transition-transform duration-200 xl:left-0 xl:translate-x-0 xl:bg-transparent ${
         isOpen ? "translate-x-0 shadow-soft-xl" : ""
       }`}
     >

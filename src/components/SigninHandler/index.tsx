@@ -8,7 +8,7 @@ export function SignOut() {
 
   return (
     <button
-      className="mb-4 flex rounded-md border border-gray-800 bg-black px-4 py-3 text-sm font-semibold text-neutral-200 transition-all hover:text-white"
+      className="flex rounded-md border-gray-800 bg-black text-sm font-semibold text-neutral-200 transition-all hover:text-white"
       onClick={() => {
         console.log("Logging out...")
         signOut({ callbackUrl: "/signin" })

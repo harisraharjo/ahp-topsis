@@ -43,13 +43,6 @@ export const AddCriteria = ({ operation }: { operation: "Add" | "Delete" }) => {
           handleChange()
             .then(() => console.log("Success"))
             .catch(() => console.log("NO"))
-          // useMutation.mutate({
-          //   msg: "Hello from add criteria",
-          // })
-          // .then((r) => {
-          //   console.log(r)
-          // })
-          // .catch((e) => console.log(e))
         }}
         style={{ opacity: !isMutating ? 1 : 0.7 }}
       >

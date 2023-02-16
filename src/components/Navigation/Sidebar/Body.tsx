@@ -20,17 +20,17 @@ const Logo = () => (
     <div className="h-19.5">
       {/* <i className="fas fa-times absolute top-0 right-0 hidden cursor-pointer p-4 text-slate-400 opacity-50 xl:hidden"></i> */}
       <a
-        className="m-0 block whitespace-nowrap px-8 py-6 text-sm text-slate-700"
+        className="m-0 block whitespace-nowrap px-4 py-6 text-sm text-slate-700"
         href="#"
       >
         <Image
           src={logo}
-          className="ease-nav-brand inline h-full max-h-8 w-auto max-w-full transition-all duration-200"
+          className="inline h-full max-h-8 w-auto max-w-full transition-all duration-200"
           alt="main_logo"
           width={500}
           height={500}
         />
-        <span className="ease-nav-brand ml-1 font-semibold transition-all duration-200">
+        <span className=" ml-1 font-semibold transition-all duration-200">
           SMP Negeri 1 Waru
         </span>
       </a>

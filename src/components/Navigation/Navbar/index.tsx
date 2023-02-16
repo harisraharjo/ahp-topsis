@@ -1,26 +1,14 @@
 import { type PropsWithChildren, type ReactNode } from "react"
+import { Breadcrumb } from "../Breadcrumb"
 import { SidebarHandler } from "../Sidebar"
-import { SignOut } from "@components/SigninHandler"
+// import { SignOut } from "@components/SigninHandler"
 
 export type NavbarProps = PropsWithChildren<{ _?: ReactNode }>
 export const Navbar = ({}: NavbarProps) => {
   return (
-    <nav className="relative mx-6 flex flex-wrap items-center justify-between rounded-2xl px-0 py-2 shadow-none transition-all duration-250 ease-soft-in lg:flex-nowrap lg:justify-start">
-      <div className="flex-wrap-inherit mx-auto flex w-full items-center justify-between px-4 py-1">
-        <div>
-          <ol className="mr-12 flex flex-wrap rounded-lg bg-transparent pt-1 sm:mr-16">
-            <li className="text-sm leading-normal">
-              <a className="text-slate-700 opacity-50">Pages</a>
-            </li>
-            <li
-              className="pl-2 text-sm capitalize leading-normal text-slate-700 before:float-left before:pr-2 before:text-gray-600 before:content-['/']"
-              aria-current="page"
-            >
-              Dashboard
-            </li>
-          </ol>
-          <h6 className="mb-0 font-bold capitalize">Dashboard</h6>
-        </div>
+    <nav className="relative flex flex-wrap items-center justify-between rounded-2xl px-0 py-2 transition-all duration-250 ease-soft-in lg:flex-nowrap lg:justify-start">
+      <div className="mx-auto flex w-full items-center justify-between px-4 py-1 flex-wrap-inherit">
+        <Breadcrumb />
 
         <div className="mt-2 flex grow items-center sm:mt-0 sm:mr-6 md:mr-0 lg:flex lg:basis-auto">
           <div className="flex items-center md:ml-auto md:pr-4">
@@ -34,10 +22,10 @@ export const Navbar = ({}: NavbarProps) => {
                 placeholder="Type here..."
               />
             </div>
-            <SignOut />
+            {/* <SignOut /> */}
           </div>
           {/* <-- --> */}
-          <ul className="mb-0 flex list-none flex-row justify-end pl-0 md-max:w-full">
+          <ul className="flex list-none flex-row justify-end pl-0 md-max:w-full">
             <li className="flex items-center pl-4 xl:hidden">
               <SidebarHandler />
             </li>

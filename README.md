@@ -17,12 +17,16 @@ To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the fo
   2\. Push (don't use migrate!, yet) to planetscale\
   3\. Import type to typescript with `db:type`
 
-# Important Resources
+## Resources
 
 - Prisma:
   - [Schema Reference](https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference). Pelajari mana yang implemented (keyword: `implemented`) by prisma dan mana yang langsung di db. Jadi kalau diimplementasi oleh prisma maka kita buat sendiri juga.
   - [Prisma Mapping to MySql](https://www.prisma.io/docs/concepts/database-connectors/mysql#type-mapping-between-mysql-to-prisma-schema)
   - [Data Model](https://www.prisma.io/docs/concepts/components/prisma-schema/data-model#defining-models)
+
+## FLAG TO LOOKOUT FOR
+
+- TODO, FIXME, DANGER
 
 # TODO
 
