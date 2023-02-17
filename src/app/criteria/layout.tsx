@@ -1,5 +1,3 @@
-// import { AddCriteria } from "./AddCriteria"
-
 import type { ReactNode } from "react"
 
 export default function Layout({ children }: { children: ReactNode }) {

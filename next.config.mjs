@@ -34,8 +34,8 @@ const config = {
   //   return config
   // },
   // modularizeImports: {
-  //   "@components": {
-  //     transform: "@components/{{member}}",
+  //   "~components": {
+  //     transform: "~components/{{member}}",
   //     preventFullImport: true,
   //     skipDefaultConversion: true,
   //   },

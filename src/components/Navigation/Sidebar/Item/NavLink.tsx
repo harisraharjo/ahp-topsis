@@ -1,8 +1,8 @@
 import Link from "next/link"
 import type { PropsWithChildren } from "react"
 
-import { Svg, type SvgProps } from "@components/Svg"
-import type { PATH } from "@components/Navigation/routeData"
+import { Svg, type SvgProps } from "~components/Svg"
+import type { PATH } from "../../routeData"
 
 type ActiveLink =
   "shadow-soft-xl rounded-lg bg-white font-semibold text-slate-700"

@@ -1,6 +1,6 @@
-import { getServerAuthSession } from "@server/auth"
+import { getServerAuthSession } from "~server/auth"
 import { redirect } from "next/navigation"
-import { SignIn } from "@components/SigninHandler"
+import { SignIn } from "~components/SigninHandler"
 
 export default async function Page() {
   const session = await getServerAuthSession()

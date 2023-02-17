@@ -8,7 +8,7 @@ import {
   deleteRows,
 } from "./utils"
 import type { DestructureQueryValue, QueryValue, RawQueryValue } from "../utils"
-import type { AdapterKeyFunctionParameter } from "@server/auth/adapter"
+import type { AdapterKeyFunctionParameter } from "~server/auth/adapter"
 import type { InsertObject } from "kysely"
 import { cache } from "react"
 

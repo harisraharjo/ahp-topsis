@@ -1,5 +1,5 @@
 import Image from "next/image"
-import logo from "@public/logo-ct.png"
+import logo from "~public/logo-ct.png"
 
 import { PATHS } from "../routeData"
 import { SidebarItem } from "./Item"
@@ -19,28 +19,26 @@ export const SidebarBody = () => (
 
 const Logo = () => (
   <>
-    <div className="h-19.5">
-      <Link
-        className="block whitespace-nowrap px-4 py-6 text-sm text-slate-700"
-        href="/"
-      >
-        <Image
-          src={logo}
-          className="inline h-full max-h-8 w-auto max-w-full transition-all duration-200"
-          alt="main_logo"
-          width={500}
-          height={500}
-        />
-        <span className=" ml-1 font-semibold transition-all duration-200">
-          SMP Negeri 1 Waru
-        </span>
-      </Link>
-    </div>
-    <hr className="h-px bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent" />
+    <Link
+      className="flex h-19.5 whitespace-nowrap px-4 py-6 text-sm text-slate-700"
+      href="/"
+    >
+      <Image
+        src={logo}
+        className="inline h-full max-h-8 w-auto max-w-full transition-all duration-200"
+        alt="main_logo"
+        width={500}
+        height={500}
+      />
+      <span className="ml-3 font-semibold transition-all duration-200">
+        SMP Negeri 1 Waru
+      </span>
+    </Link>
+    <hr className="mt-0 h-px bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent" />
   </>
 )
 
-// TODO: SVG PAKAI SPRITE (Terakhir)
+// TODO: SVG USE PAKAI SPRITE (Terakhir)
 const SidebarItems = () => (
   <>
     {PATHS.map((path) => (

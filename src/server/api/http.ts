@@ -68,9 +68,12 @@ let httpStatus: {
 export type HTTPStatus = typeof httpStatus
 export type ResponseCode = keyof HTTPStatus
 export type ResponseMessage<Code extends ResponseCode> = HTTPStatus[Code]
-export type NextAPIResponseError<Code extends ResponseCode> = NextApiResponse<{
+export type ResponseError<Code extends ResponseCode> = {
   error: ResponseMessage<Code>
-}>
+}
+// export type NextAPIResponseError<Code extends ResponseCode> = NextApiResponse<{
+//   error: ResponseMessage<Code>
+// }>
 
 export const sendHTTPResponse = <
   Code extends ResponseCode,

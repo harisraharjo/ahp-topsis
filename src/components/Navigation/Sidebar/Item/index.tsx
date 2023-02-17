@@ -1,6 +1,6 @@
 "use client"
 
-import type { PATH } from "@components/Navigation/routeData"
+import type { PATH } from "~components/Navigation/routeData"
 import { useSelectedLayoutSegment } from "next/navigation"
 import type { PropsWithChildren } from "react"
 import { NavLink, type NavLinkProps } from "./NavLink"

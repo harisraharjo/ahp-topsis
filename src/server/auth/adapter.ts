@@ -15,7 +15,7 @@ import {
   updateSession,
   updateUser,
 } from "../db/query"
-import type { DestructureQueryValue, RawQueryValue } from "@server/db/utils"
+import type { DestructureQueryValue, RawQueryValue } from "~server/db/utils"
 
 export type AdapterKeyFunctionParameter<Key extends keyof Adapter> = Parameters<
   // @ts-expect-error -> it _works_ but typescript keep screaming

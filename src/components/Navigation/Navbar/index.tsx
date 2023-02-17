@@ -1,7 +1,7 @@
 import { type PropsWithChildren, type ReactNode } from "react"
 import { Breadcrumb } from "../Breadcrumb"
 import { SidebarHandler } from "../Sidebar"
-// import { SignOut } from "@components/SigninHandler"
+// import { SignOut } from "~components/SigninHandler"
 
 export type NavbarProps = PropsWithChildren<{ _?: ReactNode }>
 export const Navbar = ({}: NavbarProps) => {

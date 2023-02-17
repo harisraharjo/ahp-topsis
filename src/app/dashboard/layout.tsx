@@ -1,5 +1,5 @@
 import type { ReactNode } from "react"
-import { redirectIfUnauthorized } from "@server/auth"
+import { redirectIfUnauthorized } from "~server/auth"
 
 async function Layout({ children }: { children: ReactNode }) {
   await redirectIfUnauthorized()

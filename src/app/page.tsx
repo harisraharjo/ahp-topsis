@@ -1,4 +1,4 @@
-import { redirectIfUnauthorized } from "@server/auth"
+import { redirectIfUnauthorized } from "~server/auth"
 
 export default async function Page() {
   await redirectIfUnauthorized()

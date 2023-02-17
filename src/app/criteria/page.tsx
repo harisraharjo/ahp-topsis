@@ -9,7 +9,6 @@ export default function Page() {
     <div>
       <AddCriteria operation="Add" />
       <Suspense fallback={<Loading />}>
-        {/* @ts-expect-error Server Component */}
         <Criterias />
       </Suspense>
       <br />

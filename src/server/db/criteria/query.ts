@@ -4,7 +4,7 @@ import {
   selectAllFrom,
   selectRows,
   updateRow,
-} from "./utils"
+} from "../query/utils"
 
 import type { DestructureQueryValue, InsertValue, QueryValue } from "../utils"
 
@@ -19,6 +19,7 @@ export const selectCriteria = (
   id: DestructureQueryValue<"Criteria", "id", "select">,
 ) => selectRows("Criteria", "id", "=", id)
 
+// TODO: Add Where not null
 export const selectAllCriteria = () => selectAllFrom("Criteria")
 
 export const deleteCriteria = (

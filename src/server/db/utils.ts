@@ -1,4 +1,4 @@
-import type { ExtractMandatoryKeys, WithRequired } from "@customTypes"
+import type { ExtractMandatoryKeys, WithRequired } from "~customTypes"
 import type { ColumnType, InsertObject } from "kysely"
 import type { DB } from "./types"
 
@@ -23,8 +23,9 @@ export type DestructureQueryValue<
 export type RawQueryValue<
   Table extends Tables,
   Q extends QueryType = "select",
+  Key extends keyof DB[Table] = keyof DB[Table],
 > = {
-  [K in keyof DB[Table]]: DestructureQueryValue<Table, K, Q>
+  [K in Key]: DestructureQueryValue<Table, K, Q>
 }
 
 export type QueryValue<

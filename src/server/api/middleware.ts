@@ -1,22 +1,28 @@
 import type { NextApiHandler, NextApiRequest, NextApiResponse } from "next"
+
+import type { ResponseError } from "./http"
 import { sendHTTPResponse } from "./http"
 
 export type Next = () => Promise<void>
 
 export type Hook<
-  RequestT extends NextApiRequest = NextApiRequest,
-  ResponseT extends NextApiResponse = NextApiResponse,
-> = (req: RequestT, res: ResponseT, next: Next) => PromiseLike<void> | void
+  T,
+  ResponseT extends NextApiResponse<T> = NextApiResponse<T>,
+> = (
+  req: NextApiRequest,
+  res: ResponseT,
+  next: Next,
+) => PromiseLike<void> | void
+
+type HookOrHandler<T> = [...Hook<T>[], NextApiHandler<T>]
 
 async function runMiddlewares<
-  RequestT extends NextApiRequest,
-  ResponseT extends NextApiResponse,
-  Middleware extends Hook<RequestT, ResponseT>[],
-  Handler extends NextApiHandler,
+  Middleware extends HookOrHandler<unknown>,
+  Resp extends NextApiResponse,
 >(
-  req: RequestT,
-  res: ResponseT,
-  middlewares: [...Middleware, Handler],
+  req: NextApiRequest,
+  res: Resp,
+  middlewares: Middleware,
   currentMiddlewareIndex: number,
 ) {
   // Check if previous middleware sent a response - if it did we stop execution
@@ -36,19 +42,20 @@ async function runMiddlewares<
   await middlewares[currentMiddlewareIndex]?.(req, res, next)
 }
 
-export function use<
-  RequestT extends NextApiRequest,
-  ResponseT extends NextApiResponse,
-  Middleware extends Hook<RequestT, ResponseT>[],
-  Handler extends NextApiHandler,
-  Middlewares extends [...Middleware, Handler],
->(...middlewares: Middlewares) {
-  return async (req: RequestT, res: ResponseT) => {
+export const use = <T, Middleware extends HookOrHandler<T>>(
+  ...middleware: Middleware
+): NextApiHandler<
+  | ResponseError<500>
+  | (Middleware extends HookOrHandler<T> ? Middleware[number] : never)
+> => {
+  return async (req, res) => {
     try {
-      await runMiddlewares(req, res, middlewares, 0)
+      await runMiddlewares(req, res, middleware, 0)
     } catch (error) {
-      console.error(error)
-      sendHTTPResponse(res, 500, "Internal Server Error")
+      // console.error(error)
+      sendHTTPResponse(res, 500, {
+        error: "Internal Server Error",
+      })
     }
   }
 }
