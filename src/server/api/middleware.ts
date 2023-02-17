@@ -14,10 +14,10 @@ export type Hook<
   next: Next,
 ) => PromiseLike<void> | void
 
-type HookOrHandler<T> = [...Hook<T>[], NextApiHandler<T>]
+type HooksOrHandler<T> = [...Hook<T>[], NextApiHandler<T>]
 
 async function runMiddlewares<
-  Middleware extends HookOrHandler<unknown>,
+  Middleware extends HooksOrHandler<unknown>,
   Resp extends NextApiResponse,
 >(
   req: NextApiRequest,
@@ -42,11 +42,11 @@ async function runMiddlewares<
   await middlewares[currentMiddlewareIndex]?.(req, res, next)
 }
 
-export const use = <T, Middleware extends HookOrHandler<T>>(
+export const use = <T, Middleware extends HooksOrHandler<T>>(
   ...middleware: Middleware
 ): NextApiHandler<
   | ResponseError<500>
-  | (Middleware extends HookOrHandler<T> ? Middleware[number] : never)
+  | (Middleware extends HooksOrHandler<T> ? Middleware[number] : never)
 > => {
   return async (req, res) => {
     try {
