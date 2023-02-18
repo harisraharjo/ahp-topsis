@@ -1,4 +1,5 @@
 import type { RawQueryValue } from "~server/db/utils"
+import { Playground } from "./Playground"
 
 type AD = Awaited<RawQueryValue<"Criteria", "update">[]>
 
@@ -75,15 +76,16 @@ export const Criterias = () => {
 
   return (
     <>
-      {data.map((criteria) => {
+      <Playground data={da} height={1000} width={1000} />
+      {/* {data.map((criteria) => {
         return (
-          <div key={criteria.id}>
-            {criteria.id}
-            {criteria.name}
-            {criteria.parentId}
-          </div>
+          // <div key={criteria.id}>
+          //   {criteria.id}
+          //   {criteria.name}
+          //   {criteria.parentId}
+          // </div>
         )
-      })}
+      })} */}
     </>
   )
 }
@@ -98,11 +100,11 @@ const destructure = (data: AD) => {
     {},
   )
 
-  const result: AD = []
+  const baseNodes: AD = []
   data.forEach((el) => {
     // Handle the root element
     if (el.parentId === 0) {
-      result.push(el)
+      baseNodes.push(el)
       return
     }
 
@@ -114,5 +116,12 @@ const destructure = (data: AD) => {
     parentEl.children = [...(parentEl.children || []), el]
   })
 
-  return result
+  return {
+    id: 0,
+    parentId: -1,
+    name: "Siswa Teladan",
+    scale: null,
+    weight: 0,
+    children: baseNodes,
+  }
 }
