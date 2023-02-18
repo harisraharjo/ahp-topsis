@@ -28,6 +28,8 @@ export type ArrayMinLength<Data, N extends number> = BuildArrayMinLength<
   []
 >
 
+type NonEmptyArray<T> = [T, ...T[]]
+
 export type Invalid<T> = TypeError & { __errorMessage: T }
 
 export type IsUnique<Input extends readonly unknown[]> =
@@ -36,6 +38,18 @@ export type IsUnique<Input extends readonly unknown[]> =
       ? Invalid<[X, "is repeated"]>
       : IsUnique<Rest>
     : true
+
+type Enumerate<
+  N extends number,
+  Acc extends number[] = [],
+> = Acc["length"] extends N
+  ? Acc[number]
+  : Enumerate<N, [...Acc, Acc["length"]]>
+
+export type Range<F extends number, T extends number> = Exclude<
+  Enumerate<T>,
+  Enumerate<F>
+>
 
 // type KeysUnder<T, A extends (keyof T)[]> = T extends object
 //   ? {

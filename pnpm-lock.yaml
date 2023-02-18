@@ -19,6 +19,7 @@ specifiers:
   '@visx/hierarchy': ^3.0.0
   '@visx/responsive': ^3.0.0
   '@visx/shape': ^3.0.0
+  '@visx/zoom': ^3.0.1
   add: ^2.0.6
   autoprefixer: ^10.4.13
   chalk: ^5.2.0
@@ -58,6 +59,7 @@ dependencies:
   '@visx/hierarchy': 3.0.0_react@18.2.0
   '@visx/responsive': 3.0.0_react@18.2.0
   '@visx/shape': 3.0.0_react@18.2.0
+  '@visx/zoom': 3.0.1_react@18.2.0
   add: 2.0.6
   kysely: 0.23.4
   kysely-planetscale: 1.3.0_3b4ga6arylazwmj6lzyyulo5vq
@@ -669,11 +671,31 @@ packages:
       eslint-visitor-keys: 3.3.0
     dev: true
 
+  /@use-gesture/core/10.2.24:
+    resolution: {integrity: sha512-ZL7F9mgOn3Qlnp6QLI9jaOfcvqrx6JPE/BkdVSd8imveaFTm/a3udoO6f5Us/1XtqnL4347PsIiK6AtCvMHk2Q==}
+    dev: false
+
+  /@use-gesture/react/10.2.24_react@18.2.0:
+    resolution: {integrity: sha512-rAZ8Nnpu1g4eFzqCPlaq+TppJpMy0dTpYOQx5KpfoBF4P3aWnCqwj7eKxcmdIb1NJKpIJj50DPugUH4mq5cpBg==}
+    peerDependencies:
+      react: '>= 16.8.0'
+    dependencies:
+      '@use-gesture/core': 10.2.24
+      react: 18.2.0
+    dev: false
+
   /@visx/curve/3.0.0:
     resolution: {integrity: sha512-kvHJDLBeczTQ87ZExSTfRxej06l6o6UiQ0NHf9+xpAin06y6Qk1ThOHHWJTGM6KGzwlu7jEauJGHwZs6nMhDvA==}
     dependencies:
       '@types/d3-shape': 1.3.8
       d3-shape: 1.3.7
+    dev: false
+
+  /@visx/event/3.0.1:
+    resolution: {integrity: sha512-tK1EUYQLLStBuoCMbm8LJ3VbDyCVI8HjT0pMRQxm+C75FSIVWvrThgrfrC9sWOFnEMEYWspZO7hI5zjsPKjLQA==}
+    dependencies:
+      '@types/react': 18.0.28
+      '@visx/point': 3.0.1
     dev: false
 
   /@visx/gradient/3.0.0_react@18.2.0:
@@ -709,6 +731,10 @@ packages:
       d3-hierarchy: 1.1.9
       prop-types: 15.8.1
       react: 18.2.0
+    dev: false
+
+  /@visx/point/3.0.1:
+    resolution: {integrity: sha512-S5WOBMgEP2xHcgs3A2BFB2vwzrk0tMmn3PGZAbQJ+lu4HlnalDP72klUnxLTH8xclNNvpUHtHM5eLIJXyHx6Pw==}
     dev: false
 
   /@visx/responsive/3.0.0_react@18.2.0:
@@ -750,6 +776,18 @@ packages:
       d3-path: 1.0.9
       d3-shape: 1.3.7
       lodash: 4.17.21
+      prop-types: 15.8.1
+      react: 18.2.0
+    dev: false
+
+  /@visx/zoom/3.0.1_react@18.2.0:
+    resolution: {integrity: sha512-E/HNp1c/tgippJBCqn1NKx8Xhh2y4pgVjET9or3GbTs/7VAN/NkAR2V7t7u3zfGaPnBjkfbmulMkmQP4bB8m1g==}
+    peerDependencies:
+      react: ^16.0.0-0 || ^17.0.0-0 || ^18.0.0-0
+    dependencies:
+      '@types/react': 18.0.28
+      '@use-gesture/react': 10.2.24_react@18.2.0
+      '@visx/event': 3.0.1
       prop-types: 15.8.1
       react: 18.2.0
     dev: false

@@ -19,8 +19,9 @@ export const selectCriteria = (
   id: DestructureQueryValue<"Criteria", "id", "select">,
 ) => selectRows("Criteria", "id", "=", id)
 
-// TODO: Add Where not null
-export const selectAllCriteria = () => selectAllFrom("Criteria")
+// TODO: Add sql query Where not null
+export const selectAllCriteria = () =>
+  selectAllFrom("Criteria").where("parentId", "is not", null)
 
 export const deleteCriteria = (
   id: DestructureQueryValue<"Criteria", "id", "update">,
