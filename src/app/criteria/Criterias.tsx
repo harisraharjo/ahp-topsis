@@ -1,5 +1,6 @@
 import type { RawQueryValue } from "~server/db/utils"
 import { Playground } from "./Playground"
+// import { GeoCustom } from "./geo"
 
 type AD = Awaited<RawQueryValue<"Criteria", "update">[]>
 
@@ -71,12 +72,11 @@ const data: AD = [
 // const criterias = selectAllCriteria().execute()
 export const Criterias = () => {
   const da = destructure(data)
-  // console.log("=== DA: ===")
-  // console.log(inspect(da, { showHidden: false, depth: null, colors: true }))
 
   return (
     <>
-      <Playground data={da} height={1000} width={1000} />
+      {/* <GeoCustom height={900} width={900} /> */}
+      <Playground data={da} height={900} width={900} />
       {/* {data.map((criteria) => {
         return (
           // <div key={criteria.id}>

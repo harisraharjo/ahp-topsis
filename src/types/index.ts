@@ -28,7 +28,7 @@ export type ArrayMinLength<Data, N extends number> = BuildArrayMinLength<
   []
 >
 
-type NonEmptyArray<T> = [T, ...T[]]
+export type NonEmptyArray<T> = [T, ...T[]]
 
 export type Invalid<T> = TypeError & { __errorMessage: T }
 
