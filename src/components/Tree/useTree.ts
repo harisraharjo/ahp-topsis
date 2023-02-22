@@ -42,18 +42,11 @@ export function useTree<Datum>(
   separation?: UseTreeProps<Datum>["separation"],
   nodeSize?: [number, number],
 ) {
-  const [tree] = useState(() => {
-    const _tree = d3Tree<Datum>()
+  const [tree] = useState(() => d3Tree<Datum>())
+  size && tree.size(size as [number, number])
+  separation &&
+    tree.separation(separation as Parameters<(typeof tree)["separation"]>[0])
+  nodeSize && tree.nodeSize(nodeSize as [number, number])
 
-    size && _tree.size(size as [number, number])
-    separation &&
-      _tree.separation(
-        separation as Parameters<(typeof _tree)["separation"]>[0],
-      )
-    nodeSize && _tree.nodeSize(nodeSize as [number, number])
-
-    return _tree(root)
-  })
-
-  return tree
+  return tree(root)
 }

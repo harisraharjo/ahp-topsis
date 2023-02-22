@@ -23,7 +23,10 @@ export interface TreeNode {
 
 function useForceUpdate() {
   const [, setValue] = useState<boolean>(false)
-  return () => setValue((prev) => !prev)
+  return () => {
+    console.log("TRIGGER")
+    setValue((prev) => !prev)
+  }
 }
 
 const defaultMargin = { top: 30, left: 30, right: 30, bottom: 70 }
@@ -135,23 +138,23 @@ export const Playground = <T extends TreeNode>({
             height={totalHeight}
             rx={14}
             fill="#272b4d"
-            // onTouchStart={zoom.dragStart}
-            // onTouchMove={zoom.dragMove}
-            // onTouchEnd={zoom.dragEnd}
             x={0}
             y={0}
+            onTouchStart={zoom.dragStart}
+            onTouchMove={zoom.dragMove}
+            onTouchEnd={zoom.dragEnd}
+            onMouseLeave={() => {
+              if (zoom.isDragging) zoom.dragEnd()
+            }}
           />
           {/* <Group top={margin.top} left={margin.left}> */}
           <Group
             top={origin.y}
             left={origin.x}
             id="zoom_target"
-            onMouseDown={zoom.dragStart}
-            onMouseMove={zoom.dragMove}
-            onMouseUp={zoom.dragEnd}
-            onMouseLeave={() => {
-              if (zoom.isDragging) zoom.dragEnd()
-            }}
+            // onMouseDown={zoom.dragStart}
+            // onMouseMove={zoom.dragMove}
+            // onMouseUp={zoom.dragEnd}
           >
             {tree.links().map((link, i) => (
               <LinkHorizontal
@@ -211,9 +214,10 @@ export const Playground = <T extends TreeNode>({
                       strokeDasharray={node.data.children ? "0" : "2,2"}
                       strokeOpacity={node.data.children ? 1 : 0.6}
                       rx={node.data.children ? 0 : 10}
-                      onClick={() => {
-                        node.data.isExpanded = !node.data.isExpanded
-                        console.log("YIHA")
+                      onClick={(e) => {
+                        // e.stopPropagation()
+                        console.log("YIHA", node)
+                        node.data.isExpanded = !Boolean(node.data.isExpanded)
                         forceUpdate()
                       }}
                     />
