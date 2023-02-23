@@ -16,7 +16,6 @@ specifiers:
   '@use-gesture/core': ^10.2.24
   '@visx/event': ^3.0.1
   '@visx/gradient': ^3.0.0
-  '@visx/group': ^3.0.0
   '@visx/responsive': ^3.0.0
   '@visx/shape': ^3.0.0
   '@visx/zoom': ^3.0.1
@@ -54,7 +53,6 @@ dependencies:
   '@use-gesture/core': 10.2.24
   '@visx/event': 3.0.1
   '@visx/gradient': 3.0.0_react@18.2.0
-  '@visx/group': 3.0.0_react@18.2.0
   '@visx/responsive': 3.0.0_react@18.2.0
   '@visx/shape': 3.0.0_react@18.2.0
   '@visx/zoom': 3.0.1_react@18.2.0

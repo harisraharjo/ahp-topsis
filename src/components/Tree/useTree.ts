@@ -5,6 +5,7 @@ import type {
   HierarchyPointNode,
   HierarchyPointLink,
 } from "d3-hierarchy"
+import { hierarchy } from "d3-hierarchy"
 import { tree as d3Tree } from "d3-hierarchy"
 import { useState } from "react"
 
@@ -37,16 +38,27 @@ export type UseTreeProps<Datum> = {
 }
 
 export function useTree<Datum>(
-  root: UseTreeProps<Datum>["root"],
+  data: Datum,
+  accessor:
+    | ((d: Datum) => Iterable<Datum> | null | undefined)
+    | undefined
+    | undefined,
   size?: [number, number],
   separation?: UseTreeProps<Datum>["separation"],
   nodeSize?: [number, number],
 ) {
-  const [tree] = useState(() => d3Tree<Datum>())
+  const [tree] = useState(() => {
+    const _tree = d3Tree<Datum>()
+
+    return _tree
+    // _tree.size
+  })
+
   size && tree.size(size as [number, number])
   separation &&
     tree.separation(separation as Parameters<(typeof tree)["separation"]>[0])
   nodeSize && tree.nodeSize(nodeSize as [number, number])
 
-  return tree(root)
+  const da = hierarchy(data, accessor)
+  return tree(da)
 }

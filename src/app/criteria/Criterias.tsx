@@ -1,6 +1,6 @@
 import type { RawQueryValue } from "~server/db/utils"
-import { Playground } from "./Playground"
-// import { GeoCustom } from "./geo"
+import { Playground } from "./(Playground)"
+import { Hierarchy } from "./(Playground)/Hierarchy"
 
 type AD = Awaited<RawQueryValue<"Criteria", "update">[]>
 
@@ -27,10 +27,10 @@ const data: AD = [
   { id: 92, parentId: 3, name: "NasionalA", scale: null, weight: 1.23 },
   { id: 94, parentId: 3, name: "NasionalC", scale: null, weight: 1.23 },
   { id: 95, parentId: 3, name: "NasionalD", scale: null, weight: 1.23 },
-  { id: 93, parentId: 3, name: "NasionalB", scale: null, weight: 1.23 },
-  { id: 96, parentId: 3, name: "NasionalE", scale: null, weight: 1.23 },
-  { id: 97, parentId: 3, name: "NasionalG", scale: null, weight: 1.23 },
-  { id: 98, parentId: 3, name: "NasionalH", scale: null, weight: 1.23 },
+  // { id: 93, parentId: 3, name: "NasionalB", scale: null, weight: 1.23 },
+  // { id: 96, parentId: 3, name: "NasionalE", scale: null, weight: 1.23 },
+  // { id: 97, parentId: 3, name: "NasionalG", scale: null, weight: 1.23 },
+  // { id: 98, parentId: 3, name: "NasionalH", scale: null, weight: 1.23 },
   { id: 3, parentId: 0, name: "Prestasi", scale: null, weight: 1.23 },
   {
     id: 62,
@@ -76,23 +76,29 @@ const data: AD = [
   },
 ]
 
+const structure = {
+  height: 900,
+  width: 900,
+  margin: { top: 20, left: 30, right: 30, bottom: 20 },
+}
+
 // const criterias = selectAllCriteria().execute()
 export const Criterias = () => {
   const da = destructure(data)
 
   return (
     <>
-      {/* <GeoCustom height={900} width={900} /> */}
-      <Playground data={da} height={900} width={900} />
-      {/* {data.map((criteria) => {
-        return (
-          // <div key={criteria.id}>
-          //   {criteria.id}
-          //   {criteria.name}
-          //   {criteria.parentId}
-          // </div>
-        )
-      })} */}
+      <Playground height={900} width={900}>
+        <Hierarchy
+          data={da}
+          width={
+            structure.width - structure.margin.left - structure.margin.right
+          }
+          height={
+            structure.height - structure.margin.top - structure.margin.bottom
+          }
+        />
+      </Playground>
     </>
   )
 }

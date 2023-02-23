@@ -7,6 +7,7 @@ import type {
   NativeHandlers,
   UserGestureConfig,
 } from "@use-gesture/core/types"
+import { Controller } from "@use-gesture/core"
 
 export type {
   GestureHandlers,
@@ -26,14 +27,19 @@ export function useGesture(
   handlers: GestureHandlers,
   config?: UserGestureConfig,
 ) {
-  const [
-    {
+  const [state] = useState(() => {
+    const {
       handlers: _handlers,
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       nativeHandlers,
       config: _config,
-    },
-  ] = useState(() => createUseGesture(handlers, config))
+    } = createUseGesture(handlers, config)
+    const ctrl = new Controller(_handlers)
+    ctrl.applyHandlers(_handlers, nativeHandlers as NativeHandlers)
+    ctrl.applyConfig(_config)
 
-  return useRecognizers(_handlers, _config, nativeHandlers as NativeHandlers)
+    return { ctrl, target: _config.target }
+  })
+
+  return useRecognizers(state)
 }

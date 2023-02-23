@@ -1,11 +1,10 @@
-import { useEffect, useState } from "react"
+"use client"
+
+import { useEffect } from "react"
 import type {
-  GenericOptions,
-  GestureKey,
-  InternalHandlers,
-  NativeHandlers,
   UserGestureConfig,
   GestureHandlers,
+  Target,
 } from "@use-gesture/core/types"
 
 import {
@@ -13,17 +12,16 @@ import {
   pinchAction,
   registerAction,
   wheelAction,
-  moveAction,
   // scrollAction,
   // hoverAction,
 } from "@use-gesture/core/actions"
-import { Controller, parseMergedHandlers } from "@use-gesture/core"
+import type { Controller } from "@use-gesture/core"
+import { parseMergedHandlers } from "@use-gesture/core"
 
 const actions = [
   dragAction,
   pinchAction,
   wheelAction,
-  moveAction,
   // scrollAction,
   // hoverAction,
 ]
@@ -35,30 +33,13 @@ export function createUseGesture<
   return parseMergedHandlers(_handlers, _config || {})
 }
 
-/**
- * Utility hook called by all gesture hooks and that will be responsible for
- * the internals.
- *
- * @param {InternalHandlers} handlers
- * @param {GenericOptions} config
- * @param {GestureKey} gestureKey
- * @param {NativeHandler} nativeHandlers
- * @returns nothing when config.target is set, a binding function when not.
- */
-export function useRecognizers<Config extends GenericOptions>(
-  handlers: InternalHandlers,
-  config: Config = {} as Config,
-  nativeHandlers?: NativeHandlers,
-  gestureKey?: GestureKey,
-) {
-  const [ctrl] = useState(() => {
-    const c = new Controller(handlers)
-    c.applyHandlers(handlers, nativeHandlers)
-    c.applyConfig(config, gestureKey)
-
-    return c
-  })
-
+export function useRecognizers({
+  ctrl,
+  target,
+}: {
+  ctrl: Controller
+  target: Target | undefined
+}) {
   useEffect(ctrl.effect.bind(ctrl))
 
   useEffect(() => {
@@ -67,8 +48,7 @@ export function useRecognizers<Config extends GenericOptions>(
 
   // When target is undefined we return the bind function of the controller which
   // returns prop handlers.
-
-  if (config.target === undefined) {
+  if (target === undefined) {
     return ctrl.bind.bind(ctrl)
   }
 
