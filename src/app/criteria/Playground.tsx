@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { ReactNode, useState } from "react"
 import { Group } from "@visx/group"
 import { LinearGradient } from "@visx/gradient"
 
@@ -10,6 +10,10 @@ import { LinkHorizontal } from "@visx/shape"
 import { useZoom } from "./(use-zoom)"
 import { useTree } from "~components/Tree"
 import { hierarchy } from "d3-hierarchy"
+import { animate } from "motion"
+import { localPoint } from "@visx/event"
+import { Point } from "./(use-zoom)/types"
+import { translateDelta } from "./(use-zoom)/Zoom"
 
 export interface TreeNode {
   name: string
@@ -24,7 +28,6 @@ export interface TreeNode {
 function useForceUpdate() {
   const [, setValue] = useState<boolean>(false)
   return () => {
-    console.log("TRIGGER")
     setValue((prev) => !prev)
   }
 }
@@ -87,7 +90,7 @@ export const Playground = <T extends TreeNode>({
   const tree = useTree(
     hierarchy(data, (d: TreeNode) => (d.isExpanded ? null : d.children)),
     [sizeWidth, sizeHeight],
-    (a, b) => (a.parent === b.parent ? 1 : 0.5) / a.depth,
+    (a, b) => (a.parent === b.parent ? 1 : 0.5),
   )
 
   const { containerRef, ...zoom } = useZoom<SVGSVGElement>({
@@ -167,8 +170,8 @@ export const Playground = <T extends TreeNode>({
               />
             ))}
             {tree.descendants().map((node, key) => {
-              const width = 100
-              const height = 100
+              const width = 30
+              const height = 30
 
               let top: number
               let left: number
@@ -196,14 +199,14 @@ export const Playground = <T extends TreeNode>({
                       r={50}
                       fill="url('#links-gradient')"
                       onClick={() => {
-                        node.data.isExpanded = !node.data.isExpanded
-                        console.log("YAHO")
+                        node.data.isExpanded = !Boolean(node.data.isExpanded)
                         forceUpdate()
                       }}
                     />
                   )}
                   {node.depth !== 0 && (
                     <rect
+                      // id={`rect-${key}`}
                       height={height}
                       width={width}
                       y={-height / 2}
@@ -213,31 +216,48 @@ export const Playground = <T extends TreeNode>({
                       strokeWidth={1}
                       strokeDasharray={node.data.children ? "0" : "2,2"}
                       strokeOpacity={node.data.children ? 1 : 0.6}
-                      rx={node.data.children ? 0 : 10}
-                      onClick={(e) => {
-                        // e.stopPropagation()
-                        console.log("YIHA", node)
+                      rx={node.data.children ? 2 : 15}
+                      // onTouchStart={zoom.dragStart}
+                      // onTouchMove={(e) => {
+                      //   const point = localPoint(e) as Point
+                      //   const { dx, dy } = translateDelta(point, e).value
+                      //   animate(`#rect-${key}`, {
+                      //     x: dx + 300,
+                      //     y: dy + 300,
+                      //   })
+                      //   forceUpdate()
+                      // }}
+                      // onTouchEnd={zoom.dragEnd}
+                      // onMouseLeave={() => {
+                      //   if (zoom.isDragging) zoom.dragEnd()
+                      // }}
+                      onClick={() => {
                         node.data.isExpanded = !Boolean(node.data.isExpanded)
+                        console.log("MOVE", node.x)
+                        node.x = node.x + 300
+                        console.log("MOVE2", node.x)
                         forceUpdate()
                       }}
                     />
                   )}
-                  <text
-                    dy=".33em"
-                    fontSize={9}
-                    fontFamily="Arial"
-                    textAnchor="middle"
-                    style={{ pointerEvents: "none" }}
-                    fill={
-                      node.depth === 0
-                        ? "#71248e"
-                        : node.children
-                        ? "white"
-                        : "#26deb0"
-                    }
-                  >
+                  {/* <rect
+                    height={30}
+                    width={30}
+                    y={-height / 2}
+                    x={-width / 2}
+                    fill="#272b4d"
+                    stroke={"#03c0dc"}
+                    strokeWidth={1}
+                    strokeDasharray={"0"}
+                    strokeOpacity={1}
+                    rx={2}
+                    onClick={() => {
+                      console.log("ADD ME")
+                    }}
+                  /> */}
+                  <Text depth={node.depth} child={Boolean(node.children)}>
                     {node.data.name}
-                  </text>
+                  </Text>
                 </Group>
               )
             })}
@@ -247,5 +267,28 @@ export const Playground = <T extends TreeNode>({
       </>
       )
     </>
+  )
+}
+
+const Text = ({
+  depth,
+  child,
+  children,
+}: {
+  depth: number
+  child: boolean
+  children: ReactNode
+}) => {
+  return (
+    <text
+      dy=".33em"
+      fontSize={9}
+      fontFamily="Arial"
+      textAnchor="middle"
+      style={{ pointerEvents: "none" }}
+      fill={depth === 0 ? "#71248e" : child ? "white" : "#26deb0"}
+    >
+      {children}
+    </text>
   )
 }

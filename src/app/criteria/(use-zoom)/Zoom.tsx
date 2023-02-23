@@ -263,7 +263,7 @@ ZoomProps): ProvidedZoom<Container> & ZoomState {
 
   useGestureConfig["target"] = containerRef
 
-  useGesture(useGestureHandlers, useGestureConfig)
+  // useGesture(useGestureHandlers, useGestureConfig)
 
   const dragStart = (
     event:
@@ -306,6 +306,7 @@ ZoomProps): ProvidedZoom<Container> & ZoomState {
     options?: { offsetX?: number; offsetY?: number },
   ) => {
     if (!isDragging.current || !startPoint.current) return
+    console.log("HEI JUDE")
 
     const { dx, dy } = translateDelta(startPoint.current, event).value
 
@@ -342,7 +343,7 @@ ZoomProps): ProvidedZoom<Container> & ZoomState {
   }
 }
 
-const translateDelta = <P extends Point>(
+export const translateDelta = <P extends Point>(
   startPoint: P,
   event:
     | ReactMouseEvent

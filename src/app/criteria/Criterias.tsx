@@ -24,6 +24,13 @@ const data: AD = [
   },
   { id: 80, parentId: 1, name: "Bahasa Jawa", scale: null, weight: 1.23 },
   { id: 90, parentId: 3, name: "Nasional", scale: null, weight: 1.23 },
+  { id: 92, parentId: 3, name: "NasionalA", scale: null, weight: 1.23 },
+  { id: 94, parentId: 3, name: "NasionalC", scale: null, weight: 1.23 },
+  { id: 95, parentId: 3, name: "NasionalD", scale: null, weight: 1.23 },
+  { id: 93, parentId: 3, name: "NasionalB", scale: null, weight: 1.23 },
+  { id: 96, parentId: 3, name: "NasionalE", scale: null, weight: 1.23 },
+  { id: 97, parentId: 3, name: "NasionalG", scale: null, weight: 1.23 },
+  { id: 98, parentId: 3, name: "NasionalH", scale: null, weight: 1.23 },
   { id: 3, parentId: 0, name: "Prestasi", scale: null, weight: 1.23 },
   {
     id: 62,
