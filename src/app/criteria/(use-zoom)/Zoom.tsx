@@ -46,11 +46,11 @@ const defaultPinchDelta: PinchDelta = ({
   }
 }
 
-export type ZoomProps = {
-  /** Width of the zoom container. */
-  width: number
-  /** Height of the zoom container. */
-  height: number
+export type ZoomConfig = {
+  // /** Width of the zoom container. */
+  // width: number
+  // /** Height of the zoom container. */
+  // height: number
   /**
    * ```js
    *  wheelDelta(event)
@@ -142,7 +142,7 @@ export function useZoom<Container extends Element>({
   pinchDelta = defaultPinchDelta,
   target,
 }: // constrain,
-ZoomProps): ProvidedZoom<Container> & ZoomState {
+ZoomConfig): ProvidedZoom<Container> & ZoomState {
   const containerRef = useRef<Container>(null)
   const matrixStateRef = useRef<TransformMatrix>(initialTransformMatrix)
 
@@ -365,6 +365,7 @@ const scaleConstraint = (
   scaleMin: number,
 ) => {
   // if (constrain) return constrain(newTransformMatrix, prevTransformMatrix)
+
   const shouldConstrainScaleY = newScale > scaleMax || newScale < scaleMin
   return shouldConstrainScaleY ? prevScale : newScale
 }

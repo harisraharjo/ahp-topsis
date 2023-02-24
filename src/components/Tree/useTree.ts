@@ -47,18 +47,32 @@ export function useTree<Datum>(
   separation?: UseTreeProps<Datum>["separation"],
   nodeSize?: [number, number],
 ) {
-  const [tree] = useState(() => {
-    const _tree = d3Tree<Datum>()
-
-    return _tree
-    // _tree.size
-  })
+  const [tree] = useState(() => d3Tree<Datum>())
 
   size && tree.size(size as [number, number])
   separation &&
     tree.separation(separation as Parameters<(typeof tree)["separation"]>[0])
   nodeSize && tree.nodeSize(nodeSize as [number, number])
 
-  const da = hierarchy(data, accessor)
-  return tree(da)
+  return tree(hierarchy(data, accessor))
 }
+
+// export function constructTreeLayout<Datum>(
+//   tree: TreeLayout<Datum>,
+//   data: Datum,
+//   accessor:
+//     | ((d: Datum) => Iterable<Datum> | null | undefined)
+//     | undefined
+//     | undefined,
+//   size?: [number, number],
+//   separation?: UseTreeProps<Datum>["separation"],
+//   nodeSize?: [number, number],
+// ) {
+//   size && tree.size(size as [number, number])
+//   separation &&
+//     tree.separation(separation as Parameters<(typeof tree)["separation"]>[0])
+//   nodeSize && tree.nodeSize(nodeSize as [number, number])
+
+//   const da = hierarchy(data, accessor)
+//   return tree(da)
+// }

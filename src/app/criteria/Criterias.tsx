@@ -1,15 +1,81 @@
 import type { RawQueryValue } from "~server/db/utils"
-import { Playground } from "./(Playground)"
-import { Hierarchy } from "./(Playground)/Hierarchy"
+import { Playground, Hierarchy } from "./(Playground)"
 
-type AD = Awaited<RawQueryValue<"Criteria", "update">[]>
+type Criterias = Awaited<RawQueryValue<"Criteria", "update">[]>
 
-type Dat<T extends AD> = T[number]
-type Re<T extends AD> = Dat<T> & {
-  children?: Re<T>[]
+const structure = {
+  height: 900,
+  width: 900,
+  margin: { top: 20, left: 30, right: 30, bottom: 20 },
+} as const
+
+// const criterias = selectAllCriteria().execute()
+export const Criterias = () => {
+  const criteriasTree = destructure(data)
+
+  return (
+    <>
+      <Playground height={900} width={900}>
+        <Hierarchy
+          data={criteriasTree}
+          width={
+            structure.width - structure.margin.left - structure.margin.right
+          }
+          height={
+            structure.height - structure.margin.top - structure.margin.bottom
+          }
+        />
+      </Playground>
+    </>
+  )
 }
 
-const data: AD = [
+type Id = string | number
+type Document = { id: Id; parentId: Id | null; name: string }
+type TreeNode<T extends Document> = Document & { children?: TreeNode<T>[] }
+
+function destructure<Data extends Document[]>(
+  data: Data,
+  goal = "Siswa Teladan",
+): TreeNode<{
+  id: 0
+  parentId: -1
+  name: string
+  children: TreeNode<Data[number]>[]
+}> {
+  type IDMap = Record<Document["id"], number>
+  const idMapping = data.reduce((acc, el, i) => {
+    acc[el.id] = i
+
+    return acc
+  }, {} as IDMap)
+
+  const descendants = [] as TreeNode<Data[number]>[]
+  data.forEach((el) => {
+    // Handle the root element
+    if (el.parentId === 0) {
+      descendants.push(el)
+      //continue
+      return
+    }
+
+    // Use our mapping to locate the parent element in our data array
+    // parentId will never be null because the query is filtered
+    const arrayIndex = idMapping[el.parentId as Id] as number
+    const parentEl = data[arrayIndex] as TreeNode<Data[number]>
+    // Add our current el to its parent's `children` array
+    parentEl.children = [...(parentEl.children || []), el]
+  })
+
+  return {
+    id: 0,
+    parentId: -1,
+    name: goal,
+    children: descendants,
+  }
+}
+
+const data: Criterias = [
   { id: 56, parentId: 3, name: "Provinsi", scale: null, weight: 1.53 },
   { id: 81, parentId: 80, name: "Pengetahuan", scale: null, weight: 1.23 },
   { id: 1, parentId: 0, name: "Mata Pelajaran", scale: null, weight: 1.23 },
@@ -19,7 +85,9 @@ const data: AD = [
     id: 2,
     parentId: 0,
     name: "Sikap",
-    scale: { value: ["A", "B", "C", "D"] } as unknown as AD[number]["scale"],
+    scale: {
+      value: ["A", "B", "C", "D"],
+    } as unknown as Criterias[number]["scale"],
     weight: 1.18,
   },
   { id: 80, parentId: 1, name: "Bahasa Jawa", scale: null, weight: 1.23 },
@@ -75,66 +143,3 @@ const data: AD = [
     weight: 1.23,
   },
 ]
-
-const structure = {
-  height: 900,
-  width: 900,
-  margin: { top: 20, left: 30, right: 30, bottom: 20 },
-}
-
-// const criterias = selectAllCriteria().execute()
-export const Criterias = () => {
-  const da = destructure(data)
-
-  return (
-    <>
-      <Playground height={900} width={900}>
-        <Hierarchy
-          data={da}
-          width={
-            structure.width - structure.margin.left - structure.margin.right
-          }
-          height={
-            structure.height - structure.margin.top - structure.margin.bottom
-          }
-        />
-      </Playground>
-    </>
-  )
-}
-
-const destructure = (data: AD) => {
-  const idMapping = data.reduce<{ [x in AD[number]["id"]]: number }>(
-    (acc, el, i) => {
-      acc[el.id] = i
-
-      return acc
-    },
-    {},
-  )
-
-  const baseNodes: AD = []
-  data.forEach((el) => {
-    // Handle the root element
-    if (el.parentId === 0) {
-      baseNodes.push(el)
-      return
-    }
-
-    // Use our mapping to locate the parent element in our data array
-    // parentId will never be null because the query is filtered
-    const arrayIndex = idMapping[el.parentId as number] as AD[number]["id"]
-    const parentEl = data[arrayIndex] as Re<AD>
-    // Add our current el to its parent's `children` array
-    parentEl.children = [...(parentEl.children || []), el]
-  })
-
-  return {
-    id: 0,
-    parentId: -1,
-    name: "Siswa Teladan",
-    scale: null,
-    weight: 0,
-    children: baseNodes,
-  }
-}
