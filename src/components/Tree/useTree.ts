@@ -39,10 +39,7 @@ export type UseTreeProps<Datum> = {
 
 export function useTree<Datum>(
   data: Datum,
-  accessor:
-    | ((d: Datum) => Iterable<Datum> | null | undefined)
-    | undefined
-    | undefined,
+  accessor: ((d: Datum) => Iterable<Datum> | null | undefined) | undefined,
   size?: [number, number],
   separation?: UseTreeProps<Datum>["separation"],
   nodeSize?: [number, number],

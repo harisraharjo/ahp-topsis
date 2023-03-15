@@ -5,6 +5,12 @@ import "../styles/globals.css"
 import { getServerAuthSession } from "~server/auth"
 import Loading from "./loading"
 import { Navigation } from "~components"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  colorScheme: "light",
+  title: "Sistem Penunjang Keputusan",
+} as const
 
 async function RootLayout({ children }: { children: ReactNode }) {
   const session = getServerAuthSession()

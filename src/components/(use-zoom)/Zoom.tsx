@@ -138,8 +138,8 @@ export function useZoom<Container extends Element>({
   scaleYMin = 0,
   scaleYMax = 100,
   initialTransformMatrix = defaultValue.matrix,
-  wheelDelta = defaultWheelDelta,
-  pinchDelta = defaultPinchDelta,
+  wheelDelta,
+  pinchDelta,
   target,
 }: // constrain,
 ZoomConfig): ProvidedZoom<Container> & ZoomState {
@@ -220,7 +220,7 @@ ZoomConfig): ProvidedZoom<Container> & ZoomState {
         currentMemo = currentMemo ?? { top, left }
         const [ox, oy] = origin
         scale({
-          ...pinchDelta(state),
+          ...(pinchDelta || defaultPinchDelta)(state),
           point: { x: ox - left, y: oy - top },
         })
       }
@@ -233,7 +233,9 @@ ZoomConfig): ProvidedZoom<Container> & ZoomState {
   const handleWheel = useCallback(
     (event: ReactWheelEvent | WheelEvent) => {
       event.preventDefault()
-      const res = wheelDelta(event) as Scale & { point: Point | undefined }
+      const res = (wheelDelta || defaultWheelDelta)(event) as Scale & {
+        point: Point | undefined
+      }
       res.point = localPoint(event) || undefined
       scale(res)
     },
@@ -340,7 +342,7 @@ ZoomConfig): ProvidedZoom<Container> & ZoomState {
   }
 }
 
-export const translateDelta = <P extends Point>(
+const translateDelta = <P extends Point>(
   startPoint: P,
   event:
     | ReactMouseEvent

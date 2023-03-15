@@ -1,7 +1,9 @@
 import type { RawQueryValue } from "~server/db/utils"
-import { Playground, Hierarchy } from "./(Playground)"
+import { Hierarchy, Playground } from "~components/(Playground)"
 
 type Criterias = Awaited<RawQueryValue<"Criteria", "update">[]>
+
+// type Accessor = ((d: TreeNode) => Iterable<TreeNode> | null | undefined) | undefined
 
 const structure = {
   height: 900,
@@ -11,19 +13,22 @@ const structure = {
 
 // const criterias = selectAllCriteria().execute()
 export const Criterias = () => {
-  const criteriasTree = destructure(data)
+  const criteriasTree = destructure(dummyData)
+  // const root = hierarchy(criteriasTree, (d: TreeNode) =>
+  //   d.isExpanded ? null : d.children,
+  // )
 
   return (
     <>
       <Playground height={900} width={900}>
         <Hierarchy
-          data={criteriasTree}
           width={
             structure.width - structure.margin.left - structure.margin.right
           }
           height={
             structure.height - structure.margin.top - structure.margin.bottom
           }
+          data={criteriasTree}
         />
       </Playground>
     </>
@@ -32,16 +37,16 @@ export const Criterias = () => {
 
 type Id = string | number
 type Document = { id: Id; parentId: Id | null; name: string }
-type TreeNode<T extends Document> = Document & { children?: TreeNode<T>[] }
+type Node<T extends Document> = Document & { children?: Node<T>[] }
 
 function destructure<Data extends Document[]>(
   data: Data,
   goal = "Siswa Teladan",
-): TreeNode<{
+): Node<{
   id: 0
   parentId: -1
   name: string
-  children: TreeNode<Data[number]>[]
+  children: Node<Data[number]>[]
 }> {
   type IDMap = Record<Document["id"], number>
   const idMapping = data.reduce((acc, el, i) => {
@@ -50,7 +55,7 @@ function destructure<Data extends Document[]>(
     return acc
   }, {} as IDMap)
 
-  const descendants = [] as TreeNode<Data[number]>[]
+  const descendants = [] as Node<Data[number]>[]
   data.forEach((el) => {
     // Handle the root element
     if (el.parentId === 0) {
@@ -62,7 +67,7 @@ function destructure<Data extends Document[]>(
     // Use our mapping to locate the parent element in our data array
     // parentId will never be null because the query is filtered
     const arrayIndex = idMapping[el.parentId as Id] as number
-    const parentEl = data[arrayIndex] as TreeNode<Data[number]>
+    const parentEl = data[arrayIndex] as Node<Data[number]>
     // Add our current el to its parent's `children` array
     parentEl.children = [...(parentEl.children || []), el]
   })
@@ -75,7 +80,7 @@ function destructure<Data extends Document[]>(
   }
 }
 
-const data: Criterias = [
+const dummyData: Criterias = [
   { id: 56, parentId: 3, name: "Provinsi", scale: null, weight: 1.53 },
   { id: 81, parentId: 80, name: "Pengetahuan", scale: null, weight: 1.23 },
   { id: 1, parentId: 0, name: "Mata Pelajaran", scale: null, weight: 1.23 },

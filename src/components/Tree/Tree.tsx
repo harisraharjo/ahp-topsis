@@ -6,7 +6,7 @@ import { useCallback, useState } from "react"
 // import { LinkHorizontal } from "@visx/shape"
 import { Group } from "../Svg"
 import { useTree } from "./useTree"
-import type { HierarchyPointLink } from "d3-hierarchy"
+import type { HierarchyPointLink, HierarchyPointNode } from "d3-hierarchy"
 
 export type TreeNode = {
   id: number | string
@@ -48,7 +48,6 @@ export const Tree = <T extends TreeNode>({
   // const [orientation, setOrientation] = useState<string>("horizontal")
   // const [linkType, setLinkType] = useState<string>("diagonal")
   // const [stepPercent, setStepPercent] = useState<number>(0.5)
-  const redraw = useForceUpdate()
 
   // if (orientation === "vertical") {
   //   sizeWidth = width
@@ -64,7 +63,7 @@ export const Tree = <T extends TreeNode>({
     [width, height],
     (a, b) => (a.parent === b.parent ? 1 : 0.5),
   )
-
+  const redraw = useForceUpdate()
   return (
     <>
       {tree.links().map((link, i) => (
@@ -73,18 +72,38 @@ export const Tree = <T extends TreeNode>({
           data={link}
         />
       ))}
-      {tree.descendants().map((node, key) => {
+      <Nodes<TreeNode>
+        nodes={tree.descendants()}
+        Head={Head}
+        Descendant={Descendant}
+        redraw={redraw}
+      />
+    </>
+  )
+}
+
+type NodesProps<T extends TreeNode> = Pick<
+  TreeProps<T>,
+  "Head" | "Descendant"
+> & {
+  nodes: HierarchyPointNode<T>[]
+  redraw: ReturnType<typeof useForceUpdate>
+}
+const Nodes = <T extends TreeNode>({
+  nodes,
+  Descendant,
+  Head,
+  redraw,
+}: NodesProps<T>) => {
+  return (
+    <>
+      {nodes.map((node, key) => {
         return (
           <Group top={node.x} left={node.y} key={key}>
             {node.depth === 0 && <Head redraw={redraw} />}
             {node.depth !== 0 && (
               <Descendant redraw={redraw} data={node.data} />
             )}
-            {/* <g>
-                    <rect height="10" width="10" fill="red" />
-                    <text>Add</text>
-                  </g> */}
-            {/* <button>Add</button> */}
             <Text depth={node.depth} child={Boolean(node.children)}>
               {node.data.name}
             </Text>
