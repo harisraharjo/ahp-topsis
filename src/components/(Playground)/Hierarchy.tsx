@@ -3,7 +3,6 @@
 import { LinearGradient } from "@visx/gradient"
 import { LinkHorizontal } from "@visx/shape"
 
-import { lazy } from "react"
 import { useMutationDialogContext } from "src/app/criteria/(mutation)/contexts"
 import type { TreeDescendant, TreeEdge, TreeHead, TreeProps } from "~components"
 
@@ -104,7 +103,7 @@ const Descendant: TreeDescendant = ({ data, redraw }) => {
       strokeOpacity={data.children ? 1 : 0.6}
       rx={data.children ? 2 : 15}
       onClick={() => {
-        context?.openDialog("edit")
+        context?.openDialog("add")
         // data.isExpanded = !Boolean(data.isExpanded)
 
         // const newData = {

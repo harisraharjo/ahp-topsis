@@ -10,14 +10,16 @@ const config = {
   reactStrictMode: true,
   experimental: {
     appDir: true,
-    swcPlugins: [
-      [
-        "next-superjson-plugin",
-        {
-          excluded: [],
-        },
-      ],
-    ],
+    typedRoutes: true,
+    // afaik swcPlugins pnly works with < 13.2.3
+    // swcPlugins: [
+    //   [
+    //     "next-superjson-plugin",
+    //     {
+    //       excluded: [],
+    //     },
+    //   ],
+    // ],
   },
   /* If trying out the experimental appDir, comment the i18n config out
    * @see https://github.com/vercel/next.js/issues/41980 */
