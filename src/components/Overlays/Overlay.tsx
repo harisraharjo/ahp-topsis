@@ -30,7 +30,6 @@ export function Overlay({ children }: OverlayProps) {
 
 export function useOverlayFocusContain() {
   const setContain = useContext(OverlayContext)
-  console.log("CONTEXT:", setContain)
   useLayoutEffect(() => {
     setContain?.(true)
   }, [setContain])

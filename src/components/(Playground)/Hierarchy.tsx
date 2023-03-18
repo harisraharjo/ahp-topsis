@@ -2,16 +2,12 @@
 
 import { LinearGradient } from "@visx/gradient"
 import { LinkHorizontal } from "@visx/shape"
-import type { PropsWithChildren } from "react"
+
 import { lazy } from "react"
+import { useMutationDialogContext } from "src/app/criteria/(mutation)/contexts"
 import type { TreeDescendant, TreeEdge, TreeHead, TreeProps } from "~components"
 
 import { Tree } from "~components"
-
-import {
-  ModalTrigger,
-  useModalTrigger,
-} from "~components/Overlays/ModalTrigger"
 
 export type TreeNode = {
   id: number | string
@@ -20,8 +16,6 @@ export type TreeNode = {
   children?: TreeNode[]
   parentId: number | string | null
 }
-
-const SVGDialog = lazy(() => import("./(Dialog)/SVGDialog"))
 
 // export const Container = ({ children }: PropsWithChildren) => {
 //   return (
@@ -43,33 +37,6 @@ const SVGDialog = lazy(() => import("./(Dialog)/SVGDialog"))
 //   )
 // }
 
-export const Container = ({ children }: PropsWithChildren) => {
-  const { modal, toggle, isOpen } = useModalTrigger(
-    (overlayProps, overlayRef, close) => (
-      <SVGDialog overlayRef={overlayRef} overlayProps={overlayProps}>
-        <h1>Hello Dialog</h1>
-        {/* <button onClick={close}>Close</button> */}
-      </SVGDialog>
-    ),
-    { isDismissable: true },
-  )
-
-  return (
-    <>
-      <PlaygroundContextProvider value={toggle}>
-        {children}
-      </PlaygroundContextProvider>
-      {isOpen &&
-        createPortal(
-          <foreignObject width={900} height={900}>
-            {modal}
-          </foreignObject>,
-          document.getElementById("svgRoot") as HTMLElement,
-        )}
-    </>
-  )
-}
-
 type HierarchyProps<T extends TreeNode> = Omit<
   TreeProps<T>,
   "Edge" | "Descendant" | "Head"
@@ -80,16 +47,14 @@ export const Hierarchy = <T extends TreeNode>({
   data,
 }: HierarchyProps<T>) => {
   return (
-    <Container>
-      <Tree
-        width={width}
-        height={height}
-        data={data}
-        Edge={Edge}
-        Head={Head}
-        Descendant={Descendant}
-      />
-    </Container>
+    <Tree
+      width={width}
+      height={height}
+      data={data}
+      Edge={Edge}
+      Head={Head}
+      Descendant={Descendant}
+    />
   )
 }
 
@@ -120,7 +85,7 @@ const Head: TreeHead = ({ redraw }) => {
 }
 
 const Descendant: TreeDescendant = ({ data, redraw }) => {
-  const toggle = usePlaygroundContext()
+  const context = useMutationDialogContext()
 
   const width = 50,
     height = width
@@ -139,7 +104,7 @@ const Descendant: TreeDescendant = ({ data, redraw }) => {
       strokeOpacity={data.children ? 1 : 0.6}
       rx={data.children ? 2 : 15}
       onClick={() => {
-        toggle?.()
+        context?.openDialog("edit")
         // data.isExpanded = !Boolean(data.isExpanded)
 
         // const newData = {
@@ -158,16 +123,4 @@ const Descendant: TreeDescendant = ({ data, redraw }) => {
       }}
     />
   )
-}
-
-import { createContext, useContext } from "react"
-import type { Close } from "~components/Overlays/useModalOverlay"
-import { createPortal } from "react-dom"
-
-const PlaygroundContext = createContext<Close | undefined>(undefined)
-
-export const PlaygroundContextProvider = PlaygroundContext.Provider
-
-export function usePlaygroundContext() {
-  return useContext(PlaygroundContext)
 }

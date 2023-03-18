@@ -14,13 +14,14 @@ const structure = {
 // const criterias = selectAllCriteria().execute()
 export const Criterias = () => {
   const criteriasTree = destructure(dummyData)
-  // const root = hierarchy(criteriasTree, (d: TreeNode) =>
-  //   d.isExpanded ? null : d.children,
-  // )
 
   return (
     <>
-      <Playground height={900} width={900}>
+      <Playground
+        height={900}
+        width={900}
+        dialogContent={<div>Dialog Content</div>}
+      >
         <Hierarchy
           width={
             structure.width - structure.margin.left - structure.margin.right

@@ -1,22 +1,30 @@
 "use client"
 
-import { lazy, type PropsWithChildren } from "react"
+import type { ReactNode, PropsWithChildren } from "react"
 import { useMemo } from "react"
 
 import { useZoom } from "../(use-zoom)"
 import { Group } from "~components"
 import type { ZoomConfig } from "../(use-zoom)/Zoom"
+import { MutationDialog } from "../../app/criteria/(mutation)/MutationDialog"
+import { createPortal } from "react-dom"
 
 type PlaygroundProps = PropsWithChildren<{
   width: number
   height: number
+  dialogContent: ReactNode
 }>
 
 const origin = { x: 0, y: 0 }
 
 const ZOOM_TARGET_ID = "zoom_target" as const
 
-export const Playground = ({ width, height, children }: PlaygroundProps) => {
+export const Playground = ({
+  width,
+  height,
+  children,
+  dialogContent,
+}: PlaygroundProps) => {
   const zoomConfig = useMemo<ZoomConfig>(() => {
     const initialScale = width / 630
     const TARGET = `#${ZOOM_TARGET_ID}` as const
@@ -68,41 +76,21 @@ export const Playground = ({ width, height, children }: PlaygroundProps) => {
           }}
         />
         <Group top={origin.y} left={origin.x} id={ZOOM_TARGET_ID}>
-          {children}
+          <MutationDialog
+            dialogContent={dialogContent}
+            container={(modalDialog) =>
+              createPortal(
+                <foreignObject width={width} height={height}>
+                  {modalDialog}
+                </foreignObject>,
+                zoom.containerRef.current as SVGSVGElement,
+              )
+            }
+          >
+            {children}
+          </MutationDialog>
         </Group>
       </svg>
     </>
   )
 }
-
-// import { ModalTrigger } from "~components/Overlays/ModalTrigger"
-// const SVGDialog = lazy(() => import("./(Dialog)/SVGDialog"))
-// const Container = ({ children }: PropsWithChildren) => {
-//   return (
-//     <ModalTrigger
-//       triggerElement={(close) => (
-//         <PlaygroundContextProvider value={close}>
-//           {children}
-//         </PlaygroundContextProvider>
-//       )}
-//     >
-//       {(overlayProps, overlayRef, close) => (
-//         <SVGDialog overlayRef={overlayRef} overlayProps={overlayProps}>
-//           <h1>Hello Dialog</h1>
-//           {/* <button onClick={close}>Close</button> */}
-//         </SVGDialog>
-//       )}
-//     </ModalTrigger>
-//   )
-// }
-
-// import { createContext, useContext } from "react"
-// import type { Close } from "~components/Overlays/useModalOverlay"
-
-// const PlaygroundContext = createContext<Close | undefined>(undefined)
-
-// export const PlaygroundContextProvider = PlaygroundContext.Provider
-
-// export function usePlaygroundContext() {
-//   return useContext(PlaygroundContext)
-// }

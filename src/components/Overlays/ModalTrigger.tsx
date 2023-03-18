@@ -1,13 +1,12 @@
 "use client"
 
-import type { ReactElement } from "react"
-import { Suspense } from "react"
+import type { ReactElement, ReactNode, ReactPortal } from "react"
+
 import { lazy } from "react"
-import { createPortal } from "react-dom"
 
 import type { ModalProps, OverlayElement } from "./Modal"
 import type { Close } from "./useModalOverlay"
-import { useOverlayTrigger, type Trigger } from "./useOverlayTrigger"
+import { useOverlayTrigger } from "./useOverlayTrigger"
 
 const Modal = lazy(() => import("./Modal"))
 
@@ -18,12 +17,19 @@ export type ModalTriggerProps<T extends HTMLElement> = Omit<
   ModalProps<T>,
   "isOpen" | "onClose"
 > &
-  TriggerElement
+  TriggerElement & {
+    // portalContainer: Element | DocumentFragment
+    modalContainer: (modalDialog: ReactElement) => ReactElement
+    WrapperElement: <Props extends { children: ReactNode }>(
+      arg: Props,
+    ) => ReactElement | ReactPortal
+  }
 
 export const ModalTrigger = <T extends HTMLElement>({
   children,
   triggerElement,
-  // Container,
+  WrapperElement,
+  modalContainer,
   ...props
 }: ModalTriggerProps<T>) => {
   const { isOpen, toggle } = useOverlayTrigger()
@@ -31,23 +37,23 @@ export const ModalTrigger = <T extends HTMLElement>({
   return (
     <>
       {triggerElement(toggle)}
-      {isOpen && (
-        <Modal isOpen={isOpen} onClose={toggle} {...props}>
-          {children as OverlayElement<HTMLElement>}
-        </Modal>
-      )}
+      {isOpen &&
+        modalContainer(
+          <Modal isOpen={isOpen} onClose={toggle} {...props}>
+            {children as OverlayElement<HTMLElement>}
+          </Modal>,
+        )}
     </>
   )
 }
 
-type Res = Omit<Trigger, "setIsOpen"> & { modal: ReactElement | false }
 export const useModalTrigger = <T extends HTMLElement>(
   children: ModalTriggerProps<T>["children"],
   config: Pick<
     ModalTriggerProps<T>,
     "isDismissable" | "isKeyboardDismissDisabled"
   >,
-): Res => {
+) => {
   const { isOpen, toggle } = useOverlayTrigger()
 
   return {

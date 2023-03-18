@@ -7,12 +7,17 @@ import type { OverlayProps, OverlayRef } from "~components/Overlays/Modal"
 const config = { role: "dialog" } as const
 
 export type Props = PropsWithChildren<{
-  className?: Pick<HTMLDivElement, "className">["className"]
+  className?: string | "border border-solid border-gray-400"
   overlayRef: OverlayRef<HTMLElement>
   overlayProps: OverlayProps
 }>
 
-const Dialog = ({ overlayProps, children, className, overlayRef }: Props) => {
+const Dialog = ({
+  overlayProps,
+  children,
+  className = "border border-solid border-gray-400",
+  overlayRef,
+}: Props) => {
   const { dialogProps } = useDialog(config, overlayRef)
 
   return (
@@ -20,7 +25,7 @@ const Dialog = ({ overlayProps, children, className, overlayRef }: Props) => {
       {...overlayProps}
       {...dialogProps}
       ref={overlayRef as OverlayRef<HTMLDivElement>}
-      className={className || "border border-solid border-gray-400 bg-red-800"}
+      className={className}
     >
       {children}
     </div>
