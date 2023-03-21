@@ -1,5 +1,6 @@
 import type { RawQueryValue } from "~server/db/utils"
 import { Hierarchy, Playground } from "~components/(Playground)"
+// import { MutationDialogContent } from "./(mutation)/(MutationDialogContent)"
 
 type Criterias = Awaited<RawQueryValue<"Criteria", "update">[]>
 
@@ -20,7 +21,7 @@ export const Criterias = () => {
       <Playground
         height={900}
         width={900}
-        dialogContent={<div>Dialog Content</div>}
+        // dialogContent={<MutationDialogContent />}
       >
         <Hierarchy
           width={

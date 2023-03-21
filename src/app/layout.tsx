@@ -3,7 +3,7 @@ import { Suspense } from "react"
 
 import "../styles/globals.css"
 import { getServerAuthSession } from "~server/auth"
-import Loading from "./loading"
+import Loading from "./aloading"
 import { Navigation } from "~components"
 import type { Metadata } from "next"
 

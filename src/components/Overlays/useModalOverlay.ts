@@ -7,7 +7,7 @@ import type {
   DOMAttributes as ReactDOMAttributes,
 } from "react"
 import type { AriaModalOverlayProps } from "@react-aria/overlays"
-import { usePreventScroll } from "@react-aria/overlays"
+// import { usePreventScroll } from "@react-aria/overlays"
 
 export interface FocusableElement extends Element, HTMLOrSVGElement {}
 
@@ -47,10 +47,9 @@ export function useModalOverlay(
   preventScroll: boolean,
   // config: ModalOverlayConfig,
 ) {
-  usePreventScroll({
-    isDisabled: !preventScroll,
-  })
-
+  // usePreventScroll({
+  //   isDisabled: !preventScroll,
+  // })
   // return {
   //   // modalProps: mergeProps(overlayProps),
   //   modalProps,

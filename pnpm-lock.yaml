@@ -3,7 +3,6 @@ lockfileVersion: 5.4
 specifiers:
   '@paralleldrive/cuid2': ^2.2.0
   '@planetscale/database': ^1.6.0
-  '@react-aria/dialog': ^3.5.0
   '@react-aria/focus': ^3.11.0
   '@react-aria/overlays': ^3.13.0
   '@types/d3-geo': ^3.0.3
@@ -41,6 +40,7 @@ specifiers:
   prisma: ^4.11.0
   react: 18.2.0
   react-dom: 18.2.0
+  react-hook-form: ^7.43.7
   react-merge-refs: ^2.0.1
   superjson: 1.12.2
   svg-sprite-loader: ^6.0.11
@@ -52,7 +52,6 @@ specifiers:
 dependencies:
   '@paralleldrive/cuid2': 2.2.0
   '@planetscale/database': 1.6.0
-  '@react-aria/dialog': 3.5.0_biqbaboplfbrettd7655fr4n2y
   '@react-aria/focus': 3.11.0_react@18.2.0
   '@react-aria/overlays': 3.13.0_biqbaboplfbrettd7655fr4n2y
   '@use-gesture/core': 10.2.24
@@ -72,6 +71,7 @@ dependencies:
   next-superjson-plugin: 0.5.6_75m7oggamdjnfhhmgkdxdhs2c4
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
+  react-hook-form: 7.43.7_react@18.2.0
   react-merge-refs: 2.0.1
   superjson: 1.12.2
   use-onclickoutside: 0.4.1_pmekkgnqduwlme35zpnqhenc34
@@ -468,23 +468,6 @@ packages:
     requiresBuild: true
     dev: true
 
-  /@react-aria/dialog/3.5.0_biqbaboplfbrettd7655fr4n2y:
-    resolution: {integrity: sha512-QcGwrNSn7hya6tcs0CTuYEMYBPk6YT1vaO6xMTfsSyRhJNCRvvtx/NJ3Bg26M7WvzbuC2aKaSDBw2c14ZeXr5g==}
-    peerDependencies:
-      react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0
-    dependencies:
-      '@react-aria/focus': 3.11.0_react@18.2.0
-      '@react-aria/overlays': 3.13.0_biqbaboplfbrettd7655fr4n2y
-      '@react-aria/utils': 3.15.0_react@18.2.0
-      '@react-stately/overlays': 3.5.0_react@18.2.0
-      '@react-types/dialog': 3.5.0_react@18.2.0
-      '@react-types/shared': 3.17.0_react@18.2.0
-      '@swc/helpers': 0.4.14
-      react: 18.2.0
-    transitivePeerDependencies:
-      - react-dom
-    dev: false
-
   /@react-aria/focus/3.11.0_react@18.2.0:
     resolution: {integrity: sha512-yPuWs9bAR9CMfIwyOPm2oXLPF19gNkUqW+ozSPhWbLMTEa8Ma09eHW1br4xbN+4ONOm/dCJsIkxTNPUkiLdQoA==}
     peerDependencies:
@@ -606,16 +589,6 @@ packages:
     peerDependencies:
       react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0
     dependencies:
-      '@react-types/shared': 3.17.0_react@18.2.0
-      react: 18.2.0
-    dev: false
-
-  /@react-types/dialog/3.5.0_react@18.2.0:
-    resolution: {integrity: sha512-QsHqAK8zE4QSCQTJcRm/e6vweSE8S62o4GGvm+e+crMro/doA4it1Y4udE94Yy3WyDQEMFxyfd2P1Q6bI9JuyQ==}
-    peerDependencies:
-      react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0
-    dependencies:
-      '@react-types/overlays': 3.7.0_react@18.2.0
       '@react-types/shared': 3.17.0_react@18.2.0
       react: 18.2.0
     dev: false
@@ -3690,6 +3663,15 @@ packages:
       loose-envify: 1.4.0
       react: 18.2.0
       scheduler: 0.23.0
+    dev: false
+
+  /react-hook-form/7.43.7_react@18.2.0:
+    resolution: {integrity: sha512-38yehQkQQ5uufaPKFScs7jhLE8n3+LG9H/BZfFAiBL2+7piDmw/BrdNJV4irzMaPnWZGhmGLHVICHXNVGIuXZg==}
+    engines: {node: '>=12.22.0'}
+    peerDependencies:
+      react: ^16.8.0 || ^17 || ^18
+    dependencies:
+      react: 18.2.0
     dev: false
 
   /react-is/16.13.1:

@@ -1,30 +1,31 @@
 "use client"
 
-import type { ReactNode, PropsWithChildren } from "react"
+import type { PropsWithChildren } from "react"
 import { useMemo } from "react"
 
-import { useZoom } from "../(use-zoom)"
+import { useZoom } from "../../../components/(use-zoom)"
 import { Group } from "~components"
-import type { ZoomConfig } from "../(use-zoom)/Zoom"
-import { MutationDialog } from "../../app/criteria/(mutation)/MutationDialog"
-import { createPortal } from "react-dom"
+import type { ZoomConfig } from "../../../components/(use-zoom)/Zoom"
+
+// import { MutationDialog } from "../../app/kriteria/(mutation)/MutationDialog"
+// import { createPortal } from "react-dom"
 
 type PlaygroundProps = PropsWithChildren<{
   width: number
   height: number
-  dialogContent: ReactNode
+  // dialogContent: ReactNode
 }>
 
 const origin = { x: 0, y: 0 }
 
 const ZOOM_TARGET_ID = "zoom_target" as const
 
-export const Playground = ({
+export const Surface = ({
   width,
   height,
   children,
-  dialogContent,
-}: PlaygroundProps) => {
+}: // dialogContent,
+PlaygroundProps) => {
   const zoomConfig = useMemo<ZoomConfig>(() => {
     const initialScale = width / 630
     const TARGET = `#${ZOOM_TARGET_ID}` as const
@@ -50,10 +51,10 @@ export const Playground = ({
 
   return (
     <>
-      <button onClick={() => zoom.scale({ scaleX: 1.2, scaleY: 1.2 })}>
+      {/* <button onClick={() => zoom.scale({ scaleX: 1.2, scaleY: 1.2 })}>
         Scale
-      </button>
-      <button onClick={zoom.reset}>Reset</button>
+      </button> */}
+      {/* <button onClick={zoom.reset}>Reset</button> */}
       <svg
         width={width}
         height={height}
@@ -76,7 +77,9 @@ export const Playground = ({
           }}
         />
         <Group top={origin.y} left={origin.x} id={ZOOM_TARGET_ID}>
-          <MutationDialog
+          {children}
+          {/* <MutationDialog
+            className="bg-white p-4"
             dialogContent={dialogContent}
             container={(modalDialog) =>
               createPortal(
@@ -88,7 +91,7 @@ export const Playground = ({
             }
           >
             {children}
-          </MutationDialog>
+          </MutationDialog> */}
         </Group>
       </svg>
     </>

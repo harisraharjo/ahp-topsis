@@ -1,12 +1,15 @@
 "use client"
 
 import type { ReactElement, ReactNode } from "react"
+import { useEffect } from "react"
 import { useCallback, useState } from "react"
 
 // import { LinkHorizontal } from "@visx/shape"
 import { Group } from "../Svg"
 import { useTree } from "./useTree"
 import type { HierarchyPointLink, HierarchyPointNode } from "d3-hierarchy"
+// import { TreeProvider } from "./Provider"
+import { usePanelContext } from "~components/(Playground)/PanelProvider"
 
 export type TreeNode = {
   id: number | string
@@ -64,6 +67,7 @@ export const Tree = <T extends TreeNode>({
     (a, b) => (a.parent === b.parent ? 1 : 0.5),
   )
   const redraw = useForceUpdate()
+
   return (
     <>
       {tree.links().map((link, i) => (
@@ -72,14 +76,46 @@ export const Tree = <T extends TreeNode>({
           data={link}
         />
       ))}
+      <PanelSubscriber data={tree.data} />
       <Nodes<TreeNode>
         nodes={tree.descendants()}
         Head={Head}
         Descendant={Descendant}
         redraw={redraw}
       />
+      {/* <TreeProvider tree={tree}>
+      </TreeProvider> */}
+      {/* {createPortal(
+        <button
+          onClick={() => {
+            const ada = tree.data
+            console.log(ada)
+          }}
+        >
+          Save Me
+        </button>,
+        document.getElementById("panel") as Element,
+      )} */}
     </>
   )
+}
+
+type PanelSubscriberProps<T extends TreeNode> = {
+  data: T
+}
+const PanelSubscriber = <T extends TreeNode>({
+  data,
+}: PanelSubscriberProps<T>) => {
+  const [mode] = usePanelContext()
+
+  useEffect(() => {
+    console.log("CURRENT MODE:", mode)
+    if (mode === "edit") {
+      console.log("CURRENT Data:", data)
+    }
+  }, [mode])
+
+  return null
 }
 
 type NodesProps<T extends TreeNode> = Pick<
@@ -116,6 +152,8 @@ const Nodes = <T extends TreeNode>({
 
 function useForceUpdate() {
   const [, setValue] = useState<boolean>(false)
+  // TODO: add function to get current data everytime there is an update and append it to global state
+  // TODO: add function to edit and add node/nodes and pass it to the dialog
 
   return useCallback(() => {
     setValue((prev) => !prev)

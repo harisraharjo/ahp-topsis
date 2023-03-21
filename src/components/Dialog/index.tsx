@@ -1,10 +1,8 @@
 "use client"
 
 import type { PropsWithChildren } from "react"
-import { useDialog } from "@react-aria/dialog"
 import type { OverlayProps, OverlayRef } from "~components/Overlays/Modal"
-
-const config = { role: "dialog" } as const
+import { useDialog } from "./useDialog"
 
 export type Props = PropsWithChildren<{
   className?: string | "border border-solid border-gray-400"
@@ -15,17 +13,17 @@ export type Props = PropsWithChildren<{
 const Dialog = ({
   overlayProps,
   children,
-  className = "border border-solid border-gray-400",
+  className = "",
   overlayRef,
 }: Props) => {
-  const { dialogProps } = useDialog(config, overlayRef)
+  const { dialogProps } = useDialog(overlayRef)
 
   return (
     <div
       {...overlayProps}
       {...dialogProps}
       ref={overlayRef as OverlayRef<HTMLDivElement>}
-      className={className}
+      className={`rounded border border-solid border-gray-400 shadow-lg ${className}`}
     >
       {children}
     </div>

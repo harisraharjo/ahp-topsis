@@ -1,4 +1,5 @@
 import type { ReactNode } from "react"
+import { Panel } from "~components/(Playground)/Panel"
 import { redirectIfUnauthorized } from "~server/auth"
 
 export default async function Layout({ children }: { children: ReactNode }) {
@@ -7,7 +8,7 @@ export default async function Layout({ children }: { children: ReactNode }) {
   return (
     <div>
       LAYOUT
-      {children}
+      <Panel>{children}</Panel>
     </div>
   )
 }

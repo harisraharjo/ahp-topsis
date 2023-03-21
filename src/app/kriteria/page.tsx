@@ -3,18 +3,20 @@
 // import { AddCriteria } from "./AddCriteria"
 // import { Criterias } from "./Criterias"
 
-import { Suspense } from "react"
-import { Criterias } from "./Criterias"
-import Loading from "./loading"
+// import { Suspense } from "react"
+// import { Criterias } from "./Criterias"
+// import Loading from "./loading"
 
 // import Loading from "./loading"
 
 export default function Page() {
+  console.log("THE PAGE")
   return (
     <div>
-      <Suspense fallback={<Loading />}>
+      HALO Criteria Page
+      {/* <Suspense fallback={<Loading />}>
         <Criterias />
-      </Suspense>
+      </Suspense> */}
       <br />
     </div>
   )
