@@ -1,7 +1,7 @@
 "use client"
 
 import type { PropsWithChildren } from "react"
-import type { OverlayProps, OverlayRef } from "~components/Overlays/Modal"
+import type { OverlayProps, OverlayRef } from "~components/Overlays/OldModal"
 import { useDialog } from "./useDialog"
 
 export type Props = PropsWithChildren<{

@@ -43,10 +43,9 @@ export type ModalOverlayConfig = AriaModalOverlayProps & ModalOverlayState
  * Provides the behavior and accessibility implementation for a modal component.
  * A modal is an overlay element which blocks interaction with elements outside it.
  */
-export function useModalOverlay(
-  preventScroll: boolean,
-  // config: ModalOverlayConfig,
-) {
+export function useModalOverlay() {
+// preventScroll: boolean,
+// config: ModalOverlayConfig,
   // usePreventScroll({
   //   isDisabled: !preventScroll,
   // })

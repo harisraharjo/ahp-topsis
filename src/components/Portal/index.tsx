@@ -9,11 +9,11 @@ type PortalProps = PropsWithChildren<{
   id: string
 }>
 const Portal = ({ children, id }: PortalProps) => {
-  const ref = useRef<Element>()
+  const ref = useRef<Element | null>(null)
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    ref.current = document.getElementById(id) as Element
+    ref.current = document.getElementById(id)
     setMounted(true)
   }, [id])
 

@@ -55,45 +55,37 @@ PlaygroundProps) => {
         Scale
       </button> */}
       {/* <button onClick={zoom.reset}>Reset</button> */}
-      <svg
-        width={width}
-        height={height}
-        style={{ touchAction: "none", position: "relative" }}
-        ref={zoom.containerRef}
-        id="svgRoot"
-      >
-        <rect
-          width={width}
-          height={height}
-          rx={14}
-          fill="#272b4d"
-          x={0}
-          y={0}
-          onTouchStart={zoom.dragStart}
-          onTouchMove={zoom.dragMove}
-          onTouchEnd={zoom.dragEnd}
-          onMouseLeave={() => {
-            if (zoom.isDragging) zoom.dragEnd()
-          }}
-        />
-        <Group top={origin.y} left={origin.x} id={ZOOM_TARGET_ID}>
-          {children}
-          {/* <MutationDialog
-            className="bg-white p-4"
-            dialogContent={dialogContent}
-            container={(modalDialog) =>
-              createPortal(
-                <foreignObject width={width} height={height}>
-                  {modalDialog}
-                </foreignObject>,
-                zoom.containerRef.current as SVGSVGElement,
-              )
-            }
-          >
+      <div className="relative h-full w-full overflow-y-hidden" id="svgRoot">
+        <svg
+          viewBox="0 0 900 900"
+          // width="100%"
+          // height="auto"
+          style={{ touchAction: "none", height: "auto", width: "100%" }}
+          preserveAspectRatio="none"
+          ref={zoom.containerRef}
+        >
+          <rect
+            // width="100%"
+            style={{ height: "auto", width: "100%" }}
+            // height="auto"
+            // style={{ height: "auto" }}
+            viewBox="0 0 900 900"
+            rx={14}
+            fill="#272b4d"
+            x={0}
+            y={0}
+            onTouchStart={zoom.dragStart}
+            onTouchMove={zoom.dragMove}
+            onTouchEnd={zoom.dragEnd}
+            onMouseLeave={() => {
+              if (zoom.isDragging) zoom.dragEnd()
+            }}
+          />
+          <Group top={origin.y} left={origin.x} id={ZOOM_TARGET_ID}>
             {children}
-          </MutationDialog> */}
-        </Group>
-      </svg>
+          </Group>
+        </svg>
+      </div>
     </>
   )
 }

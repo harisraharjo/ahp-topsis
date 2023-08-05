@@ -1,154 +1,182 @@
 "use client"
 
 import type { ReactElement, ReactNode } from "react"
-import { useEffect } from "react"
+// import { useEffect } from "react"
 import { useCallback, useState } from "react"
 
 // import { LinkHorizontal } from "@visx/shape"
 import { Group } from "../Svg"
-import { useTree } from "./useTree"
+// import type { Accessor } from "./useTree"
+// import { useTree } from "./useTree"
 import type { HierarchyPointLink, HierarchyPointNode } from "d3-hierarchy"
-// import { TreeProvider } from "./Provider"
-import { usePanelContext } from "~components/(Playground)/PanelProvider"
+// import { hierarchy } from "d3-hierarchy"
 
-export type TreeNode = {
+// import { usePanelContext } from "~components/(Playground)/PanelProvider"
+
+// export type NodeWithChildren<T extends Generic,D extends RequiredProps> = {
+//   children?: T<D>[]
+// }
+
+export type Id = number | string
+export type RequiredProps = {
   id: number | string
   name: string
-  isExpanded?: boolean
-  children?: TreeNode[]
-  parentId: number | string | null
+  parentId: Id | null
 }
+export type TreeNodeData<Node extends RequiredProps> = Node & {
+  isExpanded?: boolean
+} & {
+  children?: TreeNodeData<Node>[]
+}
+// type A = {speed: number, id: number | string
+//   name: string
+//   parentId: Id | null}
 
-export type TreeEdge = <T extends TreeNode>(props: {
+// const am: TreeNodeData<A> = {
+//   id:1,name:"D",parentId: 1, speed: 44, isExpanded: false, children: [{}]
+// }
+
+export type TreeEdge = <
+  Node extends RequiredProps,
+  T extends TreeNodeData<Node>,
+>(props: {
   data: HierarchyPointLink<T>
 }) => ReactElement
-export type TreeHead = (props: {
-  redraw: ReturnType<typeof useForceUpdate>
-}) => ReactElement
-export type TreeDescendant = <T extends TreeNode>(props: {
-  redraw: ReturnType<typeof useForceUpdate>
-  data: T
+
+// export type TreeHead = <
+//   Node extends RequiredProps,
+//   Data extends TreeNodeData<Node>,
+// >(props: {
+//   data: Data
+// }) => ReactElement
+
+// export type TreeDescendant = <
+//   Node extends RequiredProps,
+//   Data extends TreeNodeData<Node>,
+// >(props: {
+//   redraw: ReturnType<typeof useForceUpdate>
+//   data: Data
+//   depth: number
+// }) => ReactElement
+
+export type TreeNode = <
+  Node extends RequiredProps,
+  Data extends TreeNodeData<Node>,
+>(props: {
+  // redraw: ReturnType<typeof useForceUpdate>
+  data: Data
+  depth: number
 }) => ReactElement
 
-export type TreeProps<T extends TreeNode> = {
-  data: T
+export type TreeProps<
+  Node extends RequiredProps,
+  Data extends TreeNodeData<Node>,
+> = {
+  data: Data
   height: number
   width: number
   Edge: TreeEdge
-  Head: TreeHead
-  Descendant: TreeDescendant
+  Node: TreeNode
 }
 
-export const Tree = <T extends TreeNode>({
-  data,
-  height,
-  width,
-  Edge,
-  Head,
-  Descendant,
-}: TreeProps<T>) => {
-  // const [layout, setLayout] = useState<string>("cartesian")
-  // const [orientation, setOrientation] = useState<string>("horizontal")
-  // const [linkType, setLinkType] = useState<string>("diagonal")
-  // const [stepPercent, setStepPercent] = useState<number>(0.5)
+// export const Tree = <Node extends RequiredProps, T extends TreeNodeData<Node>>({
+//   data,
+//   height,
+//   width,
+//   Edge,
+//   Head,
+//   Descendant,
+// }: TreeProps<Node, T>) => {
+//   // const [layout, setLayout] = useState<string>("cartesian")
+//   // const [orientation, setOrientation] = useState<string>("horizontal")
+//   // const [linkType, setLinkType] = useState<string>("diagonal")
+//   // const [stepPercent, setStepPercent] = useState<number>(0.5)
 
-  // if (orientation === "vertical") {
-  //   sizeWidth = width
-  //   sizeHeight = height
-  // } else {
-  // }
+//   // if (orientation === "vertical") {
+//   //   sizeWidth = width
+//   //   sizeHeight = height
+//   // } else {
+//   // }
 
-  // const LinkComponent = getLinkComponent({ layout, linkType, orientation })
+//   // const LinkComponent = getLinkComponent({ layout, linkType, orientation })
 
-  const tree = useTree<TreeNode>(
-    data,
-    (d) => (d.isExpanded ? null : d.children),
-    [width, height],
-    (a, b) => (a.parent === b.parent ? 1 : 0.5),
-  )
-  const redraw = useForceUpdate()
+//   const tree = useTree<T>(
+//     hierarchy(data, ((d) =>
+//       d.parentId === null ? null : d.children) as Accessor<T>),
+//     (a, b) => (a.parent === b.parent ? 1 : 0.5),
+//     [width, height],
+//   )
+//   const redraw = useForceUpdate()
 
-  return (
-    <>
-      {tree.links().map((link, i) => (
-        <Edge
-          key={`${link.source.data.id}-${link.target.data.id}-${i}`}
-          data={link}
-        />
-      ))}
-      <PanelSubscriber data={tree.data} />
-      <Nodes<TreeNode>
-        nodes={tree.descendants()}
-        Head={Head}
-        Descendant={Descendant}
-        redraw={redraw}
-      />
-      {/* <TreeProvider tree={tree}>
-      </TreeProvider> */}
-      {/* {createPortal(
-        <button
-          onClick={() => {
-            const ada = tree.data
-            console.log(ada)
-          }}
-        >
-          Save Me
-        </button>,
-        document.getElementById("panel") as Element,
-      )} */}
-    </>
-  )
-}
+//   return (
+//     <>
+//       {tree.links().map((link, i) => (
+//         <Edge
+//           key={`${link.source.data.id}-${link.target.data.id}-${i}`}
+//           data={link}
+//         />
+//       ))}
+//       {/* <PanelSubscriber data={tree.data} /> */}
+//       <Nodes<Node, T>
+//         nodes={tree.descendants()}
+//         Head={Head}
+//         Descendant={Descendant}
+//         redraw={redraw}
+//       />
+//     </>
+//   )
+// }
 
-type PanelSubscriberProps<T extends TreeNode> = {
-  data: T
-}
-const PanelSubscriber = <T extends TreeNode>({
-  data,
-}: PanelSubscriberProps<T>) => {
-  const [mode] = usePanelContext()
+// type PanelSubscriberProps<Node extends RequiredProps,T extends TreeNodeData<Node>> = {
+//   data: T
+// }
+// const PanelSubscriber = <Node extends RequiredProps,T extends TreeNodeData<Node>>({
+//   data,
+// }: PanelSubscriberProps<T>) => {
+//   const [mode] = usePanelContext()
 
-  useEffect(() => {
-    console.log("CURRENT MODE:", mode)
-    if (mode === "edit") {
-      console.log("CURRENT Data:", data)
-    }
-  }, [mode])
+//   useEffect(() => {
+//     console.log("CURRENT MODE:", mode)
+//     if (mode === "edit") {
+//       console.log("CURRENT Data:", data)
+//     }
+//   }, [mode])
 
-  return null
-}
+//   return null
+// }
 
-type NodesProps<T extends TreeNode> = Pick<
-  TreeProps<T>,
-  "Head" | "Descendant"
-> & {
+type NodesProps<
+  Node extends RequiredProps,
+  T extends TreeNodeData<Node>,
+> = Pick<TreeProps<Node, T>, "Node"> & {
   nodes: HierarchyPointNode<T>[]
-  redraw: ReturnType<typeof useForceUpdate>
 }
-const Nodes = <T extends TreeNode>({
+export const Nodes = <
+  Node extends RequiredProps,
+  T extends TreeNodeData<Node>,
+>({
   nodes,
-  Descendant,
-  Head,
-  redraw,
-}: NodesProps<T>) => {
-  return (
-    <>
-      {nodes.map((node, key) => {
-        return (
-          <Group top={node.x} left={node.y} key={key}>
-            {node.depth === 0 && <Head redraw={redraw} />}
-            {node.depth !== 0 && (
-              <Descendant redraw={redraw} data={node.data} />
-            )}
-            <Text depth={node.depth} child={Boolean(node.children)}>
-              {node.data.name}
-            </Text>
-          </Group>
-        )
-      })}
-    </>
-  )
-}
+  Node,
+}: NodesProps<Node, T>) => (
+  <>
+    {nodes.map((node, key) => {
+      const depth = node.depth
+
+      return (
+        <Group top={node.y} left={node.x} key={key}>
+          <Node data={node.data} depth={depth} />
+          {/* {depth === 0 && <Head data={node.data} />}
+              {depth !== 0 && (
+                <Descendant depth={depth} redraw={redraw} data={node.data} />
+              )} */}
+          <Text depth={depth} hasChild={Boolean(node.children)}>
+            {node.data.name}
+          </Text>
+        </Group>
+      )
+    })}
+  </>
+)
 
 function useForceUpdate() {
   const [, setValue] = useState<boolean>(false)
@@ -160,23 +188,29 @@ function useForceUpdate() {
   }, [])
 }
 
-const Text = ({
+export const Text = ({
   depth,
-  child,
+  hasChild,
   children,
 }: {
   depth: number
-  child: boolean
+  hasChild: boolean
   children: ReactNode
-}) => (
-  <text
-    dy=".33em"
-    fontSize={9}
-    fontFamily="Arial"
-    textAnchor="middle"
-    style={{ pointerEvents: "none" }}
-    fill={depth === 0 ? "#71248e" : child ? "white" : "#26deb0"}
-  >
-    {children}
-  </text>
-)
+}) => {
+  type TextColor = "#71248e" | "#fafafa" | "#26deb0"
+  const txtColor: TextColor =
+    depth === 0 ? "#71248e" : hasChild ? "#fafafa" : "#26deb0"
+
+  return (
+    <text
+      dy=".33em"
+      fontSize={9}
+      fontFamily="Arial"
+      textAnchor="middle"
+      style={{ pointerEvents: "none" }}
+      fill={txtColor}
+    >
+      {children}
+    </text>
+  )
+}

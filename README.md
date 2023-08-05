@@ -35,4 +35,5 @@ To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the fo
 - Add Github Webhook(?).\
   Possible flow:\
   user action (C,U,D) -> create github repo issue with its data -> github dispatch webhook with data -> api receive webhook -> update data to database from api -> revalidate page(s) from api
-- Change GETTER to a class or something simple. [Perf](https://webreflection.medium.com/js-benchmarking-lazy-getters-9b132f45c15e)
+- WATCH planetscale x nextjs [issue](https://github.com/planetscale/database-js/issues/101)
+- create separate page for fixed nodes (?)

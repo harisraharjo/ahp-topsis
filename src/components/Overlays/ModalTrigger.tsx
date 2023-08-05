@@ -1,14 +1,14 @@
 "use client"
 
-import type { ReactElement, ReactNode, ReactPortal } from "react"
+import type { ReactElement } from "react"
 
 import { lazy } from "react"
 
-import type { ModalProps, OverlayElement } from "./Modal"
+import type { ModalProps, OverlayElement } from "./OldModal"
 import type { Close } from "./useModalOverlay"
 import { useOverlayTrigger } from "./useOverlayTrigger"
 
-const Modal = lazy(() => import("./Modal"))
+const Modal = lazy(() => import("./OldModal"))
 
 export type TriggerElement = {
   triggerElement: (trigger: Close) => ReactElement
@@ -20,15 +20,14 @@ export type ModalTriggerProps<T extends HTMLElement> = Omit<
   TriggerElement & {
     // portalContainer: Element | DocumentFragment
     modalContainer: (modalDialog: ReactElement) => ReactElement
-    WrapperElement: <Props extends { children: ReactNode }>(
-      arg: Props,
-    ) => ReactElement | ReactPortal
+    // WrapperElement: <Props extends { children: ReactNode }>(
+    //   arg: Props,
+    // ) => ReactElement | ReactPortal
   }
 
 export const ModalTrigger = <T extends HTMLElement>({
   children,
   triggerElement,
-  WrapperElement,
   modalContainer,
   ...props
 }: ModalTriggerProps<T>) => {

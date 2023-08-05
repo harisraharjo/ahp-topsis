@@ -7,6 +7,11 @@ module.exports = {
   presets: [],
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
+    extend: {
+      gridTemplateRows: {
+        pg: "repeat(auto-fill, 1fr)",
+      },
+    },
     screens: {
       sm: "576px",
       "sm-max": { max: "576px" },

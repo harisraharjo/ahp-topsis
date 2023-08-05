@@ -1,4 +1,4 @@
-import { MutationDialogTitle } from "../MutationDialogTitle"
+import { MutationDialogTitle } from "./MutationDialogTitle"
 import type { PropsWithChildren } from "react"
 import { ButtonLink } from "./ButtonLink"
 
@@ -9,7 +9,7 @@ export default function Page({ params }: PageProps) {
       <MutationDialogTitle type="detail" />
       <div>Detail Content</div>
       <ButtonLink destination={`/${params.slug}/add`} className="bg-blue-700">
-        Add
+        AddE
       </ButtonLink>
       <ButtonLink destination={`/${params.slug}/edit`} className="bg-red-700">
         Edit
@@ -17,3 +17,4 @@ export default function Page({ params }: PageProps) {
     </>
   )
 }
+// TODO: Configure Criteria CRUD

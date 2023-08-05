@@ -13,7 +13,7 @@
 import { focusSafely } from "@react-aria/focus"
 import type { RefObject } from "react"
 import { useEffect, useRef } from "react"
-import { useOverlayFocusContain } from "~components/Overlays"
+import { useOverlayFocusContain } from "~components/Overlays/Overlay"
 import type {
   DOMAttributes,
   FocusableElement,

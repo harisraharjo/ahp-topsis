@@ -1,4 +1,4 @@
-import { MutationDialogTitle } from "../../MutationDialogTitle"
+import { MutationDialogTitle } from "../MutationDialogTitle"
 
 export default function Page() {
   return (

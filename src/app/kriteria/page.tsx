@@ -10,7 +10,6 @@
 // import Loading from "./loading"
 
 export default function Page() {
-  console.log("THE PAGE")
   return (
     <div>
       HALO Criteria Page
