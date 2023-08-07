@@ -32,6 +32,7 @@ export const Hierarchy = <T extends HierarchyNode>({
     ),
   )
 
+  // console.log("THE HIE: ", root)
   const tree = useTree<HierarchyNode>(
     root,
     (a, b) => {
@@ -39,6 +40,7 @@ export const Hierarchy = <T extends HierarchyNode>({
     },
     [100, 100],
   )
+  // console.log("THE Tree: ", tree)
 
   const [, setfirst] = useState(false) //useForceUpdate()
   const redraw = () => setfirst((prev) => !prev)

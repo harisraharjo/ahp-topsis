@@ -12,11 +12,7 @@ type Criterias = Awaited<RawQueryValue<"Criteria", "update">[]>
 export const Playground = ({ children }: PropsWithChildren) => {
   // TIL: Kalau object ditaruh diluar hasil destructure jadi double. bug dari next js RSC (?)
   const dummyDataFromDB: Criterias = [
-    { id: 56, parentId: 3, name: "Provinsi", scale: null, weight: 1.53 },
-    { id: 81, parentId: 80, name: "Pengetahuan", scale: null, weight: 1.23 },
     { id: 1, parentId: 0, name: "Mata Pelajaran", scale: null, weight: 1.23 },
-    { id: 76, parentId: 80, name: "Ketarampilan", scale: null, weight: 1.23 },
-    { id: 63, parentId: 3, name: "Kecamatan", scale: null, weight: 1.23 },
     {
       id: 2,
       parentId: 0,
@@ -26,6 +22,11 @@ export const Playground = ({ children }: PropsWithChildren) => {
       } as unknown as Criterias[number]["scale"],
       weight: 1.18,
     },
+    { id: 3, parentId: 0, name: "Prestasi", scale: null, weight: 1.23 },
+    { id: 56, parentId: 3, name: "Provinsi", scale: null, weight: 1.53 },
+    { id: 81, parentId: 80, name: "Pengetahuan", scale: null, weight: 1.23 },
+    { id: 76, parentId: 80, name: "Ketarampilan", scale: null, weight: 1.23 },
+    { id: 63, parentId: 3, name: "Kecamatan", scale: null, weight: 1.23 },
     { id: 80, parentId: 1, name: "Bahasa Jawa", scale: null, weight: 1.23 },
     { id: 90, parentId: 3, name: "Nasional", scale: null, weight: 1.23 },
     { id: 92, parentId: 3, name: "NasionalA", scale: null, weight: 1.23 },
@@ -35,7 +36,6 @@ export const Playground = ({ children }: PropsWithChildren) => {
     // { id: 96, parentId: 3, name: "NasionalE", scale: null, weight: 1.23 },
     // { id: 97, parentId: 3, name: "NasionalG", scale: null, weight: 1.23 },
     // { id: 98, parentId: 3, name: "NasionalH", scale: null, weight: 1.23 },
-    { id: 3, parentId: 0, name: "Prestasi", scale: null, weight: 1.23 },
     {
       id: 62,
       parentId: 1,

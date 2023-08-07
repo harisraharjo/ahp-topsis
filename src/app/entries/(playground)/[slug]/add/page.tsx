@@ -6,14 +6,10 @@ export default function Page() {
       <MutationDialogTitle type="add" />
       <form action="/entries" method="dialog">
         <div>
-          <label htmlFor="say">What greeting do you want to say?</label>
-          <input name="say" id="say" defaultValue="Hi" />
+          <label htmlFor="nama">Nama</label>
+          <input name="nama" id="nama" placeholder="Nama kriteria" />
         </div>
-        <div>
-          <label htmlFor="to">Who do you want to say it to?</label>
-          <input name="to" id="to" defaultValue="Mom" />
-        </div>
-        <button>Send my greetings</button>
+        <button>Ok</button>
       </form>
       {/* <ButtonLink
         destination="/"

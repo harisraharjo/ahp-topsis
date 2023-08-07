@@ -9,10 +9,16 @@ export default function Page({ params }: PageProps) {
       <MutationDialogTitle type="detail" />
       <div>Detail Content</div>
       <ButtonLink destination={`/${params.slug}/add`} className="bg-blue-700">
-        AddE
+        Tambah
       </ButtonLink>
       <ButtonLink destination={`/${params.slug}/edit`} className="bg-red-700">
         Edit
+      </ButtonLink>
+      <ButtonLink
+        destination={`/${params.slug}/comparison`}
+        className="bg-yellow-700"
+      >
+        Komparasi
       </ButtonLink>
     </>
   )
