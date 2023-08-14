@@ -11,6 +11,7 @@ const config = {
   experimental: {
     appDir: true,
     typedRoutes: true,
+    serverActions: true,
     // afaik swcPlugins pnly works with < 13.2.3
     // swcPlugins: [
     //   [

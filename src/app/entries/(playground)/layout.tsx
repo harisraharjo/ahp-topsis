@@ -1,11 +1,20 @@
 import type { ReactNode } from "react"
 
 import { Playground } from "./Playground"
+import { selectAllCriteria } from "~server/db/criteria";
 
-export default function Layout({ children }: { children: ReactNode }) {
+
+async function getData() {
+  const res = await selectAllCriteria().execute();
+ 
+  return res
+}
+
+
+export default async function Layout({ children }: { children: ReactNode }) {
+  const data = await getData()
+  
   return (
-    <>
-      <Playground>{children}</Playground>
-    </>
+      <Playground data={data}>{children}</Playground>
   )
 }

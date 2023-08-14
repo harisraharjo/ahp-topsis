@@ -8,7 +8,6 @@ import {
 } from "@tanstack/react-table"
 // import type { HierarchyPointNode } from "d3-hierarchy"
 // import type { HierarchyNode } from "../../(hierarchy)/Hierarchy"
-import { Input } from "~components/ui/input"
 import {
   Table,
   TableBody,
@@ -17,7 +16,6 @@ import {
   TableHeader,
   TableRow,
 } from "~components/ui/table"
-import { Button } from "~components/ui/button"
 // import { calculateAHP } from "./AHP"
 // import { useRef, useState } from "react"
 // import { calculateAHP } from "./AHP"
@@ -34,45 +32,29 @@ type ComparatorProps = {
 
 export type TableData = {
   id: string
-  compareTo: string
-  scale: number
+  name: string
 }
 
 const columns: ColumnDef<TableData>[] = [
   {
-    accessorKey: "compareTo",
-    header: "Perbandingan",
-  },
-  {
-    accessorKey: "scale",
-    header: "Skala",
-    cell: ({ cell: { renderValue, row } }) => (
-      <Input
-        type="number"
-        min={1}
-        max={9}
-        className="outline"
-        name={row.original.id}
-        defaultValue={renderValue() as number}
-      />
-    ),
+    accessorKey: "name",
+    header: "Nama",
   },
 ]
 
-export const Comparator = ({ data }: ComparatorProps) => {
+export const Leaderboard = ({ data }: ComparatorProps) => {
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
   })
 
-  // THE AMOUNT OF COMPARISONS NEEDED
-  // n*(n-1)/2
-
-  
-
   return (
-   <>
+    <>
+      <br></br>
+      <br></br>
+      Leaderboard
+      <br></br>
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -106,22 +88,9 @@ export const Comparator = ({ data }: ComparatorProps) => {
                 ))}
               </TableRow>
             ))
-            //   table.getRowModel().rows?.length ? (
-            // ) : (
-            //   <TableRow>
-            //     <TableCell
-            //       // colSpan={columns.length}
-            //       className="h-24 text-center"
-            //     >
-            //       No results.
-            //     </TableCell>
-            //   </TableRow>
-            // )
           }
         </TableBody>
       </Table>
-
-      <Button>Hitung</Button>
     </>
   )
 }

@@ -7,23 +7,24 @@ import { CriteriaTypes } from "../CriteriaTypes"
 import { revalidatePath } from "next/cache";
 import { createCriteria } from "~server/db/criteria";
 
-// TODO: DIBENARKAN ADD NYA
 type LayoutProps = PropsWithChildren<{ params: { slug: `${string}-${string}-${string}` } }>
-export default function Page({ params:{slug} }: LayoutProps) {
+export default function Layout({ children, params:{slug} }: LayoutProps) {
+    
   async function action(formData: FormData) {
     "use server"
 
-    let [id] = slug.split("-");
-    id = id!
-    
-    await createCriteria({ name: formData.get("name") as string, weight: 0, parentId: parseInt(id), isBenefit: 1 });
+      let [id, parentId, depth] = slug.split("-");
+      id = id!, depth = depth!, parentId = parentId!
+      
+      await createCriteria({ name: formData.get("name") as string, weight: 0, parentId: parseInt(id), isBenefit: 1 });
   
-    revalidatePath("/entries")
-  }
+      revalidatePath("/entries")
+    }
 
   return (
     <>
-     <MutationDialogTitle type="add" />
+        <MutationDialogTitle type="add" />
+        
       {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
       <form action={action}>
          <div>
@@ -33,8 +34,12 @@ export default function Page({ params:{slug} }: LayoutProps) {
         </div>
         <Button>Submit</Button>
       </form>
+        {children}
     </>
   )
 }
+
+
+
 
 
