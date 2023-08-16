@@ -1,43 +1,11 @@
-// @ts-check
-/**
- * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.
- * This is especially useful for Docker builds.
- */
-!process.env.SKIP_ENV_VALIDATION && (await import("./src/env/server.mjs"))
-
 /** @type {import("next").NextConfig} */
 const config = {
   reactStrictMode: true,
   experimental: {
-    appDir: true,
     typedRoutes: true,
     serverActions: true,
-    // afaik swcPlugins pnly works with < 13.2.3
-    // swcPlugins: [
-    //   [
-    //     "next-superjson-plugin",
-    //     {
-    //       excluded: [],
-    //     },
-    //   ],
-    // ],
   },
   /* If trying out the experimental appDir, comment the i18n config out
    * @see https://github.com/vercel/next.js/issues/41980 */
-  // webpack: (config) => {
-  //   config.module.rules.push({
-  //     test: /\.svg$/,
-  //     loader: "svg-sprite-loader",
-  //   })
-
-  //   return config
-  // },
-  // modularizeImports: {
-  //   "~components": {
-  //     transform: "~components/{{member}}",
-  //     preventFullImport: true,
-  //     skipDefaultConversion: true,
-  //   },
-  // },
 }
 export default config

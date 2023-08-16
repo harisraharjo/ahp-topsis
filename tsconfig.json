@@ -21,7 +21,6 @@
       "~components": ["src/components"],
       "~components/*": ["src/components/*"],
       "~middleware/*": ["src/oldpages/api/*"],
-      "~env/*": ["src/env/*"],
       "~server/*": ["src/server/*"],
       "~server": ["src/server"],
       "~layouts/*": ["src/layouts/*"],
