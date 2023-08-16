@@ -4,10 +4,8 @@ import { Playground } from "./Playground"
 import { selectAllCriteria } from "~server/db/criteria";
 
 
-async function getData() {
-  const res = await selectAllCriteria().execute();
- 
-  return res
+function getData() {
+  return selectAllCriteria().execute();
 }
 
 

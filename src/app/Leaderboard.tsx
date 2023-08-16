@@ -6,8 +6,7 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table"
-// import type { HierarchyPointNode } from "d3-hierarchy"
-// import type { HierarchyNode } from "../../(hierarchy)/Hierarchy"
+
 import {
   Table,
   TableBody,
@@ -16,18 +15,9 @@ import {
   TableHeader,
   TableRow,
 } from "~components/ui/table"
-// import { calculateAHP } from "./AHP"
-// import { useRef, useState } from "react"
-// import { calculateAHP } from "./AHP"
 
 type ComparatorProps = {
   data: TableData[]
-  // id: string | number
-  // sAction: Action
-  // result: {
-  //   isSuccess: boolean
-  //   pV: number[]
-  // }
 }
 
 export type TableData = {

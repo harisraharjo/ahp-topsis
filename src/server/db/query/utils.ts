@@ -1,15 +1,7 @@
 import type { ComparisonOperator } from "kysely"
 import { db } from "../config"
 import type { DB } from "../types"
-import { createId as createCUID } from "@paralleldrive/cuid2"
 import type { DestructureQueryValue, InsertValue, QueryValue } from "../utils"
-
-export const appendID = <
-  T extends keyof DB,
-  V extends DB[T] | Omit<DB[T], "id">,
->(
-  values: V,
-) => ({ ...values, id: createCUID() })
 
 export const insertRows = <T extends keyof DB, V extends InsertValue<T>>(
   table: T,

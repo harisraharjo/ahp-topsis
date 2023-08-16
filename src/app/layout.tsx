@@ -11,7 +11,6 @@ export const metadata: Metadata = {
 } as const
 
 function RootLayout({ children }: { children: ReactNode }) {
-  // const session = getServerAuthSession()
 
   return (
     <ClerkProvider>

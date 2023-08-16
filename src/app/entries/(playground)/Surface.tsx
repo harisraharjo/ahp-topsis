@@ -21,8 +21,7 @@ export const Surface = ({
   width,
   height,
   children,
-}: // dialogContent,
-PlaygroundProps) => {
+}: PlaygroundProps) => {
   const zoomConfig = useMemo<ZoomConfig>(() => {
     const initialScale = width / 630
     const TARGET = `#${ZOOM_TARGET_ID}` as const

@@ -4,18 +4,8 @@ import { ButtonLink } from "./ButtonLink"
 import { selectCriteria } from "~server/db/criteria";
 
 
-async function getData(id: number) {
-  const res = await selectCriteria(id).executeTakeFirst();
-
-  // The return value is *not* serialized
-  // You can return Date, Map, Set, etc.
- 
-  // if (!res.ok) {
-  //   // This will activate the closest `error.js` Error Boundary
-  //   throw new Error('Failed to fetch data')
-  // }
- 
-  return res
+function getData(id: number) {
+  return selectCriteria(id).executeTakeFirst();
 }
 
 
@@ -38,9 +28,6 @@ export default async function Page({ params: {slug} }: PageProps) {
         Tambah
       </ButtonLink>
       }
-      {/* <ButtonLink destination={`/${id}/edit`} className="bg-red-700">
-        Edit
-      </ButtonLink> */}
       <ButtonLink
         destination={`/${slug}/comparison`}
         className="bg-yellow-700"

@@ -8,10 +8,8 @@ import topsis2 from "topsis2"
 import { Leaderboard } from "./Leaderboard";
 import { revalidatePath } from "next/cache";
 
-async function getData() {
-  const res = await selectAllCriteria().execute();
- 
-  return res
+function getData() {
+  return selectAllCriteria().execute();
 }
 
 let leaderboard: {id: string, name:string}[] = []

@@ -1,5 +1,5 @@
 const Loading = () => (
-  <div className="grid place-items-center bg-red-DEFAULT-400">Loading</div>
+  <div className="grid place-items-center bg-blue-DEFAULT-400">Loading</div>
 )
 
 export default Loading

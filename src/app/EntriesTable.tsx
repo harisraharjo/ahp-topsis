@@ -30,7 +30,6 @@ type ComparatorProps = {
     fieldNames: Record<string, string>
 }
 
-// type TableData = Record<string, string>
 
 const defaultColumn = {
     // @ts-expect-error it's ok
