@@ -7,16 +7,15 @@ import { CriteriaTypes } from "../CriteriaTypes"
 import { revalidatePath } from "next/cache";
 import { createCriteria } from "~server/db/criteria";
 
-// TODO: DIBENARKAN ADD NYA
 type LayoutProps = PropsWithChildren<{ params: { slug: `${string}-${string}-${string}` } }>
-export default function Page({ params:{slug} }: LayoutProps) {
+export default function Page({ params: { slug } }: LayoutProps) {
+  
+  let [id] = slug.split("-");
+  id = id!
   async function action(formData: FormData) {
     "use server"
 
-    let [id] = slug.split("-");
-    id = id!
-    
-    await createCriteria({ name: formData.get("name") as string, weight: 0, parentId: parseInt(id), isBenefit: 1 });
+    await createCriteria({ name: formData.get("name") as string, weight: 0, parentId: parseInt(id!), isBenefit: parseInt(formData.get("type") as string) });
   
     revalidatePath("/entries")
   }
@@ -28,7 +27,7 @@ export default function Page({ params:{slug} }: LayoutProps) {
       <form action={action}>
          <div>
           <label htmlFor="name">Nama</label>
-          <Input name="name" placeholder="Nama kriteria" />
+          <Input name="name" placeholder="Nama kriteria" required/>
           <CriteriaTypes />
         </div>
         <Button>Submit</Button>

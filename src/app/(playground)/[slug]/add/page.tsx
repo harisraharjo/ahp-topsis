@@ -28,7 +28,7 @@ export default function Page({ params:{slug} }: LayoutProps) {
       <form action={action}>
          <div>
           <label htmlFor="name">Nama</label>
-          <Input name="name" placeholder="Nama kriteria" required />
+          <Input name="name" placeholder="Nama kriteria" />
           <CriteriaTypes />
         </div>
         <Button>Submit</Button>
