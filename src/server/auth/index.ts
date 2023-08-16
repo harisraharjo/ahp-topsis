@@ -1,10 +1,10 @@
 import { redirect } from "next/navigation"
 import { type NextAuthOptions } from "next-auth"
-import DiscordProvider from "next-auth/providers/discord"
+// import DiscordProvider from "next-auth/providers/discord"
 
 import type { Adapter as NextAuthAdapter } from "next-auth/adapters"
 import { KyselyPlanetscaleAdapter } from "./adapter"
-import { env } from "~env/server.mjs"
+// import { env } from "~env/server.mjs"
 
 export const redirectIfUnauthorized = async () => {
   // const session = await getServerAuthSession()
@@ -29,10 +29,10 @@ export const authOptions: NextAuthOptions = {
   adapter: KyselyPlanetscaleAdapter() as unknown as NextAuthAdapter<false>,
   providers: [
     // GoogleProvider(),
-    DiscordProvider({
-      clientId: env.DISCORD_CLIENT_ID,
-      clientSecret: env.DISCORD_CLIENT_SECRET,
-    }),
+    // DiscordProvider({
+    //   clientId: env.DISCORD_CLIENT_ID,
+    //   clientSecret: env.DISCORD_CLIENT_SECRET,
+    // }),
   ],
 }
 

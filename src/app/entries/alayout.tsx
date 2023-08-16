@@ -1,12 +1,14 @@
 import type { ReactNode } from "react"
 // import { Panel } from "~components/(Playground)/Panel"
 
+
 export default function Layout({ children }: { children: ReactNode }) {
+  
   return (
-    <div>
-      <h1>Kriteria</h1>
+    <div className="h-screen w-full p-3">
+      <div>Panel</div>
+      {/* <Panel></Panel> */}
       {children}
-      {/* <Panel>{children}</Panel> */}
     </div>
   )
 }

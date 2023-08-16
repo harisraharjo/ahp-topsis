@@ -11,17 +11,17 @@ import type { DestructureQueryValue, InsertValue, QueryValue } from "../utils"
 export const createCriteria = (criteria: InsertValue<"Criteria">) =>
   insertRows("Criteria", criteria)
     .executeTakeFirstOrThrow()
-    .then((r) =>
-      r.insertId ? selectCriteria(r.insertId as unknown as number) : undefined,
-    )
+    // .then((r) =>
+    //   r.insertId ? selectCriteria(r.insertId as unknown as number) : undefined,
+    // )
 
 export const selectCriteria = (
   id: DestructureQueryValue<"Criteria", "id", "select">,
 ) => selectRows("Criteria", "id", "=", id)
 
-// TODO: Add sql query Where not null
+
 export const selectAllCriteria = () =>
-  selectAllFrom("Criteria").where("parentId", "is not", null)
+  selectAllFrom("Criteria")//.where("parentId", "is not", null)
 
 export const deleteCriteria = (
   id: DestructureQueryValue<"Criteria", "id", "update">,

@@ -23,11 +23,11 @@ export function getY(l?: { y?: unknown }) {
 export function getSource<This, LinkDatum, NodeDatum>(
   l: Parameters<Link<This, LinkDatum, NodeDatum>["source"]>[0],
 ) {
-  // @expect-error no error. something is wrong with the lib
+  // @ts-expect-error no error. something is wrong with the lib
   return l?.source
 }
 
-export function getTarget(l: any) {
-  // @expect-error no error. something is wrong with the lib
+export function getTarget(l: unknown) {
+  // @ts-expect-error it's ok
   return l?.target
 }
