@@ -6,7 +6,7 @@ import { selectCriteria } from "~server/db/criteria";
 
 async function getData(id: number) {
   const res = await selectCriteria(id).executeTakeFirst();
-  // console.log(res)
+
   // The return value is *not* serialized
   // You can return Date, Map, Set, etc.
  

@@ -40,7 +40,6 @@ const columns: ColumnDef<TableData>[] = [
     accessorKey: "name",
     header: "Nama",
   },
-  {accessorKey: "value", header: "Nilai"}
 ]
 
 export const Leaderboard = ({ data }: ComparatorProps) => {
@@ -56,7 +55,7 @@ export const Leaderboard = ({ data }: ComparatorProps) => {
       <br></br>
       Leaderboard
       <br></br>
-      <Table className="max-w-fit">
+      <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
@@ -84,7 +83,7 @@ export const Leaderboard = ({ data }: ComparatorProps) => {
               >
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext(),)}
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
                 ))}
               </TableRow>

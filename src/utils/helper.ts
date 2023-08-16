@@ -14,14 +14,14 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 type Id = string | number
-type Document = { id: Id; parentId: Id | null; name: string, isBenefit: number }
+type Document = { id: Id; parentId: Id | null; name: string, isBenefit: 0 | 1 }
 type Node<T extends Document> = Document & { children?: Node<T>[] }
 type Goal<Data extends Document> = {
   id: 0
   parentId: -1
   name: string
   children: Node<Data>[]
-  isBenefit: number
+  isBenefit: 0 | 1
 }
 
 export function constructHierarchy<Data extends Document[]>(

@@ -11,7 +11,7 @@ export interface Criteria {
   name: string;
   weight: Decimal;
   parentId: number | null;
-  isBenefit: Generated<number>;
+  isBenefit: Generated<0 | 1>;
 }
 
 export interface DB {

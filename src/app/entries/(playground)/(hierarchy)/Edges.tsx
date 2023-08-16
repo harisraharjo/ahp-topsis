@@ -17,4 +17,3 @@ export function createEdge() {
   return edge
 }
 
-// export const edge = createEdge()

@@ -4,7 +4,7 @@ import { hierarchy } from "d3-hierarchy";
 import type { HierarchyNode } from "./entries/(playground)/(hierarchy)/Hierarchy";
 import { constructHierarchy } from "~utils/helper";
 import { EntriesTable } from "./EntriesTable";
-import topsis2 from 'topsis2';
+import topsis2 from "topsis2"
 import { Leaderboard } from "./Leaderboard";
 import { revalidatePath } from "next/cache";
 
@@ -107,8 +107,8 @@ export default async function Page() {
       matrix[k].push(value);
       }
     
-    const rank = topsis2.rank(totalWeight, matrix).sort((a,b) => b-a);
-    leaderboard = rank.map(id => ({id: id.toString(), name: formData.get(`${id}-name`)!.toString()}))
+    const rank = topsis2.rank(totalWeight, matrix);//.sort((a,b) => b-a);
+    leaderboard = rank.map(([id, value]) => ({id: id!.toString(), name: formData.get(`${id}-name`)!.toString(), value}))
 
 
     revalidatePath("/")

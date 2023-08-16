@@ -1,9 +1,8 @@
 "use client"
 
-import type { RequiredProps, TreeProps } from "~components"
-import { Nodes, useTree } from "~components"
+import type { RequiredProps, TreeProps } from "~components/Tree"
+import { Nodes, useTree } from "~components/Tree"
 
-import { HierarchyContextProvider } from "./Provider"
 import type { PropsWithChildren } from "react"
 import { useState } from "react"
 
@@ -29,11 +28,7 @@ export const Hierarchy = <T extends HierarchyNode>({
       d.parentId === null ? null : d.children,
     ),
   )
-  // console.log("COUNT: ", root.count())
-  // console.log("LEAVES: ", root.leaves())
   
-
-  // console.log("THE HIE: ", root)
   const tree = useTree<HierarchyNode>(
     root,
     (a, b) => {
@@ -42,8 +37,6 @@ export const Hierarchy = <T extends HierarchyNode>({
     [100, 100],
   )
 
-  const [, setfirst] = useState(false) //useForceUpdate()
-  const redraw = () => setfirst((prev) => !prev)
   const edge = createEdge()
 
   return (
@@ -59,9 +52,7 @@ export const Hierarchy = <T extends HierarchyNode>({
         />
       ))}
       <Nodes<Document, HierarchyNode> nodes={tree.descendants()}/>
-      <HierarchyContextProvider value={{ tree, redraw }}>
         {children}
-      </HierarchyContextProvider>
     </>
   )
 }

@@ -37,12 +37,11 @@ const defaultColumn = {
     cell: (w) => {
     return (
         <Input
-        type="text"
-        
+            type="text"
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
             name={`${w.row.index}-${w.column.id}`}
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-        defaultValue=""
+        defaultValue={w.cell.renderValue()}
         className="outline"
       />
     )

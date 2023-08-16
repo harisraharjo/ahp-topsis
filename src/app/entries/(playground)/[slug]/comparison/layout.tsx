@@ -14,10 +14,9 @@ async function getData(id: number): Promise<{
     name: string;
     parentId: number | null;
     weight: string;
-    isBenefit: number;
+    isBenefit: 0 | 1;
 }[]> {
   const res = await selectAllCriteria().where("parentId", "=", id).execute()
-  // console.log(res)
   // The return value is *not* serialized
   // You can return Date, Map, Set, etc.
  
@@ -109,7 +108,7 @@ export async function calculateAHP(formData: FormData, length: number, raw_data:
     name: string;
     parentId: number | null;
     weight: string;
-    isBenefit: number;
+    isBenefit:  0 | 1;
 }[]): Promise<boolean> {
     
     const { matrix, colsSum } = constructMatrix(formData, length)
