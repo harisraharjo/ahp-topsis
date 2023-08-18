@@ -93,27 +93,25 @@ const RI = [
   1.49,
 ] as const
 
-// eslint-disable-next-line @typescript-eslint/require-await
-export async function calculateAHP(formData: FormData, degree: number, raw_data: {
+type RawData = {
     id: number;
     name: string;
     parentId: number | null;
     weight: string;
     isBenefit:  0 | 1;
-}[]): Promise<boolean> {
-
+}[]
+// eslint-disable-next-line @typescript-eslint/require-await
+export async function calculateAHP(formData: FormData, degree: number, raw_data: RawData): Promise<boolean> {
   if (degree <= 1) return false
     
   const { matrix, colsSum } = constructMatrix(formData, degree)
 
-  //Priority Vector (PV)
   const rawPV = new Array<number>(degree).fill(0)
     let x, y;
     for (x = 0; x < degree; x++) {
         const row = matrix.slice(x, x + 1);
         for (y = 0; y < degree; y++) { 
           row.data[y] /= colsSum[y] as number
-          
           rawPV[x] += row.data[y] as number 
         }
       }
@@ -125,18 +123,12 @@ export async function calculateAHP(formData: FormData, degree: number, raw_data:
   
     if (degree > 2) {
       const lambdaMax = array(pV).dot(array(colsSum))
-
       const degreeMinusOne = degree - 1
       const CI = (lambdaMax - degree) / (degreeMinusOne);
       const CR = CI / (RI[degreeMinusOne] as number);
-
-    console.log("Lambda Max: ", lambdaMax)
-    console.log("CI: ", CI)
-    console.log("CR: ", CR)
       isSuccess = CR < 0.1;
     }
   
-
   if (isSuccess) {  
     const updatedData = raw_data.map((v, i) => ({ id: v.id, weight: pV[i] }));
     await Promise.all(updatedData.map((value) => updateCriteria(value).execute()))

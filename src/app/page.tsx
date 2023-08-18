@@ -50,16 +50,6 @@ export default async function Page() {
   })
 
   const leaves = root.leaves()
-  const fieldNames = leaves.reduce((acc, leaf) => {
-    const property = leaf.data.name.replaceAll(" ", "");
-    // @ts-expect-error it's ok
-    acc[property] = "";
-    
-    return acc
-  }, {});
-
-  // @ts-expect-error it's ok
-  fieldNames["name"] = ""
 
   const totalWeight: {weight: number, type: "cost" | "benefit"}[] = leaves.map(leaf => {
     // @ts-expect-error it's ok
@@ -87,7 +77,7 @@ export default async function Page() {
 
 
     const matrix: number[][] = []
-    // let counter = 0;
+    
     for (const [key, value] of formData.entries()) {
       const spl = key.split("-");
       // @ts-expect-error it's ok
@@ -112,6 +102,16 @@ export default async function Page() {
     revalidatePath("/")
   }
 
+  const fieldNames = leaves.reduce((acc, leaf) => {
+    const property = leaf.data.name.replaceAll(" ", "");
+    // @ts-expect-error it's ok
+    acc[property] = "";
+    
+    return acc
+  }, {});
+
+  // @ts-expect-error it's ok
+  fieldNames["name"] = ""
 
   return (
     <>
