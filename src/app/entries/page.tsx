@@ -1,7 +1,7 @@
 import { selectAllCriteria } from "~server/db/criteria";
 
 import { hierarchy } from "d3-hierarchy";
-import type { HierarchyNode } from "../(kriteria)/(hierarchy)/Hierarchy";
+import type { HierarchyNode } from "../(criteria)/(hierarchy)/Hierarchy";
 import { constructHierarchy } from "~utils/helper";
 import { EntriesTable } from "./EntriesTable";
 import topsis2 from "topsis2"

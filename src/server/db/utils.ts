@@ -7,7 +7,7 @@ export type InsertValue<Table extends keyof DB> = InsertObject<DB, Table>
 type Modify = "update" | "delete"
 type QueryType = "select" | Modify
 type Tables = keyof DB
-// TODO: (VERY LOW) No autocomplete?
+
 export type DestructureQueryValue<
   Table extends Tables,
   Key extends keyof DB[Table],

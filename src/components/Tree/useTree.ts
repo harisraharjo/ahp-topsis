@@ -46,8 +46,6 @@ export type UseTreeProps<Datum> = {
 }
 
 export function useTree<Datum>(
-  // data: Datum,
-  // accessor: Accessor<Datum>,
   root: HierarchyNode<Datum>,
   separation?: Separation<Datum>,
   nodeSize?: NodeSize,

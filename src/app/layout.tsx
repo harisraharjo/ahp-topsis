@@ -18,7 +18,6 @@ function RootLayout({ children, }: { children: ReactNode }) {
         <body className="m-0 bg-gray-50 font-sans text-base font-normal leading-default text-slate-500 antialiased">
           <Navbar />
           {children}
-          {/* {modal} */}
         </body>
       </html>
     </ClerkProvider>

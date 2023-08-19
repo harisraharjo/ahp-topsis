@@ -55,10 +55,6 @@ export const Comparator = ({ data }: ComparatorProps) => {
     getCoreRowModel: getCoreRowModel(),
   })
 
-  // THE AMOUNT OF COMPARISONS NEEDED
-  // n*(n-1)/2
-
-
   return (
    <>
       <Table>

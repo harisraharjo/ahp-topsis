@@ -3,7 +3,7 @@
 export function CriteriaTypes() {
   return (
     <fieldset>
-  <legend>Pilih tipe:</legend>
+  <legend>Select type:</legend>
 
   <div>
     <input type="radio" id="benefit" name="type" value="1" defaultChecked={true} />

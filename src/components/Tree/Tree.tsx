@@ -1,6 +1,5 @@
 "use client"
 
-// TODO: COBA SERVER SIDE RENDER
 import { LinearGradient } from "@visx/gradient"
 import type { LegacyRef, ReactNode, SVGProps, ReactElement } from "react"
 

@@ -71,7 +71,7 @@ export const deleteRows = <
   value: V,
 ) =>
   db.deleteFrom(table).where(
-    // @ts-expect-error -> kysely uses function overload which confused vscode
+    // @ts-expect-error -> kysely uses function overload which confuse vscode
     key,
     op,
     value,

@@ -3,7 +3,6 @@
 import type { RequiredProps, TreeProps } from "~components/Tree"
 import { Nodes, useTree } from "~components/Tree"
 
-import type { PropsWithChildren } from "react"
 import { useState } from "react"
 
 import { hierarchy } from "d3-hierarchy"
@@ -14,9 +13,9 @@ export type HierarchyNode = Document & {
   children?: HierarchyNode[]
 }
 
-type HierarchyProps<T extends HierarchyNode> = PropsWithChildren<
+type HierarchyProps<T extends HierarchyNode> = 
   Omit<TreeProps<Document, T>, "Edge" | "Node">
->
+
 
 export const Hierarchy = <T extends HierarchyNode>({
   data,

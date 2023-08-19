@@ -43,17 +43,12 @@ export function constructHierarchy<Data extends Document[]>(
       return
     }
 
-    // Use our mapping to locate the parent element in our data array
-    // parentId will never be null because the query is filtered
     const parentId = el.parentId
-    if (parentId === null) return
+    
+    // honestly parentId will never be null because the query is filtered
+    const arrayIndex = idMapping[parentId!]
 
-    const arrayIndex = idMapping[parentId]
-    // Impossible to be undefined/null because we already map it's Ids beforehand
-    // not sure why typescript can't understand this
     const parentEl = data[arrayIndex as number] as Node<Data[number]>
-    // Add our current el to its parent's `children` array
-    // parentEl.children = [...(parentEl.children || []), el]
 
     Array.isArray(parentEl.children)
       ? parentEl.children.push(el)

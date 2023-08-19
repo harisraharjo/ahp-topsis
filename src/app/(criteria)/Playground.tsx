@@ -35,8 +35,7 @@ export const Playground = ({ children, data }: PropsWithChildren<{ data: Criteri
             structure.height - structure.margin.top - structure.margin.bottom
           }
           data={hierarchyData}
-        >
-        </Hierarchy>
+        />
       </Surface>
     </div>
 

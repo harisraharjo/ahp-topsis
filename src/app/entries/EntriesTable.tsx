@@ -32,8 +32,8 @@ type ComparatorProps = {
 
 
 const defaultColumn = {
-    // @ts-expect-error it's ok
-    cell: (w) => {
+  // @ts-expect-error it's ok
+  cell: (w) => {
     return (
         <Input
         type="text"
@@ -62,8 +62,6 @@ export const EntriesTable = ({  columns, fieldNames }: ComparatorProps) => {
         },
         // @ts-expect-error it's ok
       updateData: (rowIndex, columnId, value) => {
-        // Skip page index reset until after next rerender
-        // skipAutoResetPageIndex()
             
         setData(old =>
           old.map((row, index) => {

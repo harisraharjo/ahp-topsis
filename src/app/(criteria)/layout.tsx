@@ -16,7 +16,6 @@ export default async function Page({  modal }: { children: ReactNode, modal: Rea
     return (
         <Playground data={data}>
             {modal}
-          {/* {children} */}
         </Playground>
   )
 }

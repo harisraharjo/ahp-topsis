@@ -33,7 +33,7 @@ export default async function Page({ params: {slug} }: PageProps) {
         destination={`/${slug}/comparison`}
         className="bg-yellow-700"
       >
-        Komparasi
+        Compare
       </ButtonLink>
     </>
   )

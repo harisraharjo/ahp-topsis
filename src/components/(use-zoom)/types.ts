@@ -62,21 +62,10 @@ export interface ScaleSignature {
 export interface ProvidedZoom<ElementType extends Element> {
   // /** Sets x/Y to the center defined by width and height. */
   // center: () => void
-  // /** Sets the transform matrix to the identity matrix. */
-  // clear: () => void
   /** Applies the specified scaleX + optional scaleY transform relative to the specified point (or center of canvas if unspecified). */
   scale: (scale: ScaleSignature) => void
   /** Multiplies the current transform matrix by the specified translation. */
   translate: (x: Translate["x"], y: Translate["y"]) => void
-  // /** Translates to a specific x,y point. */
-  // translateTo: (point: Point) => void
-  // /** Sets the translation of the current transform matrix to the specified translation. */
-  // setTranslate: (translate: Translate) => void
-  // /**
-  //  * Sets the transform matrix to the specified matrix, constraining the transform
-  //  * scale by default (or applying props.constrain if provided).
-  //  */
-  // setTransformMatrix: (matrix: TransformMatrix) => void
   /** Resets the transform to the initial transform specified by props. */
   reset: () => void
   /** Callback for a wheel event, updating scale based on props.wheelDelta, relative to the mouse position. */
@@ -94,8 +83,6 @@ export interface ProvidedZoom<ElementType extends Element> {
   dragStart: (
     event: ReactMouseEvent | ReactTouchEvent | MouseEvent | TouchEvent,
   ) => void
-  // /** Returns the inverse of the current transform matrix. */
-  // invert: () => TransformMatrix
   /** Ref to stick on element to attach all handlers automatically. */
   containerRef: RefObject<ElementType>
 }
