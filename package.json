@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "next build",
+    "build": "rm -rf .next && next build",
     "dev": "next dev",
     "lint": "next lint",
     "start": "next start",
@@ -33,12 +33,10 @@
     "next": "13.4.13",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-merge-refs": "^2.0.1",
     "react-table": "^7.8.0",
     "tailwind-merge": "^1.14.0",
     "tailwindcss-animate": "^1.0.6",
     "topsis2": "github:harisraharjo/topsis2#withValue",
-    "use-onclickoutside": "^0.4.1",
     "vectorious": "github:harisraharjo/vectorious"
   },
   "devDependencies": {
