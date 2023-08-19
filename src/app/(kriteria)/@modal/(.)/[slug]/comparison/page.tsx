@@ -7,7 +7,6 @@ import { selectAllCriteria, updateCriteria } from "~server/db/criteria"
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-// import { updateRow } from "~server/db/query/utils";
 
 function getData(id: number): Promise<{
     id: number;
@@ -21,7 +20,7 @@ function getData(id: number): Promise<{
 
 let message = ""
 type LayoutProps = PropsWithChildren<{ params: { slug: `${string}-${string}-${string}` } }>
-export default async function Layout({ children, params }: LayoutProps) {
+export default async function Page({ children, params }: LayoutProps) {
   const [, parentId] = params.slug.split("-")
 
   const siblings = await getData(parseInt(parentId!));
@@ -33,10 +32,10 @@ export default async function Layout({ children, params }: LayoutProps) {
 
     if (result) {
       message = "";
-      revalidatePath(`/entries`)
-      redirect("/entries")
+      revalidatePath(`/`)
+      redirect("/")
     } else {
-      revalidatePath(`/entries`)
+      revalidatePath(`/`)
       message = "Tidak Konsisten"
     }
 

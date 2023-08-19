@@ -46,8 +46,6 @@ export const Surface = ({
   const zoom = useZoom<SVGSVGElement>(zoomConfig)
 
   return (
-    <>
-      <div className="relative h-full w-full overflow-y-hidden" id="svgRoot">
         <svg
           viewBox="0 0 900 900"
           style={{ touchAction: "none", height: "auto", width: "100%" }}
@@ -72,7 +70,5 @@ export const Surface = ({
             {children}
           </Group>
         </svg>
-      </div>
-    </>
   )
 }

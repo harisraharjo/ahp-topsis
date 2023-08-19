@@ -9,15 +9,15 @@ import { createCriteria } from "~server/db/criteria";
 
 type LayoutProps = PropsWithChildren<{ params: { slug: `${string}-${string}-${string}` } }>
 export default function Page({ params: { slug } }: LayoutProps) {
-  
   let [id] = slug.split("-");
   id = id!
+
   async function action(formData: FormData) {
     "use server"
 
     await createCriteria({ name: formData.get("name") as string, weight: 0, parentId: parseInt(id!), isBenefit: parseInt(formData.get("type") as string) as 1 | 0 });
   
-    revalidatePath("/entries")
+    revalidatePath("/")
   }
 
   return (
@@ -25,11 +25,9 @@ export default function Page({ params: { slug } }: LayoutProps) {
      <MutationDialogTitle type="add" />
       {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
       <form action={action}>
-         <div>
           <label htmlFor="name">Nama</label>
           <Input name="name" placeholder="Nama kriteria" required/>
           <CriteriaTypes />
-        </div>
         <Button>Submit</Button>
       </form>
     </>

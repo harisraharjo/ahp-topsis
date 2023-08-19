@@ -10,16 +10,17 @@ export const metadata: Metadata = {
   title: "Sistem Penunjang Keputusan",
 } as const
 
-function RootLayout({ children }: { children: ReactNode }) {
-
+function RootLayout({ children, }: { children: ReactNode }) {
+  
   return (
     <ClerkProvider>
-    <html lang="en">
-      <body className="m-0 bg-gray-50 font-sans text-base font-normal leading-default text-slate-500 antialiased">
-        <Navbar />
-        {children}
-      </body>
-    </html>
+      <html lang="en">
+        <body className="m-0 bg-gray-50 font-sans text-base font-normal leading-default text-slate-500 antialiased">
+          <Navbar />
+          {children}
+          {/* {modal} */}
+        </body>
+      </html>
     </ClerkProvider>
   )
 }

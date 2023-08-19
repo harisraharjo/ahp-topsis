@@ -1,7 +1,7 @@
 import { selectAllCriteria } from "~server/db/criteria";
 
 import { hierarchy } from "d3-hierarchy";
-import type { HierarchyNode } from "./entries/(playground)/(hierarchy)/Hierarchy";
+import type { HierarchyNode } from "../(kriteria)/(hierarchy)/Hierarchy";
 import { constructHierarchy } from "~utils/helper";
 import { EntriesTable } from "./EntriesTable";
 import topsis2 from "topsis2"
@@ -16,11 +16,16 @@ let leaderboard: {id: string, name:string}[] = []
 
 const defaultColumns = [{ header: "Nama Siswa", accessorKey: "name" }];
 export default async function Page() {
-  const data = await getData()
+  let data =  getData()
+  const leavesColumns = [defaultColumns[0]]
+
+  
+  // @ts-expect-error it's ok
+  data = await data;
+  // @ts-expect-error it's ok
   const das = constructHierarchy(data)
   const root = hierarchy<HierarchyNode>(das)
 
-  const leavesColumns = [defaultColumns[0]]
   root.children!.forEach((node) => {
     const name = node.data.name
     const result: {
@@ -95,7 +100,7 @@ export default async function Page() {
       matrix[k].push(value);
       }
     
-    const rank = topsis2.rank(totalWeight, matrix);//.sort((a,b) => b-a);
+    const rank = topsis2.rank(totalWeight, matrix);
     leaderboard = rank.map(([id, value]) => ({id: id!.toString(), name: formData.get(`${id}-name`)!.toString(), value}))
 
 

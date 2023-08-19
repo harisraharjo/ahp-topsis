@@ -20,7 +20,6 @@ type HierarchyProps<T extends HierarchyNode> = PropsWithChildren<
 
 export const Hierarchy = <T extends HierarchyNode>({
   data,
-  children,
 }: HierarchyProps<T>) => {
 
   const [root] = useState(() =>
@@ -52,7 +51,6 @@ export const Hierarchy = <T extends HierarchyNode>({
         />
       ))}
       <Nodes<Document, HierarchyNode> nodes={tree.descendants()}/>
-        {children}
     </>
   )
 }

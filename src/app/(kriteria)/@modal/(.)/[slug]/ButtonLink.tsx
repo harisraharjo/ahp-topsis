@@ -2,7 +2,6 @@ import Link from "next/link"
 import type { PropsWithChildren } from "react"
 import type { UrlObject } from "url"
 
-// href: string | UrlObject
 type ButtonLinkProps = PropsWithChildren<{
   destination: string
   className: string
@@ -15,7 +14,7 @@ export const ButtonLink = ({
   query,
 }: ButtonLinkProps) => (
   <Link
-    href={{ pathname: `/entries${destination}`, query }}
+    href={{ pathname: `${destination}`, query }}
     className={className}
   >
     {children}

@@ -20,7 +20,8 @@ export const Playground = ({ children, data }: PropsWithChildren<{ data: Criteri
   const hierarchyData = constructHierarchy(data)
 
   return (
-    <>
+    <div className="h-full w-full overflow-y-hidden" id="svgRoot">
+      {children}
       <Surface
         height={900}
         width={900}
@@ -35,9 +36,9 @@ export const Playground = ({ children, data }: PropsWithChildren<{ data: Criteri
           }
           data={hierarchyData}
         >
-          {children}
         </Hierarchy>
       </Surface>
-    </>
+    </div>
+
   )
 }

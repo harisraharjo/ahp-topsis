@@ -68,7 +68,7 @@ export const Nodes = <
 
       return (
         <Group top={node.y} left={node.x} key={key}>
-          <Link href={`/entries/${data.id}-${data.parentId}-${depth}`}>
+          <Link href={`${data.id}-${data.parentId}-${depth}`}>
             {isHead && <Head />}
             {!isHead && <Descendant hasChild={Boolean(data.children)} />}
           </Link>

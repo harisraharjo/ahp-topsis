@@ -14,6 +14,7 @@ export default async function Page({ params: {slug} }: PageProps) {
   let [id,,depth] = slug.split("-")
   id = id!, depth = depth!
   
+  
   const data = await getData(parseInt(id))
   const addAble = parseInt(depth) === 1  && parseInt(id) !== 2
 
