@@ -52,19 +52,12 @@ export type ZoomConfig = {
   // /** Height of the zoom container. */
   // height: number
   /**
-   * ```js
-   *  wheelDelta(event)
-   * ```
-   *
    * A function that returns { scaleX,scaleY } factors to scale the matrix by.
    * Scale factors greater than 1 will increase (zoom in), less than 1 will decrease (zoom out).
    */
   wheelDelta?: (event: ReactWheelEvent | WheelEvent) => Scale
   target: ElementOrSelector
   /**
-   * ```js
-   *  pinchDelta(state)
-   * ```
    *
    * A function that returns { scaleX, scaleY, point } factors to scale the matrix by.
    * Scale factors greater than 1 will increase (zoom in), less than 1 will decrease (zoom out), the point is used to find where to zoom.
@@ -79,30 +72,6 @@ export type ZoomConfig = {
   scaleYMin?: number
   /** Maximum y scale value for transform. */
   scaleYMax?: number
-  /**
-   * By default constrain() will only constrain scale values. To change
-   * constraints you can pass in your own constrain function as a prop.
-   *
-   * For example, if you wanted to constrain your view to within [[0, 0], [width, height]]:
-   *
-   * ```js
-   * function constrain(transformMatrix, prevTransformMatrix) {
-   *   const min = applyMatrixToPoint(transformMatrix, { x: 0, y: 0 });
-   *   const max = applyMatrixToPoint(transformMatrix, { x: width, y: height });
-   *   if (max.x < width || max.y < height) {
-   *     return prevTransformMatrix;
-   *   }
-   *   if (min.x > 0 || min.y > 0) {
-   *     return prevTransformMatrix;
-   *   }
-   *   return transformMatrix;
-   * }
-   * ```
-   */
-  // constrain?: (
-  //   transform: TransformMatrix,
-  //   prevTransform: TransformMatrix,
-  // ) => TransformMatrix
   /** Initial transform matrix to apply. */
   initialTransformMatrix?: TransformMatrix
 }
@@ -121,7 +90,7 @@ const useGestureConfig: UserGestureConfig = {
 
 const defaultValue = {
   point: { x: 0, y: 0 },
-  translate: { x: 0, y: 0 },
+  translate: { x: 240, y: 1700 },
   matrix: {
     scaleX: 1,
     scaleY: 1,
@@ -145,11 +114,13 @@ export function useZoom<Container extends Element>({
 ZoomConfig): ProvidedZoom<Container> & ZoomState {
   const containerRef = useRef<Container>(null)
   const matrixStateRef = useRef<TransformMatrix>(initialTransformMatrix)
+  console.log(target)
 
   const isDragging = useRef(false)
-  const startTranslate = useRef<Translate>(defaultValue.translate)
+  const startTranslate = useRef<Translate>({x: initialTransformMatrix.x, y: initialTransformMatrix.y})
   const startPoint = useRef<Point>(defaultValue.point)
-
+  
+  
   const dragEnd = useCallback(() => {
     startPoint.current.x = 0
     startPoint.current.y = 0
@@ -366,11 +337,7 @@ const scaleConstraint = (
   scaleMax: number,
   scaleMin: number,
 ) => {
-  // if (constrain) return constrain(newTransformMatrix, prevTransformMatrix)
 
   const shouldConstrainScaleY = newScale > scaleMax || newScale < scaleMin
   return shouldConstrainScaleY ? prevScale : newScale
 }
-// function translateDeltaConstraint<Limit extends Range<0, 31>>(delta: number, limit: Limit) {
-//   return delta < 0 ? Math.max(delta, -limit) : Math.min(delta, limit)
-// }

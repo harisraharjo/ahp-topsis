@@ -66,7 +66,8 @@ export const Nodes = <
       const data = node.data
 
       return (
-        <Group top={node.y} left={node.x} key={key}>
+        <g key={key} className="translate-x-1/2 translate-y-[13%]">
+        <Group top={node.y} left={node.x}>
           <Link href={`${data.id}-${data.parentId}-${depth}`}>
             {isHead && <Head />}
             {!isHead && <Descendant hasChild={Boolean(data.children)} />}
@@ -75,6 +76,7 @@ export const Nodes = <
             {node.data.name}
           </Text>
         </Group>
+        </g>
       )
     })}
   </>
@@ -84,7 +86,7 @@ const Head = () => {
   return (
     <>
       <LinearGradient id="links-gradient" from="#fd9b93" to="#fe6e9e" />
-      <circle r={50} fill="url('#links-gradient')" />
+      <circle r={30} fill="url('#links-gradient')" />
     </>
   )
 }
@@ -95,6 +97,7 @@ const Descendant = ({ hasChild }: { hasChild: boolean }) => {
 
   return (
     <rect
+      id="descendant"
       height={height}
       width={width}
       y={-height / 2}

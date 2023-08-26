@@ -14,7 +14,7 @@ export type HierarchyNode = Document & {
 }
 
 type HierarchyProps<T extends HierarchyNode> = 
-  Omit<TreeProps<Document, T>, "Edge" | "Node">
+  Pick<TreeProps<Document, T>, "data">
 
 
 export const Hierarchy = <T extends HierarchyNode>({
@@ -41,6 +41,7 @@ export const Hierarchy = <T extends HierarchyNode>({
     <>
       {tree.links().map((data, i) => (
         <path
+          className="translate-x-1/2 translate-y-[13%]"
           key={`${data.source.data.id}-${data.target.data.id}-${i}`}
           // @ts-expect-error wrong types from @types/d3-shape
           d={edge(data) as string}

@@ -26,7 +26,7 @@ type Goal<Data extends Document> = {
 
 export function constructHierarchy<Data extends Document[]>(
   data: Data,
-  goal = "Siswa Teladan",
+  goal = "Goal",
 ): Node<Goal<Data[number]>> {
   type IDMap = Record<Document["id"], number>
   const idMapping = data.reduce((acc, el, i) => {
