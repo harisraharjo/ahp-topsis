@@ -44,15 +44,14 @@ export const Leaderboard = ({ data }: ComparatorProps) => {
     <>
       <br></br>
       <br></br>
-      Leaderboard
-      <br></br>
+      <h3>Leaderboard</h3>
       <Table className="max-w-fit">
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
                 return (
-                  <TableHead key={header.id}>
+                  <TableHead key={header.id} className="text-slate-50 pointer-events-none">
                     {header.isPlaceholder
                       ? null
                       : flexRender(

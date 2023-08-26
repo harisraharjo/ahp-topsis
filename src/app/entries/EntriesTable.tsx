@@ -1,7 +1,6 @@
 "use client"
 
 import {
-//   type ColumnDef,
   flexRender,
   getCoreRowModel,
   useReactTable,
@@ -16,12 +15,10 @@ import {
   TableHeader,
   TableRow,
 } from "~components/ui/table"
-import { Button } from "~components/ui/button"
 import { useState } from "react"
 import { FooterCell } from "./FooterCell"
 
 type ComparatorProps = {
-    // data: TableData[]
     columns: {
         header: string;
         accessorKey: string;
@@ -37,12 +34,11 @@ const defaultColumn = {
     return (
         <Input
         type="text"
-        
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
             name={`${w.row.index}-${w.column.id}`}
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
         defaultValue=""
-        className="outline"
+        className="outline text-black"
       />
     )
   },
@@ -81,14 +77,13 @@ export const EntriesTable = ({  columns, fieldNames }: ComparatorProps) => {
   })
 
   return (
-   <>
-      <Table>
+    <Table className="mb-4">
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
                 return (
-                  <TableHead key={header.id}>
+                  <TableHead key={header.id} className="text-slate-50 pointer-events-none">
                     {header.isPlaceholder
                       ? null
                       : flexRender(
@@ -122,15 +117,8 @@ export const EntriesTable = ({  columns, fieldNames }: ComparatorProps) => {
                 <TableHead>
                     <FooterCell table={table} />
                       </TableHead>
-                      
-             </TableRow>
-                  <TableRow>
-                      <TableHead className="mx-auto">
-                          <Button>Hitung</Button>
-                      </TableHead>
                       </TableRow>
           </TableFooter>
       </Table>
-    </>
   )
 }

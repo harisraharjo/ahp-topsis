@@ -1,4 +1,4 @@
-type DialogType = "add" | "detail" | "komparasi"
+type DialogType = "add" | "detail" | "compare"
 
 
 export const MutationDialogTitle = ({ type }: { type: DialogType }) => (

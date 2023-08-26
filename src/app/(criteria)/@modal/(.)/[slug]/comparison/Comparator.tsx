@@ -6,16 +6,17 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table"
+import { Button } from "~components/ui/button"
 import { Input } from "~components/ui/input"
 import {
   Table,
   TableBody,
   TableCell,
+  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
 } from "~components/ui/table"
-import { Button } from "~components/ui/button"
 
 type ComparatorProps = {
   data: TableData[]
@@ -30,17 +31,17 @@ export type TableData = {
 const columns: ColumnDef<TableData>[] = [
   {
     accessorKey: "compareTo",
-    header: "Perbandingan",
+    header: "Comparation",
   },
   {
     accessorKey: "scale",
-    header: "Skala",
+    header: "Scale",
     cell: ({ cell: { renderValue, row } }) => (
       <Input
         type="number"
         min={1}
         max={9}
-        className="outline"
+        className="outline outline-slate-50 text-black"
         name={row.original.id}
         defaultValue={renderValue() as number}
       />
@@ -56,14 +57,13 @@ export const Comparator = ({ data }: ComparatorProps) => {
   })
 
   return (
-   <>
-      <Table>
-        <TableHeader>
+    <Table>
+        <TableHeader >
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
                 return (
-                  <TableHead key={header.id}>
+                  <TableHead key={header.id} className="text-slate-50 pointer-events-none">
                     {header.isPlaceholder
                       ? null
                       : flexRender(
@@ -91,10 +91,10 @@ export const Comparator = ({ data }: ComparatorProps) => {
               </TableRow>
             ))
           }
-        </TableBody>
+      </TableBody>
+      <TableFooter>
+        <Button variant={"default"} className="border ml-1 mb-2">Calculate</Button>
+      </TableFooter>
       </Table>
-
-      <Button>Hitung</Button>
-    </>
   )
 }

@@ -8,7 +8,9 @@ export const FooterCell = ({ table }: {table: Table<Record<string, string>>}) =>
   const meta = table.options.meta
     
   return (
-      <Button type="button" onClick={
+    <Button
+      className="border border-slate-50"
+      type="button" onClick={
           //  @ts-expect-error it's ok
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           meta!.addRow

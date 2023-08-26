@@ -44,7 +44,7 @@ export const Surface = ({
   return (
         <svg
           viewBox={VIEW_BOX}
-          className="touch-none h-auto w-full"
+          className="touch-none h-auto w-full bg-slate-900"
           preserveAspectRatio="none"
           ref={zoom.containerRef}
     >

@@ -1,5 +1,5 @@
 # AHP-TOPSIS
-A tool to solve MCDM problems with the help of AHP & TOPSIS
+A tool to solve MCDM problems using AHP & TOPSIS
 
 # ! Under Construction !
 

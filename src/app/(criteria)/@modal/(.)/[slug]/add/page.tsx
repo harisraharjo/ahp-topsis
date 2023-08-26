@@ -1,6 +1,5 @@
 import type { PropsWithChildren } from "react"
 
-import { MutationDialogTitle } from "../MutationDialogTitle"
 import { Input } from "~components/ui/input"
 import { Button } from "~components/ui/button"
 import { CriteriaTypes } from "../CriteriaTypes"
@@ -22,13 +21,12 @@ export default function Page({ params: { slug } }: LayoutProps) {
 
   return (
     <>
-     <MutationDialogTitle type="add" />
       {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
       <form action={action}>
-          <label htmlFor="name">Nama</label>
-          <Input name="name" placeholder="Nama kriteria" required/>
+          <label htmlFor="name">Name</label>
+          <Input name="name" className="text-black" placeholder="Nama kriteria" required/>
           <CriteriaTypes />
-        <Button>Submit</Button>
+        <Button className="border border-slate-50">Submit</Button>
       </form>
     </>
   )

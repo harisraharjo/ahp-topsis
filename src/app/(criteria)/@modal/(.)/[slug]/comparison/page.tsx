@@ -1,7 +1,6 @@
 import type { PropsWithChildren } from "react"
 
 import { array, ones } from "vectorious";
-import { MutationDialogTitle } from "../MutationDialogTitle"
 import { Comparator, type TableData } from "./Comparator"
 import { selectAllCriteria, updateCriteria } from "~server/db/criteria"
 
@@ -36,7 +35,7 @@ export default async function Page({ children, params }: LayoutProps) {
       redirect("/")
     } else {
       revalidatePath(`/`)
-      message = "Tidak Konsisten"
+      message = "Not Consistent"
     }
 
   }
@@ -53,7 +52,7 @@ export default async function Page({ children, params }: LayoutProps) {
       temp_data.forEach((cd) => {
         result.push({
           id: `${d.id}`,
-          compareTo: `${d.name} terhadap ${cd.name}`,
+          compareTo: `${d.name} -> ${cd.name}`,
           scale: 1,
         })
       })
@@ -64,7 +63,6 @@ export default async function Page({ children, params }: LayoutProps) {
 
   return (
     <>
-      <MutationDialogTitle type="komparasi" />
       <div className="max-h-80 overflow-auto rounded-md border">
         {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
         <form action={action}>
@@ -72,12 +70,10 @@ export default async function Page({ children, params }: LayoutProps) {
           {message}
         </form>
       </div>
-        {children}
+      {children}
     </>
   )
 }
-
-
 
 const RI = [
     0,
@@ -129,8 +125,7 @@ export async function calculateAHP(formData: FormData, degree: number, raw_data:
     }
   
   if (isSuccess) {  
-    const updatedData = raw_data.map((v, i) => ({ id: v.id, weight: pV[i] }));
-    await Promise.all(updatedData.map((value) => updateCriteria(value).execute()))
+    await Promise.all(raw_data.map((v, i) => updateCriteria({ id: v.id, weight: pV[i] }).execute()));
   }
 
   return isSuccess
@@ -139,7 +134,6 @@ export async function calculateAHP(formData: FormData, degree: number, raw_data:
 function constructMatrix(formData: FormData, degree: number) {
     const matrix = ones(degree, degree)
     const columns = degree, rows = degree
-    
     
     const formDataValues = formData.values()
     const colsSum = new Array<number>(degree).fill(0)
@@ -155,8 +149,8 @@ function constructMatrix(formData: FormData, degree: number) {
             
             // lower
             if (x > y ) {
-                const pembagi = matrix.slice(y, y+1).data[x] as number
-                row.data[y] = 1 / (pembagi)
+                const denominator = matrix.slice(y, y+1).data[x] as number
+                row.data[y] = 1 / (denominator)
             }
 
             colsSum[y] += row.data[y] as number

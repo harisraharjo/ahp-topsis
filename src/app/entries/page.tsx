@@ -7,6 +7,7 @@ import { EntriesTable } from "./EntriesTable";
 import topsis2 from "topsis2"
 import { Leaderboard } from "./Leaderboard";
 import { revalidatePath } from "next/cache";
+import { Button } from "~components/ui/button";
 
 function getData() {
   return selectAllCriteria().execute();
@@ -124,6 +125,7 @@ export default async function Page() {
       <form action={action}>
       {/* @ts-expect-error it's ok */}
         <EntriesTable columns={leavesColumns} fieldNames={fieldNames} />
+        <Button className="border border-slate-50">Calculate</Button>
       </form>
       <Leaderboard key={Math.random()} data={leaderboard}/>
     </>
