@@ -22,7 +22,6 @@
     "@use-gesture/core": "^10.2.26",
     "@visx/event": "^3.0.1",
     "@visx/gradient": "^3.0.0",
-    "@visx/pattern": "^3.3.0",
     "@visx/responsive": "^3.0.0",
     "add": "^2.0.6",
     "class-variance-authority": "^0.7.0",

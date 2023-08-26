@@ -38,9 +38,6 @@ dependencies:
   '@visx/gradient':
     specifier: ^3.0.0
     version: 3.0.0(react@18.2.0)
-  '@visx/pattern':
-    specifier: ^3.3.0
-    version: 3.3.0(react@18.2.0)
   '@visx/responsive':
     specifier: ^3.0.0
     version: 3.0.0(react@18.2.0)
@@ -1618,17 +1615,6 @@ packages:
       react: 18.2.0
     dev: false
 
-  /@visx/pattern@3.3.0(react@18.2.0):
-    resolution: {integrity: sha512-x/a8sG8a+yj+yMjecL+UunRBGPf2Jm6L/X5AbRHEYddHZxxZa6FwxFuJe4R6S19+/vmFaXm8Md1ZAzT/cu6Icw==}
-    peerDependencies:
-      react: ^16.0.0-0 || ^17.0.0-0 || ^18.0.0-0
-    dependencies:
-      '@types/react': 18.2.20
-      classnames: 2.3.2
-      prop-types: 15.8.1
-      react: 18.2.0
-    dev: false
-
   /@visx/point@3.0.1:
     resolution: {integrity: sha512-S5WOBMgEP2xHcgs3A2BFB2vwzrk0tMmn3PGZAbQJ+lu4HlnalDP72klUnxLTH8xclNNvpUHtHM5eLIJXyHx6Pw==}
     dev: false
@@ -1959,10 +1945,6 @@ packages:
     resolution: {integrity: sha512-jFI8IQw4hczaL4ALINxqLEXQbWcNjoSkloa4IaufXCJr6QawJyw7tuRysRsrE8w2p/4gGaxKIt/hX3qz/IbD1A==}
     dependencies:
       clsx: 2.0.0
-    dev: false
-
-  /classnames@2.3.2:
-    resolution: {integrity: sha512-CSbhY4cFEJRe6/GQzIk5qXZ4Jeg5pcsP7b5peFSDpffpe1cqjASH/n9UTjBwOp6XpMSTwQ8Za2K5V02ueA7Tmw==}
     dev: false
 
   /client-only@0.0.1:
