@@ -1,7 +1,12 @@
-import type { ComparisonOperator } from "kysely"
+import type {
+  ComparisonOperator,
+  UpdateObject,
+  WhereExpressionFactory,
+} from "kysely"
 import { db } from "../config"
 import type { DB } from "../types"
 import type { DestructureQueryValue, InsertValue, QueryValue } from "../utils"
+import type { ExtractTableAlias } from "kysely/dist/cjs/parser/table-parser"
 
 export const insertRows = <T extends keyof DB, V extends InsertValue<T>>(
   table: T,
@@ -30,19 +35,24 @@ export const selectRows = <
     value,
   )
 
-// export const selectIsEqual = <
-//   T extends keyof DB,
-//   S extends SelectQueryBuilder<DB, T, unknown>,
-//   SelectedTable extends S extends SelectQueryBuilder<DB, infer U, unknown>
-//     ? U
-//     : never,
-//   R extends keyof DB[SelectedTable],
-//   V extends DestructureQueryValue<SelectedTable, R, "select">,
-// >(
-//   sb: S,
-//   key: R,
-//   value: V,
-// ) => sb.where(key as ReferenceExpression<DB, SelectedTable>, "=", value)
+type UpdateProps<T extends keyof DB> = UpdateObject<
+  DB,
+  ExtractTableAlias<DB, T>,
+  ExtractTableAlias<DB, T>
+>
+
+export const updateRows = <
+  T extends keyof DB,
+  V extends UpdateProps<T>,
+  Where extends WhereExpressionFactory<DB, T>,
+>(
+  table: T,
+  value: V,
+  fn: Where,
+) => {
+  //@ts-expect-error kysely types for set and where clause (1st parameter) is too restrictive but don't worry it still works
+  return db.updateTable(table).set(value).where(fn)
+}
 
 export const updateRow = <
   T extends keyof DB,

@@ -14,7 +14,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 type Id = string | number
-type Document = { id: Id; parentId: Id | null; name: string, isBenefit: 0 | 1 }
+type Document = { id: Id; parentId: Id | null; name: string; isBenefit: 0 | 1 }
 type Node<T extends Document> = Document & { children?: Node<T>[] }
 type Goal<Data extends Document> = {
   id: 0
@@ -44,8 +44,8 @@ export function constructHierarchy<Data extends Document[]>(
     }
 
     const parentId = el.parentId
-    
-    // honestly parentId will never be null because the query is filtered
+
+    // parentId will never be null because the query is filtered
     const arrayIndex = idMapping[parentId!]
 
     const parentEl = data[arrayIndex as number] as Node<Data[number]>
@@ -56,10 +56,10 @@ export function constructHierarchy<Data extends Document[]>(
   })
 
   return {
-    id: 0,
-    parentId: -1,
+    id: 1,
+    parentId: 0,
     name: goal,
     children: nodes,
-    isBenefit: 1
+    isBenefit: 1,
   }
 }
