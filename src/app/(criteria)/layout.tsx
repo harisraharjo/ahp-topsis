@@ -1,18 +1,18 @@
-import { selectAllCriteria } from "~server/db/criteria";
-import { Playground } from "./Playground";
-import type { ReactNode } from "react";
-
+import { selectAllCriteria } from "~server/db/criteria"
+import { Playground } from "./Playground"
+import type { ReactNode } from "react"
 
 function getData() {
-  return selectAllCriteria().execute();
+  return selectAllCriteria().execute()
 }
 
-export default async function Page({  modal }: { children: ReactNode, modal: ReactNode }) {
+export default async function Page({
+  modal,
+}: {
+  children: ReactNode
+  modal: ReactNode
+}) {
   const data = await getData()
-  
-    return (
-      <Playground data={data}>
-          {modal}
-      </Playground>
-  )
+
+  return <Playground data={data}>{modal}</Playground>
 }

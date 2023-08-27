@@ -1,12 +1,11 @@
 "use client"
 
 import type { PropsWithChildren } from "react"
-import {  useMemo } from "react"
+import { useMemo } from "react"
 
 import { useZoom } from "~components/(use-zoom)"
 import { Group } from "~components/Tree"
 import type { ZoomConfig } from "~components/(use-zoom)/Zoom"
-
 
 type PlaygroundProps = PropsWithChildren
 
@@ -15,9 +14,7 @@ const origin = { x: 0, y: 0 }
 const ZOOM_TARGET_ID = "zoom_target" as const
 const VIEW_BOX = "0 0 1000 1000" as const
 
-export const Surface = ({
-  children,
-}: PlaygroundProps) => {
+export const Surface = ({ children }: PlaygroundProps) => {
   const zoomConfig = useMemo<ZoomConfig>(() => {
     const initialScale = 0
     const TARGET = `#${ZOOM_TARGET_ID}` as const
@@ -42,30 +39,29 @@ export const Surface = ({
   const zoom = useZoom<SVGSVGElement>(zoomConfig)
 
   return (
-        <svg
-          viewBox={VIEW_BOX}
-          className="touch-none h-auto w-full bg-slate-900"
-          preserveAspectRatio="none"
-          ref={zoom.containerRef}
+    <svg
+      viewBox={VIEW_BOX}
+      className="h-auto w-full touch-none bg-slate-900"
+      preserveAspectRatio="none"
+      ref={zoom.containerRef}
     >
-          <rect
-            className="h-auto w-full"
-            viewBox={VIEW_BOX}
-            rx={14}
-            fill="#272b4d"
-            x={0}
-            y={0}
-            onTouchStart={zoom.dragStart}
-            onTouchMove={zoom.dragMove}
-            onTouchEnd={zoom.dragEnd}
-            onMouseLeave={() => {
-              if (zoom.isDragging) zoom.dragEnd()
-            }}
+      <rect
+        className="h-auto w-full"
+        viewBox={VIEW_BOX}
+        rx={14}
+        fill="#272b4d"
+        x={0}
+        y={0}
+        onTouchStart={zoom.dragStart}
+        onTouchMove={zoom.dragMove}
+        onTouchEnd={zoom.dragEnd}
+        onMouseLeave={() => {
+          if (zoom.isDragging) zoom.dragEnd()
+        }}
       />
-          <Group id={ZOOM_TARGET_ID} top={origin.y} left={origin.x}>
-            {children}
+      <Group id={ZOOM_TARGET_ID} top={origin.y} left={origin.x}>
+        {children}
       </Group>
-      
-        </svg>
+    </svg>
   )
 }

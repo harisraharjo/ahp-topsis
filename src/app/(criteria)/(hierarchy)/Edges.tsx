@@ -16,4 +16,3 @@ export function createEdge() {
   edge.y((l) => (typeof l?.y === "number" ? l.y : 0) as number)
   return edge
 }
-

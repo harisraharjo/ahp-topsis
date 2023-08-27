@@ -13,20 +13,20 @@ export type HierarchyNode = Document & {
   children?: HierarchyNode[]
 }
 
-type HierarchyProps<T extends HierarchyNode> = 
-  Pick<TreeProps<Document, T>, "data">
-
+type HierarchyProps<T extends HierarchyNode> = Pick<
+  TreeProps<Document, T>,
+  "data"
+>
 
 export const Hierarchy = <T extends HierarchyNode>({
   data,
 }: HierarchyProps<T>) => {
-
   const [root] = useState(() =>
     hierarchy<HierarchyNode>(data, (d) =>
       d.parentId === null ? null : d.children,
     ),
   )
-  
+
   const tree = useTree<HierarchyNode>(
     root,
     (a, b) => {
@@ -50,8 +50,7 @@ export const Hierarchy = <T extends HierarchyNode>({
           fill="none"
         />
       ))}
-      <Nodes<Document, HierarchyNode> nodes={tree.descendants()}/>
+      <Nodes<Document, HierarchyNode> nodes={tree.descendants()} />
     </>
   )
 }
-

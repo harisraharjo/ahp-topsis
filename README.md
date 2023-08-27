@@ -1,6 +1,7 @@
 # AHP-TOPSIS
 A tool to solve MCDM problems using AHP & TOPSIS
-<img width="943" alt="image" src="https://github.com/harisraharjo/ahp-topsis/assets/34530664/40993e83-8a1b-430a-b540-72fd8f93e74e">
+
+<img width="600" alt="image" src="https://github.com/harisraharjo/ahp-topsis/assets/34530664/40993e83-8a1b-430a-b540-72fd8f93e74e">
 
 
 # ! Under Construction !

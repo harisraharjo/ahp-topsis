@@ -41,7 +41,7 @@ const columns: ColumnDef<TableData>[] = [
         type="number"
         min={1}
         max={9}
-        className="outline outline-slate-50 text-black"
+        className="text-black outline outline-slate-50"
         name={row.original.id}
         defaultValue={renderValue() as number}
       />
@@ -58,43 +58,43 @@ export const Comparator = ({ data }: ComparatorProps) => {
 
   return (
     <Table>
-        <TableHeader >
-          {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map((header) => {
-                return (
-                  <TableHead key={header.id} className="text-slate-50 pointer-events-none">
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext(),
-                        )}
-                  </TableHead>
-                )
-              })}
-            </TableRow>
-          ))}
-        </TableHeader>
-        <TableBody>
-          {
-            table.getRowModel().rows.map((row) => (
-              <TableRow
-                key={row.id}
-                data-state={row.getIsSelected() && "selected"}
-              >
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
-                ))}
-              </TableRow>
-            ))
-          }
+      <TableHeader>
+        {table.getHeaderGroups().map((headerGroup) => (
+          <TableRow key={headerGroup.id}>
+            {headerGroup.headers.map((header) => {
+              return (
+                <TableHead
+                  key={header.id}
+                  className="pointer-events-none text-slate-50"
+                >
+                  {header.isPlaceholder
+                    ? null
+                    : flexRender(
+                        header.column.columnDef.header,
+                        header.getContext(),
+                      )}
+                </TableHead>
+              )
+            })}
+          </TableRow>
+        ))}
+      </TableHeader>
+      <TableBody>
+        {table.getRowModel().rows.map((row) => (
+          <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
+            {row.getVisibleCells().map((cell) => (
+              <TableCell key={cell.id}>
+                {flexRender(cell.column.columnDef.cell, cell.getContext())}
+              </TableCell>
+            ))}
+          </TableRow>
+        ))}
       </TableBody>
       <TableFooter>
-        <Button variant={"default"} className="border ml-1 mb-2">Calculate</Button>
+        <Button variant={"default"} className="mb-2 ml-1 border">
+          Calculate
+        </Button>
       </TableFooter>
-      </Table>
+    </Table>
   )
 }

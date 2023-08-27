@@ -114,7 +114,6 @@ export function useZoom<Container extends Element>({
 ZoomConfig): ProvidedZoom<Container> & ZoomState {
   const containerRef = useRef<Container>(null)
   const matrixStateRef = useRef<TransformMatrix>(initialTransformMatrix)
-  console.log(target)
 
   const isDragging = useRef(false)
   const startTranslate = useRef<Translate>({x: initialTransformMatrix.x, y: initialTransformMatrix.y})
