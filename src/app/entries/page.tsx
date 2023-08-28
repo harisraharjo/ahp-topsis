@@ -1,7 +1,7 @@
 import { selectAllCriteria } from "~server/db/criteria"
 
 import { hierarchy } from "d3-hierarchy"
-import type { HierarchyNode } from "../(criteria)/(hierarchy)/Hierarchy"
+import type { HierarchyNode } from "../(criteria)/Hierarchy"
 import { constructHierarchy } from "~utils/helper"
 import { EntriesTable } from "./EntriesTable"
 import topsis2 from "topsis2"
@@ -13,10 +13,9 @@ function getData() {
   return selectAllCriteria().execute()
 }
 
-let leaderboard: { id: string; name: string }[] = []
-
-const defaultColumns = [{ header: "Nama Siswa", accessorKey: "name" }]
+const defaultColumns = [{ header: "Name", accessorKey: "name" }]
 export default async function Page() {
+  let leaderboard: { id: string; name: string }[] = []
   let data = getData()
   const leavesColumns = [defaultColumns[0]]
 
@@ -26,7 +25,7 @@ export default async function Page() {
   const das = constructHierarchy(data)
   const root = hierarchy<HierarchyNode>(das)
 
-  root.children!.forEach((node) => {
+  root.children?.forEach((node) => {
     const name = node.data.name
     const result: {
       header: string
@@ -90,11 +89,12 @@ export default async function Page() {
     const matrix: number[][] = []
 
     for (const [key, value] of formData.entries()) {
-      const spl = key.split("-")
-      // @ts-expect-error it's ok
-      if (!(spl[1]?.replaceAll(" ", "") in fieldNames)) continue
+      const noise = key.split("-")
 
-      const k = Number(spl[0])
+      // @ts-expect-error it's ok
+      if (!(noise[1]?.replaceAll(" ", "") in fieldNames)) continue
+
+      const k = Number(noise[0])
 
       if (!Array.isArray(matrix[k])) {
         matrix[k] = []
@@ -135,7 +135,9 @@ export default async function Page() {
         <EntriesTable columns={leavesColumns} fieldNames={fieldNames} />
         <Button className="border border-slate-50">Calculate</Button>
       </form>
-      <Leaderboard key={Math.random()} data={leaderboard} />
+      {leaderboard.length && (
+        <Leaderboard key={Math.random()} data={leaderboard} />
+      )}
     </>
   )
 }

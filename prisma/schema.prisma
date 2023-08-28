@@ -15,7 +15,7 @@ datasource db {
 }
 
 model Criteria {
-    id        Int     @id @default(autoincrement()) @db.UnsignedSmallInt()
+    id        Int     @id @default(autoincrement()) @db.UnsignedInt()
     name      String
     weight    Decimal @db.Decimal(8, 5)
     isBenefit Boolean @default(true)

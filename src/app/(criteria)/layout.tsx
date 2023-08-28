@@ -8,11 +8,20 @@ function getData() {
 
 export default async function Page({
   modal,
+  auth,
 }: {
-  children: ReactNode
+  // children: ReactNode
   modal: ReactNode
+  auth: ReactNode
 }) {
   const data = await getData()
 
-  return <Playground data={data}>{modal}</Playground>
+  return (
+    <>
+      <Playground data={data}>
+        {auth}
+        {modal}
+      </Playground>
+    </>
+  )
 }

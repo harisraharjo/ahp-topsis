@@ -1,7 +1,7 @@
 import type { RawQueryValue } from "~server/db/utils"
 
 import { Surface } from "./Surface"
-import { Hierarchy } from "./(hierarchy)/Hierarchy"
+import { Hierarchy } from "./Hierarchy"
 import type { PropsWithChildren } from "react"
 import { constructHierarchy } from "~utils/helper"
 
