@@ -2,95 +2,67 @@ import { selectAllCriteria } from "~server/db/criteria"
 
 import { hierarchy } from "d3-hierarchy"
 import type { HierarchyNode } from "../(criteria)/Hierarchy"
-import { constructHierarchy } from "~utils/helper"
+import { GOAL_ID, constructHierarchy } from "~utils/helper"
 import { EntriesTable } from "./EntriesTable"
 import topsis2 from "topsis2"
 import { Leaderboard } from "./Leaderboard"
 import { revalidatePath } from "next/cache"
 import { Button } from "~components/ui/button"
+import type { HierarchyNode as D3HierarchyNode } from "d3-hierarchy"
 
 function getData() {
   return selectAllCriteria().execute()
 }
 
-const defaultColumns = [{ header: "Name", accessorKey: "name" }]
+type FieldsNames = Record<string, "">
+type Columns = {
+  header: string
+  accessorKey: string
+}[]
+type Criteria = { weight: number; type: "cost" | "benefit" }[]
+
+const defaultColumn = { header: "Name", accessorKey: "name" }
 export default async function Page() {
+  const rawData = await getData(),
+    data = constructHierarchy(rawData),
+    root = hierarchy<HierarchyNode>(data),
+    leaves = root.leaves()
+
+  const columns: Columns = [],
+    fieldNames: FieldsNames = {}
+
+  const leavesCount = leaves.length,
+    hasEnoughCriteria = leavesCount >= 2
+
+  let criteria: Criteria
+  if (hasEnoughCriteria) {
+    let i
+    for (i = 0; i < leavesCount; i++) {
+      const leaf = leaves[i] as D3HierarchyNode<HierarchyNode>
+      const name = leaf.data.name,
+        compactName = name.replaceAll(" ", "")
+
+      columns.push({ accessorKey: compactName, header: name })
+      fieldNames[compactName] = ""
+    }
+    fieldNames[defaultColumn.accessorKey] = ""
+    criteria = collectAncestorsData(leaves)
+  }
+
   let leaderboard: { id: string; name: string }[] = []
-  let data = getData()
-  const leavesColumns = [defaultColumns[0]]
-
-  // @ts-expect-error it's ok
-  data = await data
-  // @ts-expect-error it's ok
-  const das = constructHierarchy(data)
-  const root = hierarchy<HierarchyNode>(das)
-
-  root.children?.forEach((node) => {
-    const name = node.data.name
-    const result: {
-      header: string
-      accessorKey?: string
-      columns?: { header: string; accessorKey: string }[]
-    } = {
-      header: name,
-      accessorKey: name.replaceAll(" ", ""),
-    }
-
-    const subNode = node.children
-    if (subNode) {
-      result.accessorKey = undefined
-      const subNodeData: {
-        header: string
-        accessorKey: string
-      }[] = []
-
-      subNode.forEach((sNode) => {
-        const name = sNode.data.name
-        subNodeData.push({
-          header: name,
-          accessorKey: name.replaceAll(" ", ""),
-        })
-      })
-
-      result["columns"] = subNodeData
-    }
-
-    // @ts-expect-error it's ok
-    leavesColumns.push(result)
-  })
-
-  const leaves = root.leaves()
-
-  const totalWeight: { weight: number; type: "cost" | "benefit" }[] =
-    leaves.map((leaf) => {
-      // @ts-expect-error it's ok
-      const myWeight = Number(leaf.data.weight)
-
-      const type: "cost" | "benefit" = leaf.data.isBenefit ? "benefit" : "cost"
-      if (leaf.data.parentId === 0) {
-        return { weight: myWeight, type }
-      }
-
-      // @ts-expect-error it's ok
-      const parentWeight = Number(leaf.parent!.data.weight)
-
-      const zero = myWeight * parentWeight
-      if (zero) {
-        return { weight: myWeight + parentWeight, type }
-      }
-
-      return { weight: 0, type }
-    })
 
   // eslint-disable-next-line @typescript-eslint/require-await
   async function action(formData: FormData) {
     "use server"
+
+    if (!hasEnoughCriteria) return
 
     const matrix: number[][] = []
 
     for (const [key, value] of formData.entries()) {
       const noise = key.split("-")
 
+      // somehow nextJS has some "noise" data passed to this formData so we have to filter it
       // @ts-expect-error it's ok
       if (!(noise[1]?.replaceAll(" ", "") in fieldNames)) continue
 
@@ -102,11 +74,10 @@ export default async function Page() {
       }
 
       // @ts-expect-error it's ok
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
       matrix[k].push(value)
     }
 
-    const rank = topsis2.rank(totalWeight, matrix)
+    const rank = topsis2.rank(criteria || [], matrix)
     leaderboard = rank.map(([id, value]) => ({
       id: id!.toString(),
       name: formData.get(`${id}-name`)!.toString(),
@@ -116,28 +87,59 @@ export default async function Page() {
     revalidatePath("/")
   }
 
-  const fieldNames = leaves.reduce((acc, leaf) => {
-    const property = leaf.data.name.replaceAll(" ", "")
-    // @ts-expect-error it's ok
-    acc[property] = ""
-
-    return acc
-  }, {})
-
-  // @ts-expect-error it's ok
-  fieldNames["name"] = ""
-
   return (
     <>
       {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
       <form action={action}>
-        {/* @ts-expect-error it's ok */}
-        <EntriesTable columns={leavesColumns} fieldNames={fieldNames} />
-        <Button className="border border-slate-50">Calculate</Button>
+        {!hasEnoughCriteria && <h3>Not enough Criteria</h3>}
+        <EntriesTable columns={columns} fieldNames={fieldNames} />
+        {hasEnoughCriteria && (
+          <Button className="border border-slate-50">Calculate</Button>
+        )}
       </form>
-      {leaderboard.length && (
+
+      {Boolean(leaderboard.length) && (
         <Leaderboard key={Math.random()} data={leaderboard} />
       )}
     </>
   )
+}
+
+function collectAncestorsData(criteria: D3HierarchyNode<HierarchyNode>[]) {
+  let i
+  const length = criteria.length
+  const result: Criteria = []
+  for (i = 0; i < length; i++) {
+    const criterion = criteria[i] as D3HierarchyNode<HierarchyNode>
+    const ancestors = traceAncenstors(criterion),
+      leaf = ancestors.pop() as Criteria[number]
+
+    const ancestorsWeights = ancestors.reduce(
+      (acc, current) => acc + current.weight,
+      0,
+    )
+
+    leaf.weight += ancestorsWeights
+    result.push(leaf)
+  }
+
+  return result
+}
+
+function traceAncenstors(criterion: D3HierarchyNode<HierarchyNode>) {
+  const data = criterion.data
+  const result: Criteria[0] = {
+    // @ts-expect-error it's ok (fix the type later)
+    weight: Number(data.weight),
+    type: data.isBenefit ? "benefit" : "cost",
+  }
+
+  const greatGrandfather = data.parentId === GOAL_ID
+
+  let ancestorsData: { weight: number; type: "benefit" | "cost" }[]
+  if (!greatGrandfather) {
+    ancestorsData = traceAncenstors(criterion.parent!)
+  }
+
+  return [...(ancestorsData! || []), result]
 }

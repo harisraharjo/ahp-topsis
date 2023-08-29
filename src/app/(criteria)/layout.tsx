@@ -8,9 +8,7 @@ function getData() {
 
 export default async function Page({
   modal,
-  auth,
 }: {
-  // children: ReactNode
   modal: ReactNode
   auth: ReactNode
 }) {
@@ -18,10 +16,8 @@ export default async function Page({
 
   return (
     <>
-      <Playground data={data}>
-        {auth}
-        {modal}
-      </Playground>
+      {modal}
+      <Playground data={data} />
     </>
   )
 }

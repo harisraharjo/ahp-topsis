@@ -5,14 +5,12 @@ import { Button } from "~components/ui/button"
 import { CriteriaTypes } from "../CriteriaTypes"
 import { revalidatePath } from "next/cache"
 import { createCriteria } from "~server/db/criteria"
-// import { auth } from "@clerk/nextjs"
 
 type LayoutProps = PropsWithChildren<{
   params: { slug: `${string}-${string}-${string}` }
 }>
 export default function Page({ params: { slug } }: LayoutProps) {
-  let [id] = slug.split("-")
-  id = id!
+  const id = slug.split("-")[0] as string
 
   async function action(formData: FormData) {
     "use server"
@@ -20,8 +18,9 @@ export default function Page({ params: { slug } }: LayoutProps) {
     await createCriteria({
       name: formData.get("name") as string,
       weight: 0,
-      parentId: parseInt(id!),
+      parentId: parseInt(id),
       isBenefit: parseInt(formData.get("type") as string) as 1 | 0,
+      // TODO: Add email for each criteria
       // email: auth().user!.emailAddresses,
     })
 

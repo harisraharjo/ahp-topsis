@@ -16,19 +16,23 @@ export function cn(...inputs: ClassValue[]) {
 type Id = string | number
 type Document = { id: Id; parentId: Id | null; name: string; isBenefit: 0 | 1 }
 type Node<T extends Document> = Document & { children?: Node<T>[] }
+
+export const GOAL = "Goal" as const
+export const GOAL_ID = 0 as const
+
 type Goal<Data extends Document> = {
-  id: 0
+  id: typeof GOAL_ID
   parentId: -1
-  name: string
+  name: typeof GOAL
   children: Node<Data>[]
-  isBenefit: 0 | 1
+  isBenefit: 0
 }
 
 export function constructHierarchy<Data extends Document[]>(
   data: Data,
-  goal = "Goal",
-): Node<Goal<Data[number]>> {
+): Goal<Data[number]> {
   type IDMap = Record<Document["id"], number>
+
   const idMapping = data.reduce((acc, el, i) => {
     acc[el.id] = i
 
@@ -56,10 +60,10 @@ export function constructHierarchy<Data extends Document[]>(
   })
 
   return {
-    id: 1,
-    parentId: 0,
-    name: goal,
+    id: 0,
+    parentId: -1,
+    name: GOAL,
     children: nodes,
-    isBenefit: 1,
+    isBenefit: 0,
   }
 }

@@ -4,7 +4,6 @@ import { ClerkProvider } from "@clerk/nextjs"
 import "../styles/globals.css"
 import { Navbar } from "~components/Navbar"
 import type { Metadata } from "next"
-import { Test } from "./test"
 
 export const metadata: Metadata = {
   colorScheme: "dark",
@@ -12,7 +11,8 @@ export const metadata: Metadata = {
 } as const
 
 function RootLayout({
-  children, // auth,
+  children,
+  auth,
 }: {
   children: ReactNode
   auth: ReactNode
@@ -22,8 +22,7 @@ function RootLayout({
       <html lang="en">
         <body className="leading-default m-0 bg-slate-900 font-sans text-base font-normal text-slate-50 antialiased">
           <Navbar />
-          <Test />
-          {/* {auth} */}
+          {auth}
           {children}
         </body>
       </html>

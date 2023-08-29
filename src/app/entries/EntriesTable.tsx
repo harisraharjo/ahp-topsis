@@ -15,15 +15,15 @@ import {
   TableHeader,
   TableRow,
 } from "~components/ui/table"
-import { useState } from "react"
-import { FooterCell } from "./FooterCell"
+import { type MouseEventHandler, useState } from "react"
+import { Button, type ButtonVariants } from "~components/ui/button"
+import Link from "next/link"
 
 type ComparatorProps = {
   columns: {
     header: string
     accessorKey: string
   }[]
-  leaves: number
   fieldNames: Record<string, string>
 }
 
@@ -43,6 +43,11 @@ const defaultColumn = {
   },
 }
 
+type ButtonProps = {
+  variant: ButtonVariants
+  onClick?: MouseEventHandler<HTMLButtonElement>
+}
+
 export const EntriesTable = ({ columns, fieldNames }: ComparatorProps) => {
   const [data, setData] = useState(() => [fieldNames])
 
@@ -55,24 +60,22 @@ export const EntriesTable = ({ columns, fieldNames }: ComparatorProps) => {
       addRow: () => {
         setData((prev) => [...prev, fieldNames])
       },
-      // @ts-expect-error it's ok
-      updateData: (rowIndex, columnId, value) => {
-        setData((old) =>
-          old.map((row, index) => {
-            if (index === rowIndex) {
-              return {
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-                ...old[rowIndex]!,
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-                [columnId]: value,
-              }
-            }
-            return row
-          }),
-        )
-      },
     },
   })
+
+  const enoughCriteria = columns.length
+  let buttonProps: ButtonProps = {
+    //  @ts-expect-error meta is already declared up top
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    onClick: table.options.meta!.addRow,
+    variant: "default",
+  }
+
+  if (!enoughCriteria) {
+    buttonProps = {
+      variant: "link",
+    }
+  }
 
   return (
     <Table className="mb-4">
@@ -111,7 +114,18 @@ export const EntriesTable = ({ columns, fieldNames }: ComparatorProps) => {
       <TableFooter>
         <TableRow>
           <TableHead>
-            <FooterCell table={table} />
+            <Button
+              className="border border-slate-50 text-slate-50"
+              type="button"
+              {...buttonProps}
+            >
+              {Boolean(enoughCriteria) && "Add Row"}
+              {!Boolean(enoughCriteria) && (
+                <Link href="/" className="text-slate-50">
+                  Add Criteria
+                </Link>
+              )}
+            </Button>
           </TableHead>
         </TableRow>
       </TableFooter>

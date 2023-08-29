@@ -24,14 +24,14 @@ type LayoutProps = PropsWithChildren<{
   params: { slug: `${string}-${string}-${string}` }
 }>
 export default async function Page({ children, params }: LayoutProps) {
-  const [, parentId] = params.slug.split("-")
+  const parentId = params.slug.split("-")[1]
 
   const siblings = await getData(parseInt(parentId!))
 
   async function action(formData: FormData) {
     "use server"
 
-    const result = await calculateAHP(formData, siblings.length, siblings)
+    const result = await calculateAHP(formData, siblings)
 
     if (result) {
       message = ""
@@ -39,7 +39,10 @@ export default async function Page({ children, params }: LayoutProps) {
       redirect("/")
     } else {
       revalidatePath(`/`)
-      message = "Not Consistent"
+      message =
+        siblings.length < 2
+          ? "At least 2 criteria are required"
+          : "Not Consistent"
     }
   }
 
@@ -90,9 +93,9 @@ type RawData = {
 // eslint-disable-next-line @typescript-eslint/require-await
 export async function calculateAHP(
   formData: FormData,
-  degree: number,
   raw_data: RawData,
 ): Promise<boolean> {
+  const degree = raw_data.length
   if (degree <= 1) return false
 
   const { matrix, colsSum } = constructMatrix(formData, degree)
