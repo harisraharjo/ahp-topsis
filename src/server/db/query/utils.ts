@@ -1,7 +1,8 @@
 import type {
   ComparisonOperator,
+  ExpressionOrFactory,
+  SqlBool,
   UpdateObject,
-  WhereExpressionFactory,
 } from "kysely"
 import { db } from "../config"
 import type { DB } from "../types"
@@ -44,15 +45,12 @@ type UpdateProps<T extends keyof DB> = UpdateObject<
 export const updateRows = <
   T extends keyof DB,
   V extends UpdateProps<T>,
-  Where extends WhereExpressionFactory<DB, T>,
+  Where extends ExpressionOrFactory<DB, ExtractTableAlias<DB, T>, SqlBool>,
 >(
   table: T,
   value: V,
   fn: Where,
-) => {
-  //@ts-expect-error kysely types for set and where clause (1st parameter) is too restrictive but don't worry it still works
-  return db.updateTable(table).set(value).where(fn)
-}
+) => db.updateTable(table).set(value).where(fn)
 
 export const updateRow = <
   T extends keyof DB,

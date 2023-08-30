@@ -5,6 +5,7 @@ import { Button } from "~components/ui/button"
 import { CriteriaTypes } from "../CriteriaTypes"
 import { revalidatePath } from "next/cache"
 import { createCriteria } from "~server/db/criteria"
+import { auth } from "@clerk/nextjs"
 
 type LayoutProps = PropsWithChildren<{
   params: { slug: `${string}-${string}-${string}` }
@@ -20,9 +21,8 @@ export default function Page({ params: { slug } }: LayoutProps) {
       weight: 0,
       parentId: parseInt(id),
       isBenefit: parseInt(formData.get("type") as string) as 1 | 0,
-      // TODO: Add email for each criteria
-      // email: auth().user!.emailAddresses,
-    })
+      userId: auth().userId as string,
+    }).executeTakeFirst()
 
     revalidatePath("/")
   }

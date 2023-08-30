@@ -2,7 +2,7 @@ import type { PropsWithChildren } from "react"
 
 import { array, ones } from "vectorious"
 import { Comparator, type TableData } from "./Comparator"
-import { selectAllCriteria, updateCriteria } from "~server/db/criteria"
+import { getSiblings, updateCriteria } from "~server/db/criteria"
 
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
@@ -16,7 +16,7 @@ function getData(id: number): Promise<
     isBenefit: 0 | 1
   }[]
 > {
-  return selectAllCriteria().where("parentId", "=", id).execute()
+  return getSiblings(id).execute()
 }
 
 let message = ""

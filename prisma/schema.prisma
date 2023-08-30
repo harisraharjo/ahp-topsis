@@ -17,6 +17,7 @@ datasource db {
 model Criteria {
     id        Int     @id @default(autoincrement()) @db.UnsignedInt()
     name      String
+    userId    String 
     weight    Decimal @db.Decimal(8, 5)
     isBenefit Boolean @default(true)
     parentId  Int?

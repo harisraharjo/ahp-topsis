@@ -9,9 +9,11 @@ import { Leaderboard } from "./Leaderboard"
 import { revalidatePath } from "next/cache"
 import { Button } from "~components/ui/button"
 import type { HierarchyNode as D3HierarchyNode } from "d3-hierarchy"
+import { auth } from "@clerk/nextjs"
 
 function getData() {
-  return selectAllCriteria().execute()
+  const id = auth().userId
+  return (id && selectAllCriteria(id).execute()) || undefined
 }
 
 type FieldsNames = Record<string, "">

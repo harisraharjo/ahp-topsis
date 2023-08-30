@@ -6,7 +6,7 @@ import { constructHierarchy } from "~utils/helper"
 
 export type Criterias = Awaited<RawQueryValue<"Criteria", "update">[]>
 
-export const Playground = ({ data }: { data: Criterias }) => {
+export const Playground = ({ data }: { data?: Criterias }) => {
   const hierarchyData = constructHierarchy(data)
 
   return (
