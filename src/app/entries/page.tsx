@@ -64,7 +64,7 @@ export default async function Page() {
     for (const [key, value] of formData.entries()) {
       const noise = key.split("-")
 
-      // somehow nextJS has some "noise" data passed to this formData so we have to filter it
+      // somehow nextJS passed down "noise" data through formData so we have to filter it
       // @ts-expect-error it's ok
       if (!(noise[1]?.replaceAll(" ", "") in fieldNames)) continue
 

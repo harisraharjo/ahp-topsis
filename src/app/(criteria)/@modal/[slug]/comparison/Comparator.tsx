@@ -6,7 +6,7 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table"
-import { Button } from "~components/ui/button"
+import type { PropsWithChildren } from "react"
 import { Input } from "~components/ui/input"
 import {
   Table,
@@ -49,7 +49,10 @@ const columns: ColumnDef<TableData>[] = [
   },
 ]
 
-export const Comparator = ({ data }: ComparatorProps) => {
+export const Comparator = ({
+  data,
+  children,
+}: PropsWithChildren<ComparatorProps>) => {
   const table = useReactTable({
     data,
     columns,
@@ -90,11 +93,7 @@ export const Comparator = ({ data }: ComparatorProps) => {
           </TableRow>
         ))}
       </TableBody>
-      <TableFooter>
-        <Button variant={"default"} className="mb-2 ml-1 border">
-          Calculate
-        </Button>
-      </TableFooter>
+      <TableFooter>{children}</TableFooter>
     </Table>
   )
 }

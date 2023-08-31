@@ -1,11 +1,13 @@
-import type { PropsWithChildren } from "react"
-
 import { array, ones } from "vectorious"
 import { Comparator, type TableData } from "./Comparator"
 import { getSiblings, updateCriteria } from "~server/db/criteria"
 
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
+import { Button } from "~components/ui/button"
+import { auth } from "@clerk/nextjs"
+import type { DynamicRoutesProps } from "../layout"
+import { ButtonLink } from "../ButtonLink"
 
 function getData(id: number): Promise<
   {
@@ -16,17 +18,41 @@ function getData(id: number): Promise<
     isBenefit: 0 | 1
   }[]
 > {
-  return getSiblings(id).execute()
+  return getSiblings(id, auth().userId!).execute()
 }
 
-let message = ""
-type LayoutProps = PropsWithChildren<{
-  params: { slug: `${string}-${string}-${string}` }
-}>
-export default async function Page({ children, params }: LayoutProps) {
+export default async function Page({ params }: DynamicRoutesProps) {
   const parentId = params.slug.split("-")[1]
 
-  const siblings = await getData(parseInt(parentId!))
+  const siblings = await getData(Number(parentId)),
+    hasEnoughCriteria = siblings.length >= 2
+
+  let message: "" | "Not Consistent"
+
+  let tableData: TableData[]
+
+  if (hasEnoughCriteria) {
+    const preprocessedData = siblings.map(({ id, name }) => ({
+      id,
+      name,
+    }))
+
+    tableData = siblings
+      .map((d) => {
+        const result: TableData[] = []
+        preprocessedData.shift()
+        preprocessedData.forEach((cd) => {
+          result.push({
+            id: `${d.id}`,
+            compareTo: `${d.name} -> ${cd.name}`,
+            scale: 1,
+          })
+        })
+
+        return result
+      })
+      .flat()
+  }
 
   async function action(formData: FormData) {
     "use server"
@@ -39,45 +65,30 @@ export default async function Page({ children, params }: LayoutProps) {
       redirect("/")
     } else {
       revalidatePath(`/`)
-      message =
-        siblings.length < 2
-          ? "At least 2 criteria are required"
-          : "Not Consistent"
+      message = "Not Consistent"
     }
   }
 
-  const temp_data = siblings.map(({ id, name }) => ({
-    id,
-    name,
-  }))
-
-  const tableData = siblings
-    .map((d) => {
-      const result: TableData[] = []
-      temp_data.shift()
-      temp_data.forEach((cd) => {
-        result.push({
-          id: `${d.id}`,
-          compareTo: `${d.name} -> ${cd.name}`,
-          scale: 1,
-        })
-      })
-
-      return result
-    })
-    .flat()
-
   return (
-    <>
-      <div className="max-h-80 overflow-auto rounded-md border">
-        {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
+    <div className="max-h-80 overflow-auto rounded-md border">
+      {hasEnoughCriteria && (
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
         <form action={action}>
-          <Comparator data={tableData} />
-          {message}
+          <Comparator data={tableData! || []}>
+            <Button variant="default" className="mb-2 ml-1 border">
+              Calculate
+            </Button>
+          </Comparator>
+          {Boolean(message!) && <h3 className="text-slate-50">{message!}</h3>}
         </form>
-      </div>
-      {children}
-    </>
+      )}
+      {!hasEnoughCriteria && (
+        <div className="p-3">
+          <h3>At least 2 criteria are required</h3>
+          <ButtonLink destination="/">Add Criteria</ButtonLink>
+        </div>
+      )}
+    </div>
   )
 }
 

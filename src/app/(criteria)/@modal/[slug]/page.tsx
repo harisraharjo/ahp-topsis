@@ -3,7 +3,7 @@ import { ButtonLink } from "./ButtonLink"
 import { selectCriteria, deleteCriteria } from "~server/db/criteria"
 import { Button } from "~components/ui/button"
 // import { revalidatePath } from "next/cache"
-import { redirect } from "next/navigation"
+import { notFound, redirect } from "next/navigation"
 import { GOAL_ID } from "~utils/helper"
 
 function getData(id: number) {
@@ -11,12 +11,14 @@ function getData(id: number) {
 }
 
 type PageProps = PropsWithChildren<{
-  params: { slug: `${string}-${string}-${string}` }
+  params: { slug: `${string}-${string}` }
 }>
 export default async function Page({ params: { slug } }: PageProps) {
-  const id = parseInt(slug.split("-")[0] as string)
+  const id = Number(slug.split("-")[0])
 
   const data = await getData(id)
+  if (!data) notFound()
+
   const isHead = id === GOAL_ID
 
   async function remove() {

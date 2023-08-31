@@ -39,4 +39,8 @@ export const updateCriteria = (
 
 export const getSiblings = (
   id: DestructureQueryValue<"Criteria", "id", "update">,
-) => selectAllFrom("Criteria").where("parentId", "=", id)
+  userId: DestructureQueryValue<"Criteria", "userId", "select">,
+) =>
+  selectAllFrom("Criteria").where(({ eb }) =>
+    eb("parentId", "=", id).and("userId", "=", userId),
+  )

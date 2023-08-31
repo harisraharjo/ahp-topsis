@@ -51,6 +51,8 @@ export type Range<F extends number, T extends number> = Exclude<
   Enumerate<F>
 >
 
+export type DynamicRoutesParam = `${string}-${string}`
+
 // type KeysUnder<T, A extends (keyof T)[]> = T extends object
 //   ? {
 //       [P in keyof T]: P extends string

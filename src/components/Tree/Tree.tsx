@@ -5,6 +5,7 @@ import type { LegacyRef, ReactNode, SVGProps, ReactElement } from "react"
 
 import type { HierarchyPointLink, HierarchyPointNode } from "d3-hierarchy"
 import Link from "next/link"
+import type { DynamicRoutesParam } from "~customTypes"
 
 export type Id = number | string
 export type RequiredProps = {
@@ -46,10 +47,7 @@ export type TreeProps<
   // Node: TreeNode
 }
 
-type NodesProps<
-  Node extends RequiredProps,
-  T extends TreeNodeData<Node>,
-> = {
+type NodesProps<Node extends RequiredProps, T extends TreeNodeData<Node>> = {
   nodes: HierarchyPointNode<T>[]
 }
 export const Nodes = <
@@ -62,20 +60,20 @@ export const Nodes = <
     {nodes.map((node, key) => {
       const depth = node.depth
 
-      const isHead = depth === 0
       const data = node.data
+      const isHead = depth === 0
 
       return (
         <g key={key} className="translate-x-1/2 translate-y-[13%]">
-        <Group top={node.y} left={node.x}>
-          <Link href={`${data.id}-${data.parentId}-${depth}`}>
-            {isHead && <Head />}
-            {!isHead && <Descendant hasChild={Boolean(data.children)} />}
-          </Link>
-          <Text depth={depth} hasChild={Boolean(node.children)}>
-            {node.data.name}
-          </Text>
-        </Group>
+          <Group top={node.y} left={node.x}>
+            <Link href={`${data.id}-${data.parentId}` as DynamicRoutesParam}>
+              {isHead && <Head />}
+              {!isHead && <Descendant hasChild={Boolean(data.children)} />}
+            </Link>
+            <Text depth={depth} hasChild={Boolean(node.children)}>
+              {node.data.name}
+            </Text>
+          </Group>
         </g>
       )
     })}
