@@ -8,7 +8,6 @@ import type {
 
 import { tree as d3Tree } from "d3-hierarchy"
 import { useState } from "react"
-// import { useState } from "react"
 
 export type NodeComponentProps<Datum> = { node: HierarchyPointNode<Datum> }
 export type LinkComponentProps<Datum> = { link: HierarchyPointLink<Datum> }

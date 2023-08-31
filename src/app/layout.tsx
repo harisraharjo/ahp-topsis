@@ -23,7 +23,7 @@ function RootLayout({
         <body className="leading-default m-0 bg-slate-900 font-sans text-base font-normal text-slate-50 antialiased">
           <Navbar />
           {auth}
-          {children}
+          <main className="relative">{children}</main>
         </body>
       </html>
     </ClerkProvider>

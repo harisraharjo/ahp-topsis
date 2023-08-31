@@ -16,9 +16,8 @@ import {
   TableHeader,
   TableRow,
 } from "~components/ui/table"
-import { type MouseEventHandler, useState } from "react"
-import { Button, type ButtonVariants } from "~components/ui/button"
-import Link from "next/link"
+import { useState } from "react"
+import { Button } from "~components/ui/button"
 
 type ComparatorProps = {
   columns: {
@@ -43,11 +42,6 @@ const defaultColumn: TableOptions<unknown>["defaultColumn"] = {
   },
 }
 
-type ButtonProps = {
-  variant: ButtonVariants
-  onClick?: MouseEventHandler<HTMLButtonElement>
-}
-
 export const EntriesTable = ({ columns, fieldNames }: ComparatorProps) => {
   const [data, setData] = useState(() => [fieldNames])
 
@@ -62,20 +56,6 @@ export const EntriesTable = ({ columns, fieldNames }: ComparatorProps) => {
       },
     },
   })
-
-  let buttonProps: ButtonProps = {
-    //  @ts-expect-error meta is already declared up top
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    onClick: table.options.meta!.addRow,
-    variant: "default",
-  }
-
-  const enoughCriteria = Boolean(columns.length)
-  if (!enoughCriteria) {
-    buttonProps = {
-      variant: "link",
-    }
-  }
 
   return (
     <Table className="mb-4">
@@ -117,14 +97,12 @@ export const EntriesTable = ({ columns, fieldNames }: ComparatorProps) => {
             <Button
               className="border border-slate-50 text-slate-50"
               type="button"
-              {...buttonProps}
+              //  @ts-expect-error meta is already declared up top
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+              onClick={table.options.meta!.addRow}
+              variant="default"
             >
-              {enoughCriteria && "Add Row"}
-              {!enoughCriteria && (
-                <Link href="/" className="text-slate-50">
-                  Add Criteria
-                </Link>
-              )}
+              Add Row
             </Button>
           </TableHead>
         </TableRow>

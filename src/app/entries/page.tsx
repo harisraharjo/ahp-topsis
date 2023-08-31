@@ -10,6 +10,7 @@ import { Button } from "~components/ui/button"
 import type { HierarchyNode as D3HierarchyNode } from "d3-hierarchy"
 import { auth } from "@clerk/nextjs"
 import { ID_HEAD, constructHierarchy } from "~components/Tree"
+import { ButtonLink } from "~components/ButtonLink"
 
 function getData() {
   const id = auth().userId
@@ -94,10 +95,16 @@ export default async function Page() {
     <>
       {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
       <form action={action}>
-        {!hasEnoughCriteria && <h3>Not enough Criteria</h3>}
-        <EntriesTable columns={columns} fieldNames={fieldNames} />
+        {!hasEnoughCriteria && (
+          <ButtonLink destination="/" className="absolute inset-0 ">
+            Click here to add criteria
+          </ButtonLink>
+        )}
         {hasEnoughCriteria && (
-          <Button className="border border-slate-50">Calculate</Button>
+          <>
+            <EntriesTable columns={columns} fieldNames={fieldNames} />
+            <Button className="border border-slate-50">Calculate</Button>
+          </>
         )}
       </form>
 

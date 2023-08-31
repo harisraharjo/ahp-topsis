@@ -1,24 +1,18 @@
 import { type PropsWithChildren, type ReactNode } from "react"
-import Link from "next/link"
 import { UserButton } from "@clerk/nextjs"
 import { Menubar, MenubarMenu } from "~components/ui/menubar"
-import { Button } from "~components/ui/button"
+import { ButtonLink } from "~components/ButtonLink"
 
 export type NavbarProps = PropsWithChildren<{ _?: ReactNode }>
 export const Navbar = ({}: NavbarProps) => {
   return (
-    <nav className="flex w-full border-b border-slate-50 px-4 py-2">
+    <nav className="flex w-full px-4 py-2">
       <Menubar className="bg-inherit">
         <MenubarMenu>
-          <Button variant={"link"} className="text-slate-50">
-            <Link href={"/"}>Home</Link>
-          </Button>
-          <Button variant={"link"} className="text-slate-50">
-            <Link href="/entries">Entries</Link>
-          </Button>
+          <ButtonLink destination="/">Home</ButtonLink>
+          <ButtonLink destination="/entries">Entries</ButtonLink>
         </MenubarMenu>
       </Menubar>
-
       <div className="ml-auto">
         <UserButton />
       </div>
