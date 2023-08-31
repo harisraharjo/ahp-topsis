@@ -5,6 +5,7 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table"
+import type { TableOptions } from "@tanstack/react-table"
 import { Input } from "~components/ui/input"
 import {
   Table,
@@ -27,14 +28,13 @@ type ComparatorProps = {
   fieldNames: Record<string, string>
 }
 
-const defaultColumn = {
-  // @ts-expect-error it's ok
-  cell: (w) => {
+const defaultColumn: TableOptions<unknown>["defaultColumn"] = {
+  cell: (ctx) => {
     return (
       <Input
-        type="text"
+        type={`${ctx.column.id === "name" ? "text" : "number"}`}
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-        name={`${w.row.index}-${w.column.id}`}
+        name={`${ctx.row.index}-${ctx.column.id}`}
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
         defaultValue=""
         className="text-black outline"
@@ -63,7 +63,6 @@ export const EntriesTable = ({ columns, fieldNames }: ComparatorProps) => {
     },
   })
 
-  const enoughCriteria = columns.length
   let buttonProps: ButtonProps = {
     //  @ts-expect-error meta is already declared up top
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -71,6 +70,7 @@ export const EntriesTable = ({ columns, fieldNames }: ComparatorProps) => {
     variant: "default",
   }
 
+  const enoughCriteria = Boolean(columns.length)
   if (!enoughCriteria) {
     buttonProps = {
       variant: "link",
@@ -119,8 +119,8 @@ export const EntriesTable = ({ columns, fieldNames }: ComparatorProps) => {
               type="button"
               {...buttonProps}
             >
-              {Boolean(enoughCriteria) && "Add Row"}
-              {!Boolean(enoughCriteria) && (
+              {enoughCriteria && "Add Row"}
+              {!enoughCriteria && (
                 <Link href="/" className="text-slate-50">
                   Add Criteria
                 </Link>

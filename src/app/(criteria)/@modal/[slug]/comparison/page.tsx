@@ -7,7 +7,7 @@ import { redirect } from "next/navigation"
 import { Button } from "~components/ui/button"
 import { auth } from "@clerk/nextjs"
 import type { DynamicRoutesProps } from "../layout"
-import { ButtonLink } from "../ButtonLink"
+import { ButtonLink } from "~components/ButtonLink"
 
 function getData(id: number): Promise<
   {

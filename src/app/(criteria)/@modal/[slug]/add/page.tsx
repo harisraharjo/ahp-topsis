@@ -35,7 +35,7 @@ export default function Page({ params: { slug } }: DynamicRoutesProps) {
           required
         />
         <CriteriaTypes />
-        <Button className="border border-slate-50">Submit</Button>
+        <Button className="border border-slate-50">Add</Button>
       </form>
     </>
   )

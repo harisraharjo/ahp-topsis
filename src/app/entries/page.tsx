@@ -2,7 +2,6 @@ import { selectAllCriteria } from "~server/db/criteria"
 
 import { hierarchy } from "d3-hierarchy"
 import type { HierarchyNode } from "../(criteria)/Hierarchy"
-import { GOAL_ID, constructHierarchy } from "~utils/helper"
 import { EntriesTable } from "./EntriesTable"
 import topsis2 from "topsis2"
 import { Leaderboard } from "./Leaderboard"
@@ -10,6 +9,7 @@ import { revalidatePath } from "next/cache"
 import { Button } from "~components/ui/button"
 import type { HierarchyNode as D3HierarchyNode } from "d3-hierarchy"
 import { auth } from "@clerk/nextjs"
+import { ID_HEAD, constructHierarchy } from "~components/Tree"
 
 function getData() {
   const id = auth().userId
@@ -39,6 +39,7 @@ export default async function Page() {
   let criteria: Criteria
   if (hasEnoughCriteria) {
     let i
+    columns.push({ header: "Name", accessorKey: "name" })
     for (i = 0; i < leavesCount; i++) {
       const leaf = leaves[i] as D3HierarchyNode<HierarchyNode>
       const name = leaf.data.name,
@@ -131,12 +132,11 @@ function collectAncestorsData(criteria: D3HierarchyNode<HierarchyNode>[]) {
 function traceAncenstors(criterion: D3HierarchyNode<HierarchyNode>) {
   const data = criterion.data
   const result: Criteria[0] = {
-    // @ts-expect-error it's ok (fix the type later)
     weight: Number(data.weight),
     type: data.isBenefit ? "benefit" : "cost",
   }
 
-  const greatGrandfather = data.parentId === GOAL_ID
+  const greatGrandfather = data.parentId === ID_HEAD
 
   let ancestorsData: { weight: number; type: "benefit" | "cost" }[]
   if (!greatGrandfather) {

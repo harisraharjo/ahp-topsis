@@ -1,14 +1,13 @@
 "use client"
 
-import type { RequiredProps, TreeProps } from "~components/Tree"
-import { Nodes, useTree } from "~components/Tree"
+import { type Document, type TreeProps, Nodes } from "~components/Tree"
+import { useTree } from "~components/Tree/useTree"
 
 import { useState } from "react"
 
 import { hierarchy } from "d3-hierarchy"
 import { createEdge } from "./Edges"
 
-export type Document = RequiredProps
 export type HierarchyNode = Document & {
   children?: HierarchyNode[]
 }

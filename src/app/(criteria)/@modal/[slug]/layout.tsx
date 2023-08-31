@@ -3,18 +3,27 @@ import type { PropsWithChildren } from "react"
 
 import { ModalDialog } from "~components/ModalDialog"
 import type { DynamicRoutesParam } from "~customTypes"
+import { selectCriteria } from "~server/db/criteria"
 
 export type DynamicRoutesProps = PropsWithChildren<{
   params: { slug: DynamicRoutesParam }
 }>
 
-export default function Layout({
+function getData(id: number) {
+  return selectCriteria(id).executeTakeFirst()
+}
+
+export default async function Layout({
   children,
   params: { slug },
 }: DynamicRoutesProps) {
-  const [id, parentId] = slug.split("-")
+  const ids = slug.split("-")
+  const id = Number(ids[0])
 
-  if (Number.isNaN(Number(id)) || Number.isNaN(Number(parentId))) notFound()
+  if (ids.length !== 2 || Number.isNaN(id) || Number.isNaN(Number(ids[1])))
+    notFound()
 
-  return <ModalDialog>{children}</ModalDialog>
+  !(await getData(id)) && notFound()
+
+  return <ModalDialog className="p-3">{children}</ModalDialog>
 }

@@ -15,7 +15,7 @@ export const ButtonLink = ({
 }: ButtonLinkProps) => (
   <Button
     type="button"
-    variant={"link"}
+    variant="link"
     className="border border-slate-50 text-slate-50"
   >
     <Link href={{ pathname: `${destination}`, query }}>{children}</Link>
