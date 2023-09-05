@@ -24,7 +24,6 @@
     "@visx/event": "^3.0.1",
     "@visx/gradient": "^3.0.0",
     "@visx/responsive": "^3.0.0",
-    "add": "^2.0.6",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "d3-hierarchy": "^3.1.2",

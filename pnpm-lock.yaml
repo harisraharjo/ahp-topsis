@@ -44,9 +44,6 @@ dependencies:
   '@visx/responsive':
     specifier: ^3.0.0
     version: 3.0.0(react@18.2.0)
-  add:
-    specifier: ^2.0.6
-    version: 2.0.6
   class-variance-authority:
     specifier: ^0.7.0
     version: 0.7.0
@@ -1707,10 +1704,6 @@ packages:
     engines: {node: '>=0.4.0'}
     hasBin: true
     dev: true
-
-  /add@2.0.6:
-    resolution: {integrity: sha512-j5QzrmsokwWWp6kUcJQySpbG+xfOBqqKnup3OIk1pz+kB/80SLorZ9V8zHFLO92Lcd+hbvq8bT+zOGoPkmBV0Q==}
-    dev: false
 
   /ajv@6.12.6:
     resolution: {integrity: sha512-j3fVLgvTo527anyYyJOGTYJbG+vnnQYvE0m5mmkc1TK+nxAppkCLMIL0aZ4dblVCNoGShhm+kzE4ZUykBoMg4g==}
