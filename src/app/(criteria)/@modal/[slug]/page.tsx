@@ -14,13 +14,19 @@ type PageProps = PropsWithChildren<{
   params: { slug: `${string}-${string}` }
 }>
 export default async function Page({ params: { slug } }: PageProps) {
-  const id = Number(slug.split("-")[0])
+  let [id, parentId] = slug.split("-") as [string | number, string | number]
+  id = Number(id)
+  parentId = Number(parentId)
   const data = await getData(id)
 
   async function remove() {
     "use server"
 
-    await deleteCriteria(id).execute()
+    await Promise.all(
+      deleteCriteria(id as number, parentId as number).map((mutation) =>
+        mutation.execute(),
+      ),
+    )
 
     redirect("/")
   }

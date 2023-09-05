@@ -8,17 +8,18 @@ function getData() {
   return (id && selectAllCriteria(id).execute()) || undefined
 }
 
-export default async function Page({
-  modal,
-}: {
+type Props = {
   modal: ReactNode
   auth: ReactNode
-}) {
+}
+
+export default async function Page({ modal, auth }: Props) {
   const data = await getData()
 
   return (
     <>
       {modal}
+      {auth}
       <Playground data={data} />
     </>
   )

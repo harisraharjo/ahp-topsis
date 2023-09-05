@@ -44,6 +44,7 @@ const columns: ColumnDef<TableData>[] = [
         className="text-black outline outline-slate-50"
         name={row.original.id}
         defaultValue={renderValue() as number}
+        required
       />
     ),
   },

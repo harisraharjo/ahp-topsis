@@ -31,6 +31,7 @@ const defaultColumn: TableOptions<unknown>["defaultColumn"] = {
   cell: (ctx) => {
     return (
       <Input
+        required
         type={`${ctx.column.id === "name" ? "text" : "number"}`}
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
         name={`${ctx.row.index}-${ctx.column.id}`}

@@ -27,7 +27,7 @@ export default async function Page({ params }: DynamicRoutesProps) {
   const siblings = await getData(Number(parentId)),
     hasEnoughCriteria = siblings.length >= 2
 
-  let message: "" | "Not Consistent"
+  let message: "" | "Not Consistent" = ""
 
   let tableData: TableData[]
 
@@ -79,7 +79,7 @@ export default async function Page({ params }: DynamicRoutesProps) {
               Calculate
             </Button>
           </Comparator>
-          {Boolean(message!) && <h3 className="text-slate-50">{message!}</h3>}
+          {Boolean(message) && <h3 className="text-slate-50">{message}</h3>}
         </form>
       )}
       {!hasEnoughCriteria && (

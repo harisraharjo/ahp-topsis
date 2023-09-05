@@ -10,19 +10,12 @@ export const metadata: Metadata = {
   title: "Sistem Penunjang Keputusan",
 } as const
 
-function RootLayout({
-  children,
-  auth,
-}: {
-  children: ReactNode
-  auth: ReactNode
-}) {
+function RootLayout({ children }: { children: ReactNode; auth: ReactNode }) {
   return (
     <ClerkProvider>
       <html lang="en">
         <body className="leading-default m-0 bg-slate-900 font-sans text-base font-normal text-slate-50 antialiased">
           <Navbar />
-          {auth}
           <main className="relative">{children}</main>
         </body>
       </html>
