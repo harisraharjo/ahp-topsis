@@ -20,7 +20,6 @@
     "paths": {
       "~components": ["src/components"],
       "~components/*": ["src/components/*"],
-      "~middleware/*": ["src/oldpages/api/*"],
       "~server/*": ["src/server/*"],
       "~server": ["src/server"],
       "~layouts/*": ["src/layouts/*"],
