@@ -1,4 +1,7 @@
-import { array, ones } from "vectorious"
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import { NDArray, ones } from "vectorious"
 import { Comparator, type TableData } from "./Comparator"
 import { getSiblings, updateCriteria } from "~server/db/criteria"
 
@@ -127,7 +130,7 @@ export async function calculateAHP(
   let isSuccess = true
 
   if (degree > 2) {
-    const lambdaMax = array(pV).dot(array(colsSum))
+    const lambdaMax = new NDArray(pV).dot(new NDArray(colsSum))
     const degreeMinusOne = degree - 1
     const CI = (lambdaMax - degree) / degreeMinusOne
     const CR = CI / (RI[degreeMinusOne] as number)

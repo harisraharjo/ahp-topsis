@@ -85,7 +85,7 @@ dependencies:
     version: 1.0.6(tailwindcss@3.3.3)
   vectorious:
     specifier: github:harisraharjo/vectorious
-    version: github.com/harisraharjo/vectorious/efdf908e913e9c41a4a69f49fc6902ab733f38ce
+    version: github.com/harisraharjo/vectorious/12dcb18c02618d8d40a419337f8b228c3d03ea0a
 
 devDependencies:
   '@types/d3-hierarchy':
@@ -1656,7 +1656,6 @@ packages:
   /autoprefixer@10.4.14(postcss@8.4.23):
     resolution: {integrity: sha512-FQzyfOsTlwVzjHxKEqRIAdJx9niO6VCBCoEwax/VLSoQF29ggECcPuBqUMZ+u8jCZOPSy8b8/8KnuFbp0SaFZQ==}
     engines: {node: ^10 || ^12 || >=14}
-    hasBin: true
     peerDependencies:
       postcss: ^8.1.0
     dependencies:
@@ -3054,16 +3053,9 @@ packages:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
     dev: true
 
-  /nblas@2.1.13:
-    resolution: {integrity: sha512-LsnxQIUhMToa3+J/B5t799pXYKKskmfyMwmpDf6BS/MY46tzViZd/Bixc4fl5CEizbWJ/huaj4k0Vojv112MEQ==}
-    requiresBuild: true
-    dev: false
-    optional: true
-
   /next@13.4.19(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-HuPSzzAbJ1T4BD8e0bs6B9C1kWQ6gv8ykZoRWs5AQoiIuqbGHHdQO7Ljuvg05Q0Z24E2ABozHe6FxDvI6HfyAw==}
     engines: {node: '>=16.8.0'}
-    hasBin: true
     peerDependencies:
       '@opentelemetry/api': ^1.1.0
       react: ^18.2.0
@@ -3099,12 +3091,6 @@ packages:
       - '@babel/core'
       - babel-plugin-macros
     dev: false
-
-  /nlapack@2.0.9:
-    resolution: {integrity: sha512-NnTUNKURkoRfwjNhCygmtLgu4l3gNwxSM+54U4ovnMX50biSElmOGb9yUALNfhoahfm0EGdk/GLySrZLA8yGTw==}
-    requiresBuild: true
-    dev: false
-    optional: true
 
   /no-case@3.0.4:
     resolution: {integrity: sha512-fgAN3jGAh+RoxUGZHTSOLJIqUc2wmoBwGR4tbpNAKmmovFoWq0OdRkb0VkldReO2a2iBT/OEulG9XSUc10r3zg==}
@@ -4000,7 +3986,6 @@ packages:
 
   /update-browserslist-db@1.0.11(browserslist@4.21.5):
     resolution: {integrity: sha512-dCwEFf0/oT85M1fHBg4F0jtLwJrutGoHSQXCh7u4o2t1drG+c0a9Flnqww6XUKSfQMPpJBRjU8d4RXB09qtvaA==}
-    hasBin: true
     peerDependencies:
       browserslist: '>= 4.21.0'
     dependencies:
@@ -4175,13 +4160,8 @@ packages:
       minimist: 1.2.8
     dev: true
 
-  github.com/harisraharjo/vectorious/efdf908e913e9c41a4a69f49fc6902ab733f38ce:
-    resolution: {tarball: https://codeload.github.com/harisraharjo/vectorious/tar.gz/efdf908e913e9c41a4a69f49fc6902ab733f38ce}
+  github.com/harisraharjo/vectorious/12dcb18c02618d8d40a419337f8b228c3d03ea0a:
+    resolution: {tarball: https://codeload.github.com/harisraharjo/vectorious/tar.gz/12dcb18c02618d8d40a419337f8b228c3d03ea0a}
     name: vectorious
     version: 6.1.11
-    prepare: true
-    requiresBuild: true
-    optionalDependencies:
-      nblas: 2.1.13
-      nlapack: 2.0.9
     dev: false
