@@ -85,7 +85,7 @@ dependencies:
     version: 1.0.6(tailwindcss@3.3.3)
   vectorious:
     specifier: github:harisraharjo/vectorious
-    version: github.com/harisraharjo/vectorious/12dcb18c02618d8d40a419337f8b228c3d03ea0a
+    version: github.com/harisraharjo/vectorious/a9e57dc1ecd57418af5717632e92de7137b5bedb
 
 devDependencies:
   '@types/d3-hierarchy':
@@ -4160,8 +4160,10 @@ packages:
       minimist: 1.2.8
     dev: true
 
-  github.com/harisraharjo/vectorious/12dcb18c02618d8d40a419337f8b228c3d03ea0a:
-    resolution: {tarball: https://codeload.github.com/harisraharjo/vectorious/tar.gz/12dcb18c02618d8d40a419337f8b228c3d03ea0a}
+  github.com/harisraharjo/vectorious/a9e57dc1ecd57418af5717632e92de7137b5bedb:
+    resolution: {tarball: https://codeload.github.com/harisraharjo/vectorious/tar.gz/a9e57dc1ecd57418af5717632e92de7137b5bedb}
     name: vectorious
     version: 6.1.11
+    prepare: true
+    requiresBuild: true
     dev: false
