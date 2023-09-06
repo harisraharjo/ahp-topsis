@@ -1,7 +1,7 @@
 "use client"
 
-import { type Document, type TreeProps, Nodes } from "~components/Tree"
-import { useTree } from "~components/Tree/useTree"
+import { type Document, type TreeProps, Nodes } from "../../components/Tree/Tree"
+import { useTree } from "../../components/Tree/useTree"
 
 import { useState } from "react"
 

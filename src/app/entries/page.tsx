@@ -9,7 +9,7 @@ import { revalidatePath } from "next/cache"
 import { Button } from "~components/ui/button"
 import type { HierarchyNode as D3HierarchyNode } from "d3-hierarchy"
 import { auth } from "@clerk/nextjs"
-import { ID_HEAD, constructHierarchy } from "~components/Tree"
+import { ID_HEAD, constructHierarchy } from "../../components/Tree/Tree"
 import { ButtonLink } from "~components/ButtonLink"
 
 function getData() {

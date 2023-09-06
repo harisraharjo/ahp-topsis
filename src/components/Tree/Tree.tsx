@@ -204,7 +204,11 @@ export function constructHierarchy<Data extends Document[]>(
     // parentId will never be null because the query is filtered
     const arrayIndex = idMapping[parentId!]
 
-    const parentEl = data[arrayIndex as number] as TreeNodeData<Data[number]>
+    const parentEl = data[arrayIndex as number] as
+      | TreeNodeData<Data[number]>
+      | undefined
+
+    if (!parentEl) continue
 
     Array.isArray(parentEl.children)
       ? parentEl.children.push(el)

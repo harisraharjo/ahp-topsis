@@ -3,9 +3,9 @@
 import type { PropsWithChildren } from "react"
 import { useMemo } from "react"
 
-import { useZoom } from "~components/(use-zoom)"
-import { Group } from "~components/Tree"
-import type { ZoomConfig } from "~components/(use-zoom)/Zoom"
+import { useZoom } from "../../components/(use-zoom)"
+import { Group } from "../../components/Tree/Tree"
+import type { ZoomConfig } from "../../components/(use-zoom)/Zoom"
 
 type PlaygroundProps = PropsWithChildren
 
