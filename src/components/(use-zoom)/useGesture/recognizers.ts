@@ -13,8 +13,7 @@ import {
   pinchAction,
   registerAction,
   wheelAction,
-  // scrollAction,
-  // hoverAction,
+
 } from "@use-gesture/core/actions"
 import type { Controller } from "@use-gesture/core"
 import { parseMergedHandlers } from "@use-gesture/core"
@@ -23,8 +22,6 @@ const actions = [
   dragAction,
   pinchAction,
   wheelAction,
-  // scrollAction,
-  // hoverAction,
 ]
 export function createUseGesture<
   Config extends UserGestureConfig = UserGestureConfig,

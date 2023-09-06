@@ -47,10 +47,6 @@ const defaultPinchDelta: PinchDelta = ({
 }
 
 export type ZoomConfig = {
-  // /** Width of the zoom container. */
-  // width: number
-  // /** Height of the zoom container. */
-  // height: number
   /**
    * A function that returns { scaleX,scaleY } factors to scale the matrix by.
    * Scale factors greater than 1 will increase (zoom in), less than 1 will decrease (zoom out).
@@ -110,7 +106,7 @@ export function useZoom<Container extends Element>({
   wheelDelta,
   pinchDelta,
   target,
-}: // constrain,
+}: 
 ZoomConfig): ProvidedZoom<Container> & ZoomState {
   const containerRef = useRef<Container>(null)
   const matrixStateRef = useRef<TransformMatrix>(initialTransformMatrix)
