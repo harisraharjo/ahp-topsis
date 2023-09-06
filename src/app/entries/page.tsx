@@ -3,7 +3,7 @@ import { selectAllCriteria } from "~server/db/criteria"
 import { hierarchy } from "d3-hierarchy"
 import type { HierarchyNode } from "../(criteria)/Hierarchy"
 import { EntriesTable } from "./EntriesTable"
-import topsis2 from "topsis2"
+import { Topsis } from "./topsis"
 import { Leaderboard } from "./Leaderboard"
 import { revalidatePath } from "next/cache"
 import { Button } from "~components/ui/button"
@@ -81,8 +81,8 @@ export default async function Page() {
       matrix[k].push(value)
     }
 
-    const rank = topsis2.rank(criteria || [], matrix)
-    leaderboard = rank.map(([id, value]) => ({
+    const topsis = new Topsis(criteria || [])
+    leaderboard = topsis.rank(matrix).map(([id, value]) => ({
       id: id!.toString(),
       name: formData.get(`${id}-name`)!.toString(),
       value,
