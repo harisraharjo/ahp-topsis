@@ -3,7 +3,7 @@ import type { LegacyRef, ReactNode, SVGProps, ReactElement } from "react"
 
 import type { HierarchyPointLink, HierarchyPointNode } from "d3-hierarchy"
 import Link from "next/link"
-import type { DynamicRoutesParam } from "~customTypes"
+import type { DynamicRoutesParam } from "@customTypes"
 
 export type Head = "head"
 export type NodeId = number | string

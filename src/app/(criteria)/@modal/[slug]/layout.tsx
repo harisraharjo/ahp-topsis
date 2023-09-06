@@ -1,9 +1,9 @@
 import { notFound } from "next/navigation"
 import type { PropsWithChildren } from "react"
 
-import { ModalDialog } from "~components/ModalDialog"
-import type { DynamicRoutesParam } from "~customTypes"
-import { selectCriteria } from "~server/db/criteria"
+import { ModalDialog } from "@components/ModalDialog"
+import type { DynamicRoutesParam } from "@customTypes"
+import { selectCriteria } from "@server/db/criteria"
 
 export type DynamicRoutesProps = PropsWithChildren<{
   params: { slug: DynamicRoutesParam }

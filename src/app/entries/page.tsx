@@ -1,4 +1,4 @@
-import { selectAllCriteria } from "~server/db/criteria"
+import { selectAllCriteria } from "@server/db/criteria"
 
 import { hierarchy } from "d3-hierarchy"
 import type { HierarchyNode } from "../(criteria)/Hierarchy"

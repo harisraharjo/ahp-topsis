@@ -1,4 +1,4 @@
-import type { ExtractMandatoryKeys, WithRequired } from "~customTypes"
+import type { ExtractMandatoryKeys, WithRequired } from "@customTypes"
 import type { ColumnType, InsertObject } from "kysely"
 import type { DB } from "./types"
 

@@ -1,4 +1,4 @@
-import { ModalDialog } from "~components/ModalDialog"
+import { ModalDialog } from "@components/ModalDialog"
 import AddPage from "../[slug]/add/page"
 
 const params = { slug: "0-0" } as const

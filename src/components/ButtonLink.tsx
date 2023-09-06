@@ -1,7 +1,7 @@
 import Link from "next/link"
 import type { PropsWithChildren } from "react"
 import type { UrlObject } from "url"
-import { Button } from "~components/ui/button"
+import { Button } from "@components/ui/button"
 
 type ButtonLinkProps = PropsWithChildren<{
   destination: string

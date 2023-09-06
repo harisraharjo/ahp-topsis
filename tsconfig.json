@@ -18,10 +18,10 @@
     "noUncheckedIndexedAccess": true,
     "baseUrl": ".",
     "paths": {
-      "~components/*": ["src/components/*"],
-      "~server/*": ["src/server/*"],
-      "~customTypes": ["src/types"],
-      "~utils/*": ["src/utils/*"],
+      "@components/*": ["src/components/*"],
+      "@server/*": ["src/server/*"],
+      "@customTypes": ["src/types"],
+      "@utils/*": ["src/utils/*"],
     },
     "plugins": [
       {
