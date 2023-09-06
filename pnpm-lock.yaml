@@ -88,7 +88,7 @@ dependencies:
     version: github.com/harisraharjo/topsis2/c87e11b9c8325ae1f8ae413e56f0765fd553fa18(postcss@8.4.23)(typescript@5.1.6)
   vectorious:
     specifier: github:harisraharjo/vectorious
-    version: github.com/harisraharjo/vectorious/e6e3f2f62d9de7e92c7f0f80db6eeb5c9f41993d
+    version: github.com/harisraharjo/vectorious/2fd08184b90fc5fe7ccfa899f55ba2c20e5ae261
 
 devDependencies:
   '@types/d3-hierarchy':
@@ -4573,8 +4573,8 @@ packages:
       - typescript
     dev: false
 
-  github.com/harisraharjo/vectorious/e6e3f2f62d9de7e92c7f0f80db6eeb5c9f41993d:
-    resolution: {tarball: https://codeload.github.com/harisraharjo/vectorious/tar.gz/e6e3f2f62d9de7e92c7f0f80db6eeb5c9f41993d}
+  github.com/harisraharjo/vectorious/2fd08184b90fc5fe7ccfa899f55ba2c20e5ae261:
+    resolution: {tarball: https://codeload.github.com/harisraharjo/vectorious/tar.gz/2fd08184b90fc5fe7ccfa899f55ba2c20e5ae261}
     name: vectorious
     version: 6.1.11
     prepare: true
