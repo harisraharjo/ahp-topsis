@@ -20,9 +20,6 @@
     "paths": {
       "~components/*": ["src/components/*"],
       "~server/*": ["src/server/*"],
-      "~public/*": ["public/*"],
-      "~styles/*": ["src/styles/*"],
-      "~test/*": ["test/*"],
       "~customTypes": ["src/types"],
       "~utils/*": ["src/utils/*"],
     },

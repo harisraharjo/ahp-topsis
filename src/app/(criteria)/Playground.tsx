@@ -1,8 +1,8 @@
-import type { RawQueryValue } from "~server/db/utils"
+import type { RawQueryValue } from "../../server/db/utils"
 
 import { Surface } from "./Surface"
 import { Hierarchy } from "./Hierarchy"
-import { constructHierarchy } from "~components/Tree"
+import { constructHierarchy } from "../../components/Tree/Tree"
 
 export type Criterias = Awaited<RawQueryValue<"Criteria", "update">[]>
 

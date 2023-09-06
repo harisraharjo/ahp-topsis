@@ -1,5 +1,5 @@
 import { type InputHTMLAttributes, forwardRef } from "react"
-import { cn } from "~utils/helper"
+import { cn } from "../../utils/helper"
 
 export type InputProps = InputHTMLAttributes<HTMLInputElement>
 
