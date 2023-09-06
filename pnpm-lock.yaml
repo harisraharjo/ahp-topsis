@@ -83,9 +83,6 @@ dependencies:
   tailwindcss-animate:
     specifier: ^1.0.6
     version: 1.0.6(tailwindcss@3.3.3)
-  vectorious:
-    specifier: github:harisraharjo/vectorious
-    version: github.com/harisraharjo/vectorious/c3f86b05f95d6e63847f59670fc653ba9ad148b1
 
 devDependencies:
   '@types/d3-hierarchy':
@@ -1656,6 +1653,7 @@ packages:
   /autoprefixer@10.4.14(postcss@8.4.23):
     resolution: {integrity: sha512-FQzyfOsTlwVzjHxKEqRIAdJx9niO6VCBCoEwax/VLSoQF29ggECcPuBqUMZ+u8jCZOPSy8b8/8KnuFbp0SaFZQ==}
     engines: {node: ^10 || ^12 || >=14}
+    hasBin: true
     peerDependencies:
       postcss: ^8.1.0
     dependencies:
@@ -3056,6 +3054,7 @@ packages:
   /next@13.4.19(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-HuPSzzAbJ1T4BD8e0bs6B9C1kWQ6gv8ykZoRWs5AQoiIuqbGHHdQO7Ljuvg05Q0Z24E2ABozHe6FxDvI6HfyAw==}
     engines: {node: '>=16.8.0'}
+    hasBin: true
     peerDependencies:
       '@opentelemetry/api': ^1.1.0
       react: ^18.2.0
@@ -3986,6 +3985,7 @@ packages:
 
   /update-browserslist-db@1.0.11(browserslist@4.21.5):
     resolution: {integrity: sha512-dCwEFf0/oT85M1fHBg4F0jtLwJrutGoHSQXCh7u4o2t1drG+c0a9Flnqww6XUKSfQMPpJBRjU8d4RXB09qtvaA==}
+    hasBin: true
     peerDependencies:
       browserslist: '>= 4.21.0'
     dependencies:
@@ -4159,9 +4159,3 @@ packages:
       micromatch: 4.0.5
       minimist: 1.2.8
     dev: true
-
-  github.com/harisraharjo/vectorious/c3f86b05f95d6e63847f59670fc653ba9ad148b1:
-    resolution: {tarball: https://codeload.github.com/harisraharjo/vectorious/tar.gz/c3f86b05f95d6e63847f59670fc653ba9ad148b1}
-    name: vectorious
-    version: 6.1.11
-    dev: false

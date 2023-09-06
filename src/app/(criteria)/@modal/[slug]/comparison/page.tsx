@@ -1,7 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { NDArray, ones } from "vectorious"
 import { Comparator, type TableData } from "./Comparator"
 import { getSiblings, updateCriteria } from "~server/db/criteria"
 
@@ -11,6 +7,7 @@ import { Button } from "~components/ui/button"
 import { auth } from "@clerk/nextjs"
 import type { DynamicRoutesProps } from "../layout"
 import { ButtonLink } from "~components/ButtonLink"
+import { array, ones } from "~utils/vectorious"
 
 function getData(id: number): Promise<
   {
@@ -130,7 +127,7 @@ export async function calculateAHP(
   let isSuccess = true
 
   if (degree > 2) {
-    const lambdaMax = new NDArray(pV).dot(new NDArray(colsSum))
+    const lambdaMax = array(pV).dot(array(colsSum))
     const degreeMinusOne = degree - 1
     const CI = (lambdaMax - degree) / degreeMinusOne
     const CR = CI / (RI[degreeMinusOne] as number)
@@ -157,7 +154,7 @@ function constructMatrix(formData: FormData, degree: number) {
   const colsSum = new Array<number>(degree).fill(0)
   let x, y
   for (x = 0; x < rows; x++) {
-    const row = matrix.slice(x, x + 1)
+    const row = matrix.slice(x, x + 1)!
     for (y = 0; y < columns; y++) {
       // upper triangle
       if (x < y) {
