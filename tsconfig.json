@@ -18,23 +18,13 @@
     "noUncheckedIndexedAccess": true,
     "baseUrl": ".",
     "paths": {
-      "~components": ["src/components"],
       "~components/*": ["src/components/*"],
       "~server/*": ["src/server/*"],
-      "~server": ["src/server"],
-      "~layouts/*": ["src/layouts/*"],
-      "~layouts": ["src/layouts"],
-      "~lib/*": ["src/lib/*"],
-      "~lib": ["src/lib"],
       "~public/*": ["public/*"],
-      "~public": ["public"],
       "~styles/*": ["src/styles/*"],
-      "~styles": ["src/styles"],
       "~test/*": ["test/*"],
-      "~test": ["test"],
       "~customTypes": ["src/types"],
       "~utils/*": ["src/utils/*"],
-      "~utils": ["src/utils"]
     },
     "plugins": [
       {
