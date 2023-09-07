@@ -21,13 +21,12 @@ function getData(id: number): Promise<
   return getSiblings(id, auth().userId!).execute()
 }
 
+let message: "" | "Not Consistent" = ""
 export default async function Page({ params }: DynamicRoutesProps) {
   const parentId = params.slug.split("-")[1]
 
   const siblings = await getData(Number(parentId)),
     hasEnoughCriteria = siblings.length >= 2
-
-  let message: "" | "Not Consistent" = ""
 
   let tableData: TableData[]
 
