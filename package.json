@@ -8,8 +8,7 @@
     "lint": "next lint",
     "start": "next start",
     "db:type": "kysely-codegen --out-file ./src/server/db/types.ts",
-    "db:push": "dotenv -e .env.local -- prisma db push --skip-generate",
-    "prepare": "pnpm remove kysely-codegen"
+    "db:push": "dotenv -e .env.local -- prisma db push --skip-generate"
   },
   "dependencies": {
     "@clerk/nextjs": "^4.23.2",
@@ -51,7 +50,6 @@
     "dotenv-cli": "^7.3.0",
     "eslint": "^8.47.0",
     "eslint-config-next": "13.4.19",
-    "kysely-codegen": "github:harisraharjo/kysely-codegen#planetscale",
     "postcss": "^8.4.23",
     "prettier": "^3.0.2",
     "prettier-plugin-tailwindcss": "^0.5.3",

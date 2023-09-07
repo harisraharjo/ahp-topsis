@@ -118,9 +118,6 @@ devDependencies:
   eslint-config-next:
     specifier: 13.4.19
     version: 13.4.19(eslint@8.47.0)(typescript@5.1.6)
-  kysely-codegen:
-    specifier: github:harisraharjo/kysely-codegen#planetscale
-    version: github.com/harisraharjo/kysely-codegen/9e427c40f9e9d3599e3565c775e4ff16ff84ea4c(@planetscale/database@1.11.0)(kysely-planetscale@1.4.0)(kysely@0.26.3)
   postcss:
     specifier: ^8.4.23
     version: 8.4.23
@@ -557,6 +554,7 @@ packages:
   /@planetscale/database@1.11.0:
     resolution: {integrity: sha512-aWbU+D/IRHoDE9975y+Q4c+EwwAWxCPwFId+N1AhQVFXzbeJMkj6KN2iQtoi03elcLMRdfT+V3i9Z4WRw+/oIA==}
     engines: {node: '>=16'}
+    dev: false
 
   /@prisma/engines@4.13.0:
     resolution: {integrity: sha512-HrniowHRZXHuGT9XRgoXEaP2gJLXM5RMoItaY2PkjvuZ+iHc0Zjbm/302MB8YsPdWozAPHHn+jpFEcEn71OgPw==}
@@ -1879,6 +1877,7 @@ packages:
     engines: {node: '>=0.11'}
     dependencies:
       '@babel/runtime': 7.22.11
+    dev: false
 
   /debug@3.2.7:
     resolution: {integrity: sha512-CFjzYYAi4ThfiQvizrFQevTTXHtnCqWfe7x1AhgEscTz6ZbLbfoLRLPugTQyBth6f8ZERVUSyWHFD/7Wu4t1XQ==}
@@ -2913,10 +2912,12 @@ packages:
       '@planetscale/database': 1.11.0
       date-fns: 2.30.0
       kysely: 0.26.3
+    dev: false
 
   /kysely@0.26.3:
     resolution: {integrity: sha512-yWSgGi9bY13b/W06DD2OCDDHQmq1kwTGYlQ4wpZkMOJqMGCstVCFIvxCCVG4KfY1/3G0MhDAcZsip/Lw8/vJWw==}
     engines: {node: '>=14.0.0'}
+    dev: false
 
   /language-subtag-registry@0.3.22:
     resolution: {integrity: sha512-tN0MCzyWnoz/4nHS6uxdlFWoUZT7ABptwKPQ52Ea7URk6vll88bWBVhodtnlfEuCcKWNGoc+uGbw1cwa9IKh/w==}
@@ -4126,36 +4127,3 @@ packages:
   /zod@3.21.4:
     resolution: {integrity: sha512-m46AKbrzKVzOzs/DZgVnG5H55N1sv1M8qZU3A8RIKbs3mrACDNeIOeilDymVb2HdmP8uwshOCF4uJ8uM9rCqJw==}
     dev: false
-
-  github.com/harisraharjo/kysely-codegen/9e427c40f9e9d3599e3565c775e4ff16ff84ea4c(@planetscale/database@1.11.0)(kysely-planetscale@1.4.0)(kysely@0.26.3):
-    resolution: {tarball: https://codeload.github.com/harisraharjo/kysely-codegen/tar.gz/9e427c40f9e9d3599e3565c775e4ff16ff84ea4c}
-    id: github.com/harisraharjo/kysely-codegen/9e427c40f9e9d3599e3565c775e4ff16ff84ea4c
-    name: kysely-codegen
-    version: 0.9.0
-    hasBin: true
-    peerDependencies:
-      '@planetscale/database': ^1.5.0
-      better-sqlite3: '>=7.6.2'
-      kysely: '>=0.19.12'
-      kysely-planetscale: ^1.2.1
-      mysql2: ^2.3.3
-      pg: ^8.8.0
-      planetscale: '*'
-    peerDependenciesMeta:
-      better-sqlite3:
-        optional: true
-      mysql2:
-        optional: true
-      pg:
-        optional: true
-      planetscale:
-        optional: true
-    dependencies:
-      '@planetscale/database': 1.11.0
-      chalk: 4.1.2
-      dotenv: 16.3.1
-      kysely: 0.26.3
-      kysely-planetscale: 1.4.0(@planetscale/database@1.11.0)(kysely@0.26.3)
-      micromatch: 4.0.5
-      minimist: 1.2.8
-    dev: true
