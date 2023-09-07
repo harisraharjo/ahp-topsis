@@ -16,6 +16,13 @@
     "jsx": "preserve",
     "incremental": true,
     "noUncheckedIndexedAccess": true,
+    "baseUrl": ".",
+    "paths": {
+      "@components/*": ["src/components/*"],
+      "@server/*": ["src/server/*"],
+      "@customTypes": ["src/types"],
+      "@utils/*": ["src/utils/*"]
+    },
     "plugins": [
       {
         "name": "next"

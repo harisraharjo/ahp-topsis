@@ -29,12 +29,7 @@ export default function Page({ params: { slug } }: DynamicRoutesProps) {
       {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
       <form action={action}>
         <label htmlFor="name">Name</label>
-        <Input
-          name="name"
-          className="text-black"
-          placeholder="Nama kriteria"
-          required
-        />
+        <Input name="name" className="text-black" placeholder="Name" required />
         <CriteriaTypes />
         <Button className="border border-slate-50">Add</Button>
       </form>

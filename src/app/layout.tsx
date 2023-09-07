@@ -7,7 +7,7 @@ import type { Metadata } from "next"
 
 export const metadata: Metadata = {
   colorScheme: "dark",
-  title: "Sistem Penunjang Keputusan",
+  title: "AHP-TOPSIS",
 } as const
 
 function RootLayout({ children }: { children: ReactNode; auth: ReactNode }) {

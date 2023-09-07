@@ -28,9 +28,9 @@ export type TableData = {
 const columns: ColumnDef<TableData>[] = [
   {
     accessorKey: "name",
-    header: "Nama",
+    header: "Name",
   },
-  {accessorKey: "value", header: "Nilai"}
+  { accessorKey: "value", header: "Value" },
 ]
 
 export const Leaderboard = ({ data }: ComparatorProps) => {
@@ -51,7 +51,10 @@ export const Leaderboard = ({ data }: ComparatorProps) => {
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
                 return (
-                  <TableHead key={header.id} className="text-slate-50 pointer-events-none">
+                  <TableHead
+                    key={header.id}
+                    className="pointer-events-none text-slate-50"
+                  >
                     {header.isPlaceholder
                       ? null
                       : flexRender(
@@ -65,20 +68,18 @@ export const Leaderboard = ({ data }: ComparatorProps) => {
           ))}
         </TableHeader>
         <TableBody>
-          {
-            table.getRowModel().rows.map((row) => (
-              <TableRow
-                key={row.id}
-                data-state={row.getIsSelected() && "selected"}
-              >
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext(),)}
-                  </TableCell>
-                ))}
-              </TableRow>
-            ))
-          }
+          {table.getRowModel().rows.map((row) => (
+            <TableRow
+              key={row.id}
+              data-state={row.getIsSelected() && "selected"}
+            >
+              {row.getVisibleCells().map((cell) => (
+                <TableCell key={cell.id}>
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </TableCell>
+              ))}
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
     </>
