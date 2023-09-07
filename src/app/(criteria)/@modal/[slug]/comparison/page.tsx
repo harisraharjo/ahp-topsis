@@ -1,13 +1,13 @@
 import { Comparator, type TableData } from "./Comparator"
-import { getSiblings, updateCriteria } from "@server/db/criteria"
+import { getSiblings, updateCriteria } from "../../../../../server/db/criteria"
 
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
-import { Button } from "@components/ui/button"
+import { Button } from "../../../../../components/ui/button"
 import { auth } from "@clerk/nextjs"
 import type { DynamicRoutesProps } from "../layout"
-import { ButtonLink } from "@components/ButtonLink"
-import { array, ones } from "@utils/vectorious"
+import { ButtonLink } from "../../../../../components/ButtonLink"
+import { array, ones } from "../../../../../utils/vectorious"
 
 function getData(id: number): Promise<
   {

@@ -1,7 +1,7 @@
 import { type PropsWithChildren, type ReactNode } from "react"
 import { UserButton } from "@clerk/nextjs"
-import { Menubar, MenubarMenu } from "@components/ui/menubar"
-import { ButtonLink } from "@components/ButtonLink"
+import { Menubar, MenubarMenu } from "../../components/ui/menubar"
+import { ButtonLink } from "../../components/ButtonLink"
 
 export type NavbarProps = PropsWithChildren<{ _?: ReactNode }>
 export const Navbar = ({}: NavbarProps) => {

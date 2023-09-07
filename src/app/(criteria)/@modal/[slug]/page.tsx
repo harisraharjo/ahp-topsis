@@ -1,7 +1,7 @@
 import type { PropsWithChildren } from "react"
-import { ButtonLink } from "@components/ButtonLink"
-import { selectCriteria, deleteCriteria } from "@server/db/criteria"
-import { Button } from "@components/ui/button"
+import { ButtonLink } from "../../../../components/ButtonLink"
+import { selectCriteria, deleteCriteria } from "../../../../server/db/criteria"
+import { Button } from "../../../../components/ui/button"
 // import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 

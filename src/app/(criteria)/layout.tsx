@@ -1,4 +1,4 @@
-import { selectAllCriteria } from "@server/db/criteria"
+import { selectAllCriteria } from "../../server/db/criteria"
 import { Playground } from "./Playground"
 import type { ReactNode } from "react"
 import { auth } from "@clerk/nextjs"

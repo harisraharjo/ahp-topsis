@@ -3,7 +3,7 @@ import type { LegacyRef, ReactNode, SVGProps, ReactElement } from "react"
 
 import type { HierarchyPointLink, HierarchyPointNode } from "d3-hierarchy"
 import Link from "next/link"
-import type { DynamicRoutesParam } from "@customTypes"
+import type { DynamicRoutesParam } from "../../types"
 
 export type Head = "head"
 export type NodeId = number | string
@@ -160,7 +160,7 @@ export const ID_HEAD = 0 as const
 type Goal<Data extends Document> = {
   id: typeof ID_HEAD
   parentId: -1
-  name: "Goal"
+  name: "Goal" | "Click Me"
   children: TreeNodeData<Data>[]
   isBenefit: 0
   weight: string | number
@@ -175,7 +175,7 @@ export function constructHierarchy<Data extends Document[]>(
   const result: Goal<Data[number]> = {
     id: 0,
     parentId: -1,
-    name: "Goal",
+    name: "Click Me",
     children: nodes,
     isBenefit: 0,
     weight: "0.0",
@@ -216,6 +216,7 @@ export function constructHierarchy<Data extends Document[]>(
   }
 
   result.children = nodes
+  result.name = "Goal"
 
   return result
 }

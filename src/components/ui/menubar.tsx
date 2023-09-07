@@ -4,7 +4,7 @@ import * as React from "react"
 import * as MenubarPrimitive from "@radix-ui/react-menubar"
 
 
-import { cn } from "@utils/helper"
+import { cn } from "../../utils/helper"
 
 const MenubarMenu = MenubarPrimitive.Menu
 
