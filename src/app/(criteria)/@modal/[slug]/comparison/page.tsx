@@ -63,8 +63,8 @@ export default async function Page({ params }: DynamicRoutesProps) {
       revalidatePath(`/`)
       redirect("/")
     } else {
-      revalidatePath(`/`)
       message = "Not Consistent"
+      revalidatePath(`/`)
     }
   }
 

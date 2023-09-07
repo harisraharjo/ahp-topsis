@@ -41,7 +41,7 @@ export const Surface = ({ children }: PlaygroundProps) => {
   return (
     <svg
       viewBox={VIEW_BOX}
-      className="h-auto w-full touch-none bg-slate-900"
+      className="h-auto w-full touch-none bg-slate-900 hover:cursor-grab active:cursor-grabbing"
       preserveAspectRatio="none"
       ref={zoom.containerRef}
     >

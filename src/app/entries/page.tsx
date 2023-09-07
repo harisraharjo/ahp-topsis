@@ -25,41 +25,43 @@ type Columns = {
 type Criteria = { weight: number; type: "cost" | "benefit" }[]
 
 const defaultColumn = { header: "Name", accessorKey: "name" }
+let leaderboard: { id: string; name: string }[] = []
+
 export default async function Page() {
-  const rawData = await getData(),
-    data = constructHierarchy(rawData),
-    root = hierarchy<HierarchyNode>(data),
-    leaves = root.leaves()
+  const rawData = await getData()
 
-  const columns: Columns = [],
-    fieldNames: FieldsNames = {}
-
-  const leavesCount = leaves.length,
-    hasEnoughCriteria = leavesCount >= 2
-
+  const data = constructHierarchy(rawData)
   let criteria: Criteria
-  if (hasEnoughCriteria) {
-    let i
-    columns.push({ header: "Name", accessorKey: "name" })
-    for (i = 0; i < leavesCount; i++) {
-      const leaf = leaves[i] as D3HierarchyNode<HierarchyNode>
-      const name = leaf.data.name,
-        compactName = name.replaceAll(" ", "")
+  let columns: Columns = [],
+    fieldNames: FieldsNames = {}
+  const root = hierarchy<HierarchyNode>(data)
 
-      columns.push({ accessorKey: compactName, header: name })
-      fieldNames[compactName] = ""
+  let lowestWeight = 1
+  root.eachBefore((node, i) => {
+    if (!i) return
+
+    lowestWeight = Math.min(Number(node.data.weight), lowestWeight)
+  })
+
+  let isValid = Boolean(lowestWeight)
+  if (isValid) {
+    const leaves = root.leaves()
+    isValid = leaves.length >= 2
+
+    if (isValid) {
+      const { columns: cols, fieldNames: fields } =
+        generateColsAndFields(leaves)
+      columns = cols
+      fieldNames = fields
+      criteria = collectAncestorsData(leaves)
     }
-    fieldNames[defaultColumn.accessorKey] = ""
-    criteria = collectAncestorsData(leaves)
   }
-
-  let leaderboard: { id: string; name: string }[] = []
 
   // eslint-disable-next-line @typescript-eslint/require-await
   async function action(formData: FormData) {
     "use server"
 
-    if (!hasEnoughCriteria) return
+    if (!isValid) return
 
     const matrix: number[][] = []
 
@@ -95,12 +97,13 @@ export default async function Page() {
     <>
       {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
       <form action={action}>
-        {!hasEnoughCriteria && (
+        {!isValid && (
           <ButtonLink destination="/" className="absolute inset-0 ">
-            Click here to add criteria
+            You don&apos;t have enough criteria or you have criteria with 0
+            weight
           </ButtonLink>
         )}
-        {hasEnoughCriteria && (
+        {isValid && (
           <>
             <EntriesTable columns={columns} fieldNames={fieldNames} />
             <Button className="border border-slate-50">Calculate</Button>
@@ -151,4 +154,26 @@ function traceAncenstors(criterion: D3HierarchyNode<HierarchyNode>) {
   }
 
   return [...(ancestorsData! || []), result]
+}
+
+function generateColsAndFields(leaves: D3HierarchyNode<HierarchyNode>[]) {
+  let i
+  const columns: Columns = [{ header: "Name", accessorKey: "name" }],
+    fieldNames: FieldsNames = {},
+    num_leaves = leaves.length
+
+  for (i = 0; i < num_leaves; i++) {
+    const leaf = leaves[i] as D3HierarchyNode<HierarchyNode>
+    const name = leaf.data.name,
+      compactName = name.replaceAll(" ", "")
+
+    columns.push({ accessorKey: compactName, header: name })
+    fieldNames[compactName] = ""
+  }
+  fieldNames[defaultColumn.accessorKey] = ""
+
+  return {
+    columns,
+    fieldNames,
+  }
 }

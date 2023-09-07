@@ -12,3 +12,8 @@ A tool to solve MCDM problems using AHP & TOPSIS
 4. run `pnpm install`\
 5. add [this](github:harisraharjo/kysely-codegen#planetscale) kysely-codegen as dev dependencies. `pnpm add -D github:harisraharjo/kysely-codegen#planetscale` to mirror planetscale data type to typescript
 6. Push the database to planetscale. run `pnpm db:push`
+
+## TODO
+
+1. Design
+2. configure absolute paths for deployment

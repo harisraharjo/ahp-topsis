@@ -1,10 +1,11 @@
 import { Input } from "../../../../../components/ui/input"
 import { Button } from "../../../../../components/ui/button"
 import { CriteriaTypes } from "../CriteriaTypes"
-import { revalidatePath } from "next/cache"
+// import { revalidatePath } from "next/cache"
 import { createCriteria } from "../../../../../server/db/criteria"
 import { auth } from "@clerk/nextjs"
 import type { DynamicRoutesProps } from "../layout"
+import { redirect } from "next/navigation"
 
 export default function Page({ params: { slug } }: DynamicRoutesProps) {
   const id = slug.split("-")[0] as string
@@ -20,7 +21,7 @@ export default function Page({ params: { slug } }: DynamicRoutesProps) {
       userId: auth().userId as string,
     }).executeTakeFirst()
 
-    revalidatePath("/")
+    redirect("/")
   }
 
   return (
